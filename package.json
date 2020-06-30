@@ -68,6 +68,12 @@
     "*.{js,jsx,vue}": [
       "vue-cli-service lint",
       "git add"
-    ]
+    ],
+    "*.js": "eslint --cache --fix"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   }
 }
