@@ -24,3 +24,4 @@ module.exports = {
 
 
 const a= 1
+b=2
