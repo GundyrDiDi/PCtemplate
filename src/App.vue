@@ -22,7 +22,6 @@ export default {
     HelloWorld
   }
 }
-
 </script>
 
 <style>
