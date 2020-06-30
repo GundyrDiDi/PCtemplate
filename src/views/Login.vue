@@ -4,13 +4,8 @@
 
 <script>
 export default {
-  name: 'Login',
-  data () {
-    return {}
-  }
+  name: 'Login'
 }
 </script>
 
-<style>
-
-</style>
+<style></style>
