@@ -28,7 +28,7 @@ const modules = everyStore(root)
 // 每一个module里的state数据通过mutations改变
 modules.forEach(bindMutations)
 
-export const store = new Vuex.Store(root)
+export default new Vuex.Store(root)
 
 export const vuexData = {
   ...mapVuex(modules)
