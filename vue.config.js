@@ -21,5 +21,3 @@ module.exports = {
   productionSourceMap: false
   // webpack-dev-server 相关配置
 }
-const a = 1
-console.log(a)
