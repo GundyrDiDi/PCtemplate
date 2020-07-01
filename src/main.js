@@ -5,7 +5,7 @@ import store from './store'
 import './plugins/axios'
 import './plugins/element.js'
 import 'animate.css'
-import './plugins/fontawesome'
+import './plugins/font-awesome'
 
 Vue.config.productionTip = false
 new Vue({
