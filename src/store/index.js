@@ -6,9 +6,6 @@ const root = {
   // everyStore中命名modules
   name: '',
   state: {
-    settings: {
-      theme: 'primary'
-    }
   },
   getters: {},
   mutations: {},
