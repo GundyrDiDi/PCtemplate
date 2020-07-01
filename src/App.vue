@@ -7,6 +7,7 @@
         <code v-text="'<el-button>'"></code>
         below
       </p>
+      <i class="fa fa-user"></i>
       <el-button>el-button</el-button>
     </div>
     <HelloWorld msg="Welcome to Your Vue.js App" />

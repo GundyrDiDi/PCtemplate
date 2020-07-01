@@ -5,34 +5,29 @@ Vue.use(Vuex)
 const root = {
   // everyStore中命名modules
   name: '',
-  state: {
-
-  },
-  getters: {
-
-  },
-  mutations: {
-
-  },
-  actions: {
-
-  },
-  modules: {
-
-  },
-  plugins: [
-
-  ]
+  state: {},
+  getters: {},
+  mutations: {},
+  actions: {},
+  modules: {},
+  plugins: []
 }
 const modules = everyStore(root)
 // 每一个module里的state数据通过mutations改变
 modules.forEach(bindMutations)
 
-export default new Vuex.Store(root)
-
-export const vuexData = {
-  ...mapVuex(modules)
+const store = new Vuex.Store(root)
+const _registerModule = store.registerModule
+store.registerModule = function (module) {
+  bindMutations(module)
+  const name = module.name
+  _registerModule.call(this, name.split('_'), module)
+  Vue.mixin(mapVuex([module]))
 }
+export default store
+
+Vue.mixin(mapVuex(modules))
+
 // util
 function everyStore (root) {
   const stores = [root]
@@ -83,6 +78,7 @@ function mapkeys (str, module = root) {
   }
   if (str === 'mutations' || str === 'actions') {
     keys = keys.reduce((acc, key) => {
+      // 只有_开头才是传递到组件中使用的方法
       if (key.includes('_')) {
         acc[module.name + key] = key
       }
