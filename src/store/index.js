@@ -5,7 +5,11 @@ Vue.use(Vuex)
 const root = {
   // everyStore中命名modules
   name: '',
-  state: {},
+  state: {
+    settings: {
+      theme: 'primary'
+    }
+  },
   getters: {},
   mutations: {},
   actions: {},

@@ -1,26 +1,19 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png" />
     <div>
-      <p>
-        If Element is successfully added to this project, you'll see an
-        <code v-text="'<el-button>'"></code>
-        below
-      </p>
       <i class="fa fa-user"></i>
-      <el-button>el-button</el-button>
+      <theme-picker></theme-picker>
     </div>
-    <HelloWorld msg="Welcome to Your Vue.js App" />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import ThemePicker from './components/ThemePicker'
+import Vue from 'vue'
+Vue.component('theme-picker', ThemePicker)
 export default {
   name: 'app',
   components: {
-    HelloWorld
   }
 }
 </script>

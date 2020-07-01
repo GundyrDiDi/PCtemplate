@@ -5,7 +5,7 @@
 //   return path.join(__dirname, dir)
 // }
 
-const port = process.env.port || process.env.npm_config_port || 77
+const port = process.env.port || process.env.npm_config_port || 8080
 
 module.exports = {
   // 部署生产环境和开发环境下的URL。
