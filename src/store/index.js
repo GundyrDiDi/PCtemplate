@@ -1,16 +1,17 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-
+import login from './modules/login'
 Vue.use(Vuex)
 const root = {
   // everyStore中命名modules
   name: '',
-  state: {
-  },
+  state: {},
   getters: {},
   mutations: {},
   actions: {},
-  modules: {},
+  modules: {
+    login
+  },
   plugins: []
 }
 const modules = everyStore(root)

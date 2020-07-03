@@ -1,46 +1,37 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
+import config from '@/.config.js'
 
 NProgress.inc(0.2)
 NProgress.configure({ easing: 'ease', speed: 500, showSpinner: false })
 
 Vue.use(VueRouter)
-
-const routes = [
-  {
-    path: '/',
-    name: 'Home',
-    component: Home,
-    meta: {
-      title: '首页'
+const getroutechildren = routes => {
+  return routes.map(v => {
+    if (v.children) {
+      v.children = getroutechildren(config[v.children])
     }
-  },
-  {
-    path: '/home',
-    redirect: to => ({ name: 'Home' })
-  },
-  {
-    path: '/login',
-    name: 'Login',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ '../views/Login.vue')
-  }
-]
+    return v
+  })
+}
+const routes = getroutechildren(config.routes)
 
 const router = new VueRouter({
-  routes
+  routes,
+  scrollBehavior (to, from, savedPosition) {
+    console.log(to.hash)
+    if (to.hash) {
+      return {
+        selector: to.hash
+      }
+    }
+  }
 })
 // 路由守卫
-const projectName = require('@/.config.js').name
 router.beforeEach((to, from, next) => {
-  console.log(to.meta)
-  document.title = (to.meta.title ? to.meta.title + '-' : '') + projectName
+  document.title = (to.meta.title ? to.meta.title + '-' : '') + config.name
   NProgress.start()
   next()
 })
