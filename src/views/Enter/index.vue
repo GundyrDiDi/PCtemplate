@@ -1,7 +1,9 @@
 <template>
   <div id="Enter">
     <el-row class="nav">
-      <el-col :span="12" class="flex-ter logo">{{logoname}}</el-col>
+      <el-col :span="12" class="flex-ter">
+        <img class="logo" :src="imgs.logo" alt="">
+      </el-col>
       <el-col :span="9">
         <el-menu
         class="menu"
@@ -9,7 +11,7 @@
         :default-active="activemenu"
         active-text-color="#34aaff"
         >
-          <el-menu-item v-for="v in enternavs" :key="v.name" :index="v.name" @click="moveto(v.name)">
+          <el-menu-item v-for="(v,i) in enternavs" :key="v.name" :index="v.name" @click="moveto(i)">
             {{v.meta.title}}
           </el-menu-item>
         </el-menu>
@@ -19,8 +21,8 @@
       </el-col>
     </el-row>
     <!-- content -->
-    <div class="content">
-      <component v-for="v in enternavs" :key="v.name" :is="v.component" :ref="v.name"></component>
+    <div class="content" ref="main">
+      <component v-for="v in enternavs" :key="v.name" :is="v.component" ref="menu"></component>
     </div>
   </div>
 </template>
@@ -30,57 +32,69 @@ export default {
   name: 'Enter',
   data () {
     return {
-      activemenu: ''
+      activemenu: 'entermain',
+      un: false
     }
   },
   // :is 赋值函数 ()=>import 可以动态注册组件
   // components: config.enternavs.reduce((comp, v) => ({ ...comp, ...{ [v.name]: v.component } }), {}),
   methods: {
-    moveto (name) {
-      this.$refs[name][0].$el.scrollIntoView(true)
+    moveto (i) {
+      this.un = true
+      setTimeout(e => {
+        this.un = false
+      }, 1000)
+      this.$refs.main.scrollTo(0, this.$refs.menu[i].$el.offsetTop + 20)
     }
   },
   async mounted () {
     await Promise.all(this.enternavs.map(v => v.component()))
-    const ob = new IntersectionObserver(entries => {
-      console.log(ob.takeRecords())
-      entries.forEach(v => {
-        if (v.isIntersecting) {
-          console.log(v.target.id)
-          this.activemenu = v.target.id
-        }
-      })
-    }, { threshold: 0.2 })
-    this.enternavs.forEach((v) => {
-      ob.observe(this.$refs[v.name][0].$el)
+    this.$refs.menu.sort((a, b) =>
+      a.$el.offsetTop - b.$el.offsetTop
+    )
+    const offsetTops = this.$refs.menu.map(v => v.$el.offsetTop)
+    this.$refs.main.addEventListener('scroll', e => {
+      const scrollTop = e.target.scrollTop
+      if (!this.un) {
+        offsetTops.forEach((v, i) => {
+          if (v <= scrollTop) {
+            this.activemenu = this.enternavs[i].name
+          }
+        })
+      }
     })
   }
 }
 </script>
 
 <style scoped lang="less">
-@height:60px;
+@height:calc(var(--base) * 4);
 .nav{
   height:@height;
-  box-shadow:0 0px 2px 1px rgba(0,0,0,.2);
+  box-shadow:var(--lineshadow);
   background:#fff;
+  z-index:2;
   >div{
     height:100%;
   }
-  >.logo {
-    font-size: var(--xxlfont);
-    font-weight: 600;
+  .logo {
+    height:calc(var(--base) * 2.5);
+    margin-left:8rem;
   }
   .menu{
     height:@height;
     .el-menu-item{
-      font-size:var(--mfont);
-      padding-left:30px;
-      padding-right:30px;
+      font-size:var(--lfont);
+      height:@height;
+      line-height: @height;
+      padding-left:2rem;
+      padding-right:2rem;
+      color: #909399;
     }
   }
 }
 .content{
+  position: relative;
   height:calc(100vh - @height );
   overflow: auto;
   scroll-behavior: smooth;

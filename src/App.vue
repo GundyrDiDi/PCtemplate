@@ -8,28 +8,80 @@
 export default {
   name: 'app',
   components: {
+  },
+  mounted () {
+    const docEl = document.documentElement.style
+    const recalc = () => {
+      docEl.fontSize = 24 * (window.innerWidth / 1920) + 'px'
+    }
+    window.addEventListener('resize', recalc, false)
+    window.addEventListener('pageshow', recalc, false)
+    document.addEventListener('DOMContentLoaded', recalc, false)
   }
 }
 </script>
 
 <style lang="less">
 #app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  font-family: "幼圆","Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
-  letter-spacing: 1px
 }
-
 @scrollcolor:#ccc;
-@fontsize:18px;
+@bgcolor:rgba(114, 203, 255,.3);
+@rem:1rem;
+div{
+  box-sizing: border-box;
+}
 :root{
-  font-size:@fontsize;
-  --sfont:.8rem;
-  --mfont:1rem;
-  --lfont:1.1rem;
-  --xlfont:1.2rem;
-  --xxlfont:1.5rem;
+  --base:@rem;
+  --xsfont:calc( @rem *0.6 );
+  --sfont:calc( @rem *0.8 );
+  --mfont:calc( @rem *1 );
+  --xmfont:calc( @rem *1.25);
+  --lfont:calc( @rem *1.33 );
+  --xl2font:calc( @rem *1.5 );
+  --xlfont:calc( @rem *2 );
+  --xxlfont:calc( @rem *3 );
+  --lineshadow:0 0px 2px 0px rgba(0,0,0,.2);
+  letter-spacing: 1px;
+}
+.bold{
+  font-weight: 400;
+}
+.bolder{
+  font-weight:600;
+}
+.yahei{
+  font-family: 'yahei';
+}
+.h-title{
+  font-size:var(--xxlfont);
+  .bolder();
+  .yahei();
+  letter-spacing: 4px;
+}
+.f-title{
+  font-size:var(--xlfont);
+  .bolder();
+  .yahei();
+  letter-spacing: 2px;
+}
+.s-title{
+  .bolder();
+  font-size:var(--xmfont);
+}
+.cen{
+  margin:auto
+}
+.con-cen>*{
+  .cen()
+}
+.bg{
+  position: absolute;
+  transform:scale(.8);
+  z-index:-1;
 }
 ::-webkit-scrollbar {
   /*滚动条整体样式*/
@@ -63,13 +115,25 @@ export default {
   .flex-cen();
   .flex-ter();
 }
+.flex-bwn{
+  .flex();
+  justify-content: space-between;
+}
 .flex-col{
   .flex();
   flex-direction: column;
 }
+.flex-rev{
+  .flex();
+  flex-direction: row-reverse;
+}
 .flex-col-rev{
   .flex();
   flex-direction: column-reverse;
+}
+.flex-col-cen{
+  .flex-col();
+  justify-content: center;
 }
 .flex-wrap{
   .flex();

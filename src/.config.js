@@ -12,27 +12,60 @@ export default {
   keywords: [],
   info: [
     {
-      title: '大盘数据，一目了然',
+      title: '大盘数据  一目了然',
       msg:
         '为用户提供简洁明了的大盘数据，可视化展现，支持数据下钻，帮助用户探寻数字背后的真相',
-      tabs: []
+      tab: {
+        component: 'multi-box',
+        props: {
+          inset: [
+            {
+              component: 'main-chart',
+              link: '',
+              title: '今日带货总金额(估)'
+            },
+            {
+              component: 'main-chart',
+              link: '',
+              title: '淘宝直播大盘分析',
+              suffix: '一对一专业数据分析'
+            },
+            {
+              component: 'main-chart',
+              link: '',
+              title: '主播等级分布',
+              suffix: '快速了解全网主播概况'
+            }
+          ]
+        }
+      }
     },
     {
-      title: '主播实力\n一览无余',
+      title: '主播实力<br/>一览无余',
       msg:
         '日常监控主播直播数据，对主播实力进行全面分析，综合各方面因素为主播评分',
-      tabs: [],
-      buttons: [{ name: '登录查看更多', link: '' }],
-      class: 'flex-col-rev'
+      tab: {
+        component: 'main-list'
+      },
+      button: { name: '登录查看更多', link: '' }
     },
     {
-      title: '专业团队为您服务',
+      title: '专业团队 为您服务',
       msg:
         '为用户提供简洁明了的大盘数据，可视化展现，支持数据下钻，帮助用户探寻数字背后的真相',
-      tabs: []
+      tab: []
     }
   ],
-  imgs: {},
+  imgs: {
+    logo: require('@/assets/img/jingchen.png'),
+    email: require('@/assets/img/email.png'),
+    tel: require('@/assets/img/tel.png'),
+    addr: require('@/assets/img/addr.png'),
+    bubble1: require('@/assets/img/bubble1.png'),
+    bubble2: require('@/assets/img/bubble2.png'),
+    bubble3: require('@/assets/img/bubble3.png'),
+    blueline: require('@/assets/img/blueline.png')
+  },
   icons: {},
   routes: [
     {

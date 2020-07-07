@@ -5,7 +5,9 @@ export default {
     logoname: config.name,
     description: config.description,
     enternavs: config.enternavs,
-    enterinfo: config.info
+    enterinfo: config.info,
+    company: config.company,
+    imgs: config.imgs
   },
   getters: {},
   mutations: {},

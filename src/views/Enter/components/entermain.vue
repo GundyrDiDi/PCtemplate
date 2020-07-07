@@ -8,11 +8,11 @@
       </el-col>
       <el-col :span="12" class="flex-ter">
         <div>
-          <div class="title">{{logoname}}</div>
+          <div class="h-title">{{logoname}}</div>
           <div class="description">{{description}}</div>
           <div>
             <el-button type="light">注册账户</el-button>
-            <a class="el-link">已有帐户 ?</a>
+            <a href="#" class="link bolder">已有帐户 ?</a>
           </div>
         </div>
       </el-col>
@@ -40,40 +40,36 @@ export default {
       height:100%;
     }
   }
-  .title{
-    font-size:2.5rem;
-    font-weight: 600;
-    letter-spacing: 3px;
-  }
   .description{
-    font-size:var(--lfont);
-    color:#ddd;
-    margin:.5rem 0 1.8rem 0;
+    font-size:var(--xmfont);
+    color:#bbb;
+    margin:.8rem 0 2.3rem 0;
   }
+  @color:rgba(114, 203, 255,.3);
+  @fontcolor:#0b96cc;
   .el-button{
-    @color:rgba(114, 203, 255,.3);
     background:@color;
     border:none;
-    color:#187cb7;
-    font-size:var(--lfont);
+    color:@fontcolor;
+    font-size:var(--mfont);
     margin-right:1.5rem;
-    padding:1rem 2rem;
-    border-radius:10px;
+    padding:.8rem 2rem;
+    border-radius:6px;
+    font-weight:600;
     &:hover{
       background:darken(@color,20%);
     }
     &:active{
       background:darken(@color,30%);
-      box-shadow:0 1px 2px rgba(0,0,0,.3);
+      box-shadow:0 1px 2px rgba(0,0,0,.2);
     }
   }
-  .el-link{
-    font-size:var(--xxlfont);
-    color:#187cb7;
+  .link{
+    font-size:var(--xmfont);
+    color:@fontcolor;
     position:relative;
-    top:-3px;
     &:hover{
-      color:desaturate(#187cb7,50%);
+      color:desaturate(@fontcolor,50%);
     }
   }
 </style>
