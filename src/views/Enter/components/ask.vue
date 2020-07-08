@@ -15,7 +15,8 @@
     </div>
     <div class="company con-cen yahei">
       <div>
-        <img :src="imgs.logo" alt />
+        <img class="logo" :src="imgs.logo" alt />
+        <img :src="imgs.jingchen" alt />
       </div>
       <div class="bold">{{company.name}} {{company.icp}}</div>
       <div class="bold">{{company.gip}}</div>
@@ -49,11 +50,11 @@ export default {
     width:@width;
     position: relative;
     >div{
-      margin-left:13rem;
+      margin-left:9rem;
     }
     .bg{
       top:0;
-      left:5rem;
+      left:-1rem;
     }
     .f-title{
       padding:2rem 0;
@@ -83,6 +84,10 @@ export default {
     border-top: 1px solid #aaa;
     text-align: center;
     padding-top:3rem;
+    .logo{
+      height: calc(var(--base) * 2);
+      margin:0 1rem 1.5rem 0;
+    }
     img {
       height: calc(var(--base) * 3);
       margin-bottom:1rem;

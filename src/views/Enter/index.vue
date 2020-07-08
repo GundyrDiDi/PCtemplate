@@ -3,6 +3,7 @@
     <el-row class="nav">
       <el-col :span="12" class="flex-ter">
         <img class="logo" :src="imgs.logo" alt="">
+        <img class="jingchen" :src="imgs.jingchen" alt="">
       </el-col>
       <el-col :span="9">
         <el-menu
@@ -43,7 +44,7 @@ export default {
       this.un = true
       setTimeout(e => {
         this.un = false
-      }, 1000)
+      }, 800)
       this.$refs.main.scrollTo(0, this.$refs.menu[i].$el.offsetTop + 20)
     }
   },
@@ -78,8 +79,12 @@ export default {
     height:100%;
   }
   .logo {
-    height:calc(var(--base) * 2.5);
+    height:calc(var(--base) * 2);
     margin-left:8rem;
+  }
+  .jingchen {
+    height:calc(var(--base) * 2.5);
+    margin-left:1rem;
   }
   .menu{
     height:@height;

@@ -1,14 +1,14 @@
 <template>
   <div class="flex-bwn flex-ter">
     <div
-      class="box"
+      class="box bolder"
       v-for="(v,i) in inset"
       :key="v.title"
       :class="{c:i==parseInt(inset.length/2)}"
     >
-      <div class="bolder">{{v.title}}</div>
+      <div class="title">{{v.title}}</div>
       <div class="suffix">{{v.suffix}}</div>
-      <component :is="v.component"></component>
+      <component :is="v.component" v-bind="v"></component>
       <div class="link">查看更多</div>
     </div>
   </div>
@@ -30,25 +30,23 @@ export default {
 
 <style scoped lang="less">
 .flex-bwn {
-  height: 480px;
+  height: 500px;
 }
 .box {
   position:relative;
   border-radius: 7px;
   background: #fff;
-  margin: 0 1rem;
   width: 28%;
   height: 100%;
-  box-shadow:
-  0 0 2px 7px rgba(0, 0, 0, 0.02),
-  0 0 2px 14px rgba(0, 0, 0, 0.02),
-  0 0 2px 21px rgba(0, 0, 0, 0.02);
-  padding: 3rem 1rem 2rem 1rem;
+  padding: 2.5rem 1rem 2rem 1rem;
   &:last-child {
     text-align: left;
+    .title,.suffix{
+      padding-left:1rem
+    }
   }
   .suffix {
-    color: #2e5ad6;
+    color: #1e7fe3;
     font-size: var(--xsfont);
     padding-top: 0.5rem;
   }

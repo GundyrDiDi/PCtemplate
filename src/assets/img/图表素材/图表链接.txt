@@ -1,0 +1,12 @@
+
+饼图 
+https://gallery.echartsjs.com/editor.html?c=x94KqNS42L
+
+柱状图
+https://gallery.echartsjs.com/editor.html?c=xqzOOnAEm
+
+曲线图
+https://gallery.echartsjs.com/editor.html?c=xaVGtT7Da
+
+地图
+https://gallery.echartsjs.com/editor.html?c=x-KgK5CBPs（地图旁边的柱状图不要）
