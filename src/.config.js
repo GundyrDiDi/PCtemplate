@@ -76,7 +76,8 @@ export default {
     circle: require('@/assets/img/circle.png'),
     hotlive1: require('@/assets/img/热门直播1.png'),
     hotlive2: require('@/assets/img/热门直播2.png'),
-    hotlive3: require('@/assets/img/热门直播3.png')
+    hotlive3: require('@/assets/img/热门直播3.png'),
+    whale: require('@/assets/img/whale.png')
   },
   icons: {},
   routes: [
@@ -95,7 +96,7 @@ export default {
     },
     {
       path: '/',
-      redirect: to => ({ name: 'Enter', hash: '#entermain' })
+      redirect: to => ({ name: 'Enter' })
     }
   ],
   enternavs: [
@@ -136,5 +137,11 @@ export default {
       dist: '四川成都',
       label: '美食'
     }
+  ],
+  livedata: [
+    { name: '昨日直播观看次数', value: 123456, unit: '万', link: '' },
+    { name: '昨日开播数', value: 3980, unit: '', link: '' },
+    { name: '昨日直播商品数(估)', value: 123456, unit: '万', link: '' },
+    { name: '昨日带货量(估)', value: 30980, unit: '万', link: '' }
   ]
 }

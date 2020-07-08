@@ -8,7 +8,8 @@ export default {
     enterinfo: config.info,
     company: config.company,
     imgs: config.imgs,
-    liverlist: config.liverlist
+    liverlist: config.liverlist,
+    livedata: config.livedata
   },
   getters: {},
   mutations: {},

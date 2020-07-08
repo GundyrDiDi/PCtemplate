@@ -21,6 +21,10 @@ export default {
 </script>
 
 <style lang="less">
+// @font-face {
+//   font-family: '幼圆';
+//   src: url('./static/font/SIMYOU.TTF');
+// }
 #app {
   font-family: "幼圆", "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -29,7 +33,7 @@ export default {
 }
 @scrollcolor: #ccc;
 @bgcolor: rgba(114, 203, 255, 0.3);
-@rem: 1rem;
+@rem: 1rem; // 24px / 1920drp
 div {
   box-sizing: border-box;
 }
@@ -45,6 +49,9 @@ div {
   --xxlfont: calc(@rem * 2.5);
   --xxxlfont: calc(@rem * 3);
   --lineshadow: 0 0px 2px 0px rgba(0, 0, 0, 0.2);
+  --boxshadow:
+  0 0 3px 3px rgba(6, 119, 212, 0.02),
+  0 0 6px 6px rgba(6, 119, 212, 0.02);
   letter-spacing: 1px;
 }
 .bold {
@@ -72,7 +79,8 @@ div {
   letter-spacing: 2px;
 }
 .s-title {
-  .bolder();
+  .bold();
+  .yahei();
   font-size: var(--xmfont);
 }
 .cen {
@@ -102,6 +110,9 @@ div {
   box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.2);
   border-radius: 1px;
   background: #ededed;
+}
+.grid{
+  display: grid;
 }
 .flex {
   display: flex;
@@ -146,6 +157,7 @@ a {
   text-decoration: none;
 }
 @color: rgba(114, 203, 255, 0.3);
+@color2: #42a1f2;
 @fontcolor: #0b96cc;
 .el-button.el-button--light {
   background: @color;

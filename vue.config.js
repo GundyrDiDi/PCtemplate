@@ -5,8 +5,6 @@
 //   return path.join(__dirname, dir)
 // }
 
-const port = process.env.port || process.env.npm_config_port || 8080
-
 module.exports = {
   // 部署生产环境和开发环境下的URL。
   publicPath: process.env.NODE_ENV === 'production' ? '/' : '/',
@@ -17,16 +15,16 @@ module.exports = {
   lintOnSave: process.env.NODE_ENV === 'development',
   // 打包时不生成.map文件 避免看到源码
   // 如果你不需要生产环境的 source map，可以将其设置为 false 以加速生产环境构建。
-  productionSourceMap: false,
+  productionSourceMap: false
   // webpack-dev-server 相关配置
-  devServer: {
-    // open: true, //浏览器自动打开页面
-    disableHostCheck: true, // 代理时跳过检查
-    host: '0.0.0.0', // 如果是真机测试，就使用这个IP
-    // host: '127.0.0.1',
-    port: port,
-    https: false,
-    compress: true, // 配置是否启用 gzip 压缩。boolean 为类型，默认为 false。
-    hotOnly: false // 热更新（webpack已实现了，这里false即可）
-  }
+  // devServer: {
+  //   // open: true, //浏览器自动打开页面
+  //   disableHostCheck: true, // 代理时跳过检查
+  //   host: '0.0.0.0', // 如果是真机测试，就使用这个IP
+  //   // host: '127.0.0.1',
+  //   port: port,
+  //   https: false,
+  //   compress: true, // 配置是否启用 gzip 压缩。boolean 为类型，默认为 false。
+  //   hotOnly: false // 热更新（webpack已实现了，这里false即可）
+  // }
 }
