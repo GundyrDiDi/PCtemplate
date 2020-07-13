@@ -69,7 +69,7 @@ export default {
 </script>
 
 <style scoped lang="less">
-@height:calc(var(--base) * 4);
+@height:calc(var(--base) * 3.5);
 .nav{
   height:@height;
   box-shadow:var(--lineshadow);
@@ -79,17 +79,17 @@ export default {
     height:100%;
   }
   .logo {
-    height:calc(var(--base) * 2);
+    height:calc(var(--base) * 1.5);
     margin-left:8rem;
   }
   .jingchen {
-    height:calc(var(--base) * 2.5);
+    height:calc(var(--base) * 2);
     margin-left:1rem;
   }
   .menu{
     height:@height;
     .el-menu-item{
-      font-size:var(--lfont);
+      font-size:var(--mfont);
       height:@height;
       line-height: @height;
       padding-left:2rem;

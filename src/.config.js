@@ -1,4 +1,5 @@
 export default {
+  user: {},
   name: '鲸宸数据',
   description: '淘宝主播商家、主播、MCN优选的淘宝直播AI数据平台',
   company: {

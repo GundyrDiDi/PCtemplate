@@ -17,23 +17,22 @@
     </el-row>
     <div class="tabs flex-center">
       <img class="bg" :src="imgs.circle" alt="">
-      <div class="grid" ref="grid">
-        <div class="tab flex-center" v-for="v in livedata" :key="v.name">
-          <div class="s-title">{{v.name}}</div>
-          <div>
-            <!-- <span class="h-title">{{v.value}}</span> -->
-            <count-to
-            :startVal="0"
-            :endVal="v.value"
-            class="h-title"
-            ref="count"
-            :autoplay="false"
-            :duration="5000"/>
-            <span class="f-title">{{v.unit}}</span>
+        <div class="grid" v-observe:4="[countstart]">
+            <div v-for="v in livedata" :key="v.name" v-observe.parent="animateClass" class="tab flex-center">
+              <div class="s-title">{{v.name}}</div>
+              <div>
+                <count-to
+                :startVal="0"
+                :endVal="v.value"
+                class="h-title"
+                ref="count"
+                :autoplay="false"
+                :duration="5000"/>
+                <span class="f-title">{{v.unit}}</span>
+              </div>
+              <router-link v-if="v.link" class="link" :to="v.link">查看更多</router-link>
+            </div>
           </div>
-          <router-link class="link" :to="v.link">查看更多</router-link>
-        </div>
-      </div>
     </div>
   </div>
 </template>
@@ -43,21 +42,16 @@ export default {
   name: 'entermain',
   data () {
     return {
-
+      animateClass: 'animated flipInX'
+    }
+  },
+  methods: {
+    countstart () {
+      this.$refs.count.forEach(v => v.start())
     }
   },
   mounted () {
-    const ob = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting) {
-        this.$refs.count.forEach(v => {
-          v.start()
-        })
-        ob.unobserve(this.$refs.grid)
-      }
-    }, {
-      threshold: 0.4
-    })
-    ob.observe(this.$refs.grid)
+
   }
 }
 </script>

@@ -1,7 +1,7 @@
 <template>
   <div class="main-list">
     <div class="box flex-center">
-      <el-carousel height="100%" arrow="never" :interval="5000">
+      <el-carousel height="100%" arrow="never" :interval="10000">
         <el-carousel-item
         v-for="item in 5"
         :key="item"
@@ -87,6 +87,7 @@ export default {
 </style>
 <style lang="less">
 .main-list{
+  background:#fff;
   .el-carousel__indicator {
     padding: 12px 10px;
   }

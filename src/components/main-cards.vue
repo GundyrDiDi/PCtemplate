@@ -1,6 +1,6 @@
 <template>
   <div class="main-cards">
-    <el-carousel height="100%" arrow="always" type="card" :interval="5000" indicator-position="none" @change="handlechange">
+    <el-carousel height="100%" arrow="always" type="card" :interval="8000" indicator-position="none" @change="handlechange">
       <el-carousel-item v-for="(item,i) in 3" :key="item" ref="carousel" :class="classlist[i]">
         <div class="box flex-center">
           <img :src="imgs['hotlive'+item]" alt="">

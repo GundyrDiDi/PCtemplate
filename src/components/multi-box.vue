@@ -9,7 +9,7 @@
       <div class="title">{{v.title}}</div>
       <div class="suffix">{{v.suffix}}</div>
       <component :is="v.component" v-bind="v"></component>
-      <div class="link">查看更多</div>
+      <router-link v-if="v.link" class="link" :to="v.link">查看更多</router-link>
     </div>
   </div>
 </template>
@@ -64,7 +64,6 @@ export default {
   transform: translateY(-0.5rem);
   .link{
       bottom:3rem;
-      color:#53a8e3;
   }
 }
 </style>

@@ -1,7 +1,9 @@
-// import config from '@/.config.js'
+import config from '@/.config.js'
 export default {
   namespaced: true,
-  state: {},
+  state: {
+    user: config.user
+  },
   getters: {},
   mutations: {},
   actions: {}

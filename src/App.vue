@@ -5,6 +5,8 @@
 </template>
 
 <script>
+import '@/assets/css/scroll.less'
+import '@/assets/css/flex.less'
 export default {
   name: 'app',
   components: {},
@@ -31,12 +33,13 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
 }
-@scrollcolor: #ccc;
-@bgcolor: rgba(114, 203, 255, 0.3);
-@rem: 1rem; // 24px / 1920drp
 div {
   box-sizing: border-box;
 }
+a {
+  text-decoration: none;
+}
+@rem: 1rem; // 24px / 1920drp
 :root {
   --base: @rem;
   --xsfont: calc(@rem * 0.7);
@@ -94,68 +97,7 @@ div {
   transform: scale(0.8);
   z-index: -1;
 }
-::-webkit-scrollbar {
-  /*滚动条整体样式*/
-  width: 10px; /*高宽分别对应横竖滚动条的尺寸*/
-  height: 1px;
-}
-::-webkit-scrollbar-thumb {
-  /*滚动条里面小方块*/
-  background: @scrollcolor;
-  border-radius: 3px;
-  box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.2);
-}
-::-webkit-scrollbar-track {
-  /*滚动条里面轨道*/
-  box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.2);
-  border-radius: 1px;
-  background: #ededed;
-}
-.grid{
-  display: grid;
-}
-.flex {
-  display: flex;
-}
-.flex-cen {
-  .flex();
-  justify-content: center;
-}
-.flex-ter {
-  .flex();
-  align-items: center;
-}
-.flex-center {
-  .flex-cen();
-  .flex-ter();
-}
-.flex-bwn {
-  .flex();
-  justify-content: space-between;
-}
-.flex-col {
-  .flex();
-  flex-direction: column;
-}
-.flex-rev {
-  .flex();
-  flex-direction: row-reverse;
-}
-.flex-col-rev {
-  .flex();
-  flex-direction: column-reverse;
-}
-.flex-col-cen {
-  .flex-col();
-  justify-content: center;
-}
-.flex-wrap {
-  .flex();
-  flex-wrap: nowrap;
-}
-a {
-  text-decoration: none;
-}
+@bgcolor: rgba(114, 203, 255, 0.3);
 @color: rgba(114, 203, 255, 0.3);
 @color2: #42a1f2;
 @fontcolor: #0b96cc;

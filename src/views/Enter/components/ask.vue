@@ -18,8 +18,8 @@
         <img class="logo" :src="imgs.logo" alt />
         <img :src="imgs.jingchen" alt />
       </div>
-      <div class="bold">{{company.name}} {{company.icp}}</div>
-      <div class="bold">{{company.gip}}</div>
+      <!-- <div class="bold">{{company.name}} {{company.icp}}</div>
+      <div class="bold">{{company.gip}}</div> -->
     </div>
   </div>
 </template>
