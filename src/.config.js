@@ -1,5 +1,10 @@
 export default {
-  user: {},
+  user: {
+    name: 'CHENFAN',
+    expire: '永久',
+    auth: '免费版'
+  },
+  tour: {},
   name: '鲸宸数据',
   description: '淘宝主播商家、主播、MCN优选的淘宝直播AI数据平台',
   company: {
@@ -62,6 +67,9 @@ export default {
       button: { name: '查看更多', link: '' }
     }
   ],
+  notify: {
+    msg: '点击关注服务号，可接收更多资源哦！'
+  },
   imgs: {
     logo: require('@/assets/img/logo.png'),
     jingchen: require('@/assets/img/jingchen.png'),
@@ -78,7 +86,16 @@ export default {
     hotlive1: require('@/assets/img/热门直播1.png'),
     hotlive2: require('@/assets/img/热门直播2.png'),
     hotlive3: require('@/assets/img/热门直播3.png'),
-    whale: require('@/assets/img/whale.png')
+    whale: require('@/assets/img/whale.png'),
+    overview: require('@/assets/img/home/overview.png'),
+    hosts: require('@/assets/img/home/hosts.png'),
+    ins: require('@/assets/img/home/ins.png'),
+    goods: require('@/assets/img/home/goods.png'),
+    hotlive: require('@/assets/img/home/hotlive.png'),
+    report: require('@/assets/img/home/report.png'),
+    follow: require('@/assets/img/home/follow.png'),
+    vip: require('@/assets/img/home/vip.png'),
+    advice: require('@/assets/img/home/advice.png')
   },
   icons: {},
   routes: [
@@ -97,7 +114,7 @@ export default {
     },
     {
       path: '/',
-      redirect: to => ({ name: 'Enter' })
+      redirect: to => ({ name: 'overview' })
     }
   ],
   enternavs: [
@@ -120,7 +137,111 @@ export default {
       meta: { title: '合作咨询' }
     }
   ],
-  treemenu: [],
+  api: {
+    baseUrl: '',
+    get: {
+      charts: {
+        watch: {
+          uvpv: {
+            url: 'abv',
+            _params: { a: 1 }
+          },
+          shownum: {
+            url: ''
+          },
+          hostnum: {
+            url: ''
+          },
+          goodnum: {
+            url: ''
+          }
+        }
+      }
+    },
+    post: {
+
+    }
+  },
+  charts: {
+    watch: [
+      {
+        title: '观看人数(UV)/观看次数(PV)',
+        name: 'uvpv',
+        api: 'charts/watch/uvpv'
+      },
+      {
+        title: '开播场次/开播主播数',
+        name: 'shownum',
+        api: 'charts/watch/shownum'
+      },
+      {
+        title: '新增主播数/总主播数',
+        name: 'hostnum',
+        api: 'charts/watch/hostnum'
+      },
+      {
+        title: '直播商品数/品牌数',
+        name: 'goodnum',
+        data: 'charts/watch/goodnum'
+      }
+    ]
+  },
+  treemenu: [
+    {
+      path: '/home/overview',
+      name: 'overview',
+      component: () => import('@/views/Home/components/overview.vue'),
+      meta: { title: '直播大盘' }
+    },
+    {
+      path: '/home/hosts',
+      name: 'hosts',
+      component: () => import('@/views/Home/components/hosts.vue'),
+      meta: { title: '主播' }
+    },
+    {
+      path: '/home/ins',
+      name: 'ins',
+      component: () => import('@/views/Home/components/ins.vue'),
+      meta: { title: '机构' }
+    },
+    {
+      path: '/home/goods',
+      name: 'goods',
+      component: () => import('@/views/Home/components/goods.vue'),
+      meta: { title: '商品' }
+    },
+    {
+      path: '/home/hotlive',
+      name: 'hotlive',
+      component: () => import('@/views/Home/components/hotlive.vue'),
+      meta: { title: '人气直播' }
+    },
+    {
+      path: '/home/report',
+      name: 'report',
+      component: () => import('@/views/Home/components/hotlive.vue'),
+      meta: { title: '行业专题报告' }
+    },
+    {
+      path: '/home/follow',
+      name: 'follow',
+      component: () => import('@/views/Home/components/follow.vue'),
+      meta: { title: '我的关注' }
+    },
+    {
+      path: '/home/vip',
+      name: 'vip',
+      component: () => import('@/views/Home/components/vip.vue'),
+      meta: { title: '会员套餐' }
+    },
+    {
+      path: '/home/advice',
+      name: 'advice',
+      component: () => import('@/views/Home/components/advice.vue'),
+      meta: { title: '意见和反馈' }
+    }
+  ],
   liverlist: [
     {
       nick: '李佳琪',

@@ -1,6 +1,6 @@
-// import config from '@/.config.js'
 import '@/plugins/map.js'
 import echarts from 'echarts'
+import config from '@/.config.js'
 const line = () => ({
   tooltip: {
     trigger: 'axis'
@@ -463,9 +463,15 @@ export default {
     'line-money-total': line(),
     'map-liver-area': map(),
     'rose-liver-level': rose(),
-    'lineBar-people-total': lineBar()
+    'lineBar-people-total': lineBar(),
+    charts: config.charts
   },
   getters: {},
   mutations: {},
-  actions: {}
+  actions: {
+    _getdata (store, v) {
+      console.log(v)
+      return Axios.get(v.api)
+    }
+  }
 }

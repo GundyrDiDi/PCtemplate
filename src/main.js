@@ -9,7 +9,9 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import '@/assets/css/animate.css'
+import '@/assets/css/iconfont.css'
 import './plugins/iview.js'
+import './plugins/echarts.js'
 
 Vue.config.productionTip = false
 new Vue({

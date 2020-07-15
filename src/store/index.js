@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import login from './modules/login'
 import variable from './modules/var'
-import charts from './modules/charts'
+import chart from './modules/chart'
 Vue.use(Vuex)
 const root = {
   // everyStore中命名modules
@@ -14,7 +14,7 @@ const root = {
   modules: {
     login,
     variable,
-    charts
+    chart
   },
   plugins: []
 }

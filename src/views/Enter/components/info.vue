@@ -2,7 +2,7 @@
   <div id="info" class="flex-col flex-ter" ref="info">
     <div v-for="(v,i) in enterinfo" :key="v.title" class="info-part flex-center" :class="classlist[i]">
       <div class="media" ref="media">
-          <div v-observe.hold.parent="'zoom-in-top'" class="h-title" v-html="v.title"></div>
+          <div v-observe.hold.parent="'zoom-in-top'" class="f-title" v-html="v.title"></div>
         <div v-observe.hold.parent="'zoom-in-top'" class="msg" v-html="v.msg"></div>
         <el-button v-if="v.button&&v.button.link" type="light">
           <router-link :to="v.button.link">{{v.button.name}}</router-link>

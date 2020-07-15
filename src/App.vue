@@ -23,12 +23,8 @@ export default {
 </script>
 
 <style lang="less">
-// @font-face {
-//   font-family: '幼圆';
-//   src: url('./static/font/SIMYOU.TTF');
-// }
 #app {
-  font-family: "幼圆", "Avenir", Helvetica, Arial, sans-serif;
+  font-family: "yahei", "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
@@ -42,6 +38,8 @@ a {
 @rem: 1rem; // 24px / 1920drp
 :root {
   --base: @rem;
+  --xxsfont: calc(@rem * 0.6);
+  --xs2font: calc(@rem * 0.65);
   --xsfont: calc(@rem * 0.7);
   --sfont: calc(@rem * 0.8);
   --mfont: calc(@rem * 1);
@@ -52,10 +50,22 @@ a {
   --xxlfont: calc(@rem * 2.5);
   --xxxlfont: calc(@rem * 3);
   --lineshadow: 0 0px 2px 0px rgba(0, 0, 0, 0.2);
+  --lineshadow2:
+  0 2px 2px 0px rgba(0, 0, 0, 0.05),
+  0 4px 4px 0px rgba(0, 0, 0, 0.05);
   --boxshadow:
   0 0 3px 3px rgba(6, 119, 212, 0.02),
   0 0 6px 6px rgba(6, 119, 212, 0.02);
-  letter-spacing: 1px;
+  --boxshadow2:
+  0 0 4px 4px rgba(6, 119, 212, 0.03),
+  0 0 8px 8px rgba(6, 119, 212, 0.03);
+  --prcol:#299eff;
+  --wacol:#ff9d26;
+  --dacol:#ff5a12;
+  --decol:#727272;
+  --bgcol:#e3f2ff;
+  --lbgcol:tint(#e3f2ff,50%);
+  --dbcol:#fff;
 }
 .bold {
   font-weight: 400;
@@ -82,9 +92,9 @@ a {
   letter-spacing: 2px;
 }
 .s-title {
+  font-size: var(--xmfont);
   .bold();
   .yahei();
-  font-size: var(--xmfont);
 }
 .cen {
   margin: auto;
@@ -97,10 +107,43 @@ a {
   transform: scale(0.8);
   z-index: -1;
 }
+.box{
+  box-shadow:
+  0 0 2px 8px rgba(0, 0, 0, 0.02),
+  0 0 2px 16px rgba(0, 0, 0, 0.02),
+  0 0 2px 24px rgba(0, 0, 0, 0.02);
+}
+.module-box{
+  box-shadow:var(--boxshadow2);
+  border-radius:3px;
+  background:var(--dbcol);
+  padding:1rem 1.5rem;
+  text-align:center;
+}
+.brcircle{
+  border-radius:50%;
+}
+.f-l{
+  float:left;
+}
+.f-r{
+  float:right;
+}
 @bgcolor: rgba(114, 203, 255, 0.3);
 @color: rgba(114, 203, 255, 0.3);
 @color2: #42a1f2;
 @fontcolor: #0b96cc;
+.el-menu-item{
+  font-size:var(--sfont);
+}
+.el-button{
+  font-size:var(--sfont);
+  padding:.5rem 1rem;
+}
+.el-button--small{
+  font-size:var(--xs2font);
+  padding:.4rem .8rem;
+}
 .el-button.el-button--light {
   background: @color;
   border: none;
@@ -126,11 +169,5 @@ a {
   &:hover {
     color: desaturate(@fontcolor, 50%) !important;
   }
-}
-.box{
-  box-shadow:
-  0 0 2px 8px rgba(0, 0, 0, 0.02),
-  0 0 2px 16px rgba(0, 0, 0, 0.02),
-  0 0 2px 24px rgba(0, 0, 0, 0.02);
 }
 </style>

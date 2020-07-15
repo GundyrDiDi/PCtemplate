@@ -60,7 +60,11 @@
     "parserOptions": {
       "parser": "babel-eslint"
     },
-    "rules": {}
+    "rules": {},
+    "globals": {
+      "Axios": true,
+      "plus": true
+    }
   },
   "browserslist": [
     "> 1%",

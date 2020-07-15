@@ -69,7 +69,15 @@ export default {
 </script>
 
 <style scoped lang="less">
+// @font-face {
+//   font-family: '幼圆';
+//   src: url('./static/font/SIMYOU.TTF');
+// }
 @height:calc(var(--base) * 3.5);
+#Enter{
+  font-family: "幼圆";
+  letter-spacing: 1px;
+}
 .nav{
   height:@height;
   box-shadow:var(--lineshadow);
@@ -89,7 +97,7 @@ export default {
   .menu{
     height:@height;
     .el-menu-item{
-      font-size:var(--mfont);
+      font-size:var(--sfont);
       height:@height;
       line-height: @height;
       padding-left:2rem;

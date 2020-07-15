@@ -9,7 +9,9 @@ export default {
     company: config.company,
     imgs: config.imgs,
     liverlist: config.liverlist,
-    livedata: config.livedata
+    livedata: config.livedata,
+    notify: config.notify,
+    treemenu: config.treemenu
   },
   getters: {},
   mutations: {},

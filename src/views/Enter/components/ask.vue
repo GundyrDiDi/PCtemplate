@@ -2,7 +2,7 @@
   <div id="ask" class="con-cen">
     <div class="contact flex-ter">
       <div>
-        <div class="f-title">联系我们</div>
+        <div class="s-title">联系我们</div>
         <div v-for="(v,i) in order" :key="v.name" class="flex-ter">
           <div>
             <img :style="{transform:`scale(${1+(i/8)})`}" class="icon" :src="imgs[v.name]" alt />
@@ -63,19 +63,21 @@ export default {
       padding:.8rem 0;
     }
     .flex-ter>div{
-      font-size:var(--xmfont);
+      font-size:var(--mfont);
       &:first-child{
-        margin-right:1rem;
+        margin-right:.5rem;
         height:var(--xlfont);
         width:calc(var(--base) * 3);
         text-align: center;
       }
       &:nth-child(2){
-        margin-right:.5rem;
+        margin-right:.2rem;
       }
     }
     .icon{
-      height:var(--xlfont);
+      height:var(--lfont);
+      position:relative;
+      top:.3rem;
     }
   }
   .company {
