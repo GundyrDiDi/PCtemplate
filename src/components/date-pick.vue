@@ -39,17 +39,20 @@ export default {
       rules: {
         time: [
           {
-            validator: (rule, [start, end], callback) => {
+            validator: (rule, value, callback) => {
+              const [start, end] = value || []
               if (!start) {
                 callback(new Error('请选择时间范围！'))
               } else if (start instanceof Date) {
                 callback()
+                this.$emit('update:time', value)
               } else if (
                 new Date(end).toDateString() === new Date().toDateString()
               ) {
                 const ms = Date.parse(start) - Date.parse(end)
                 this.btn = this.buttons.find(v => v.time === ms)
                 callback()
+                this.$emit('update:time', value)
               } else {
                 this.btn = null
                 if (Date.parse(start) > Date.now() || Date.parse(end) > Date.now()) {
@@ -99,6 +102,9 @@ export default {
       this.btn = v
       this.form.time = this.quickset(v)
     }
+  },
+  mounted () {
+    this.form.time = this.time
   }
 }
 </script>

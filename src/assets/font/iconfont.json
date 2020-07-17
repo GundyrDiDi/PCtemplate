@@ -1,0 +1,79 @@
+{
+  "id": "1943384",
+  "name": "jingchen",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "7250210",
+      "name": "钻石",
+      "font_class": "zuanshi",
+      "unicode": "e7a3",
+      "unicode_decimal": 59299
+    },
+    {
+      "icon_id": "717706",
+      "name": "人",
+      "font_class": "ren",
+      "unicode": "e71b",
+      "unicode_decimal": 59163
+    },
+    {
+      "icon_id": "1100256",
+      "name": "热门",
+      "font_class": "remen",
+      "unicode": "e663",
+      "unicode_decimal": 58979
+    },
+    {
+      "icon_id": "2786811",
+      "name": "关注",
+      "font_class": "guanzhu",
+      "unicode": "e60b",
+      "unicode_decimal": 58891
+    },
+    {
+      "icon_id": "3892537",
+      "name": "孤单的蓝_鲸鱼",
+      "font_class": "gudandelan_jingyu",
+      "unicode": "e605",
+      "unicode_decimal": 58885
+    },
+    {
+      "icon_id": "6939125",
+      "name": "会员",
+      "font_class": "huiyuan",
+      "unicode": "eaf7",
+      "unicode_decimal": 60151
+    },
+    {
+      "icon_id": "10621671",
+      "name": "分析",
+      "font_class": "fenxi",
+      "unicode": "e618",
+      "unicode_decimal": 58904
+    },
+    {
+      "icon_id": "11859902",
+      "name": "反馈",
+      "font_class": "fankui",
+      "unicode": "e61b",
+      "unicode_decimal": 58907
+    },
+    {
+      "icon_id": "13186517",
+      "name": "机构",
+      "font_class": "jigou",
+      "unicode": "e6b5",
+      "unicode_decimal": 59061
+    },
+    {
+      "icon_id": "13539887",
+      "name": "商品",
+      "font_class": "shangpin",
+      "unicode": "e646",
+      "unicode_decimal": 58950
+    }
+  ]
+}

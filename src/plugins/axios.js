@@ -3,6 +3,7 @@
 import Vue from 'vue'
 import axios from 'axios'
 import api from '@/api'
+import { wait } from '@/plugins/util'
 // Full config:  https://github.com/axios/axios#request-config
 // axios.defaults.baseURL = process.env.baseURL || process.env.apiUrl || '';
 // axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
@@ -28,7 +29,8 @@ _axios.get = function (url, params) {
   )
 }
 _axios.interceptors.request.use(
-  function (config) {
+  async function (config) {
+    await wait(500)
     const { method, url } = config
     let data = {}
     const last = [method, ...url.split('/')].reduce((acc, v) => {
@@ -57,7 +59,7 @@ _axios.interceptors.request.use(
 _axios.interceptors.response.use(
   function (response) {
     // Do something with response data
-    return response
+    return response.data
   },
   function (error) {
     // Do something with response error

@@ -2,8 +2,9 @@
   <el-menu :collapse="collapse" :default-active="activeIndex">
     <el-menu-item v-for="(v,i) in treemenu" :key="i" :index="i.toString()">
       <div @click="go(v,i)" class="menu-item" :class="{active:i.toString()===activeIndex}">
-        <img :src="imgs[v.name]" alt="">
-        <span slot="title">{{v.meta.title}}</span>
+        <!-- <img :src="imgs[v.name]" alt=""> -->
+        <i class="iconfont" :class="v.meta.icon"></i>
+        <span slot="title" class="menu-title">{{v.meta.title}}</span>
       </div>
     </el-menu-item>
   </el-menu>
@@ -39,11 +40,19 @@ export default {
     border-left:4px solid transparent;
     border-right:4px solid transparent;
     &.active{
-        border-left-color: var(--prcol);
+      border-left-color: var(--prcol);
+      .iconfont{
+        color:var(--prcol)
+      }
     }
-    img{
-        height:1rem;
-        margin-right:1rem;
+    .iconfont{
+      font-size:var(--mfont);
+      margin-right:1rem;
+      color:#666;
+    }
+    .menu-title{
+      font-size:var(--xsfont);
+      font-weight: 600;
     }
 }
 </style>

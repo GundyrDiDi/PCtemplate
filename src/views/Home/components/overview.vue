@@ -1,30 +1,24 @@
 <template>
   <div class="grid">
     <div class="module-box flex-center">
-      <date-pick></date-pick>
+      <date-pick :time.sync="time"></date-pick>
     </div>
-    <div class="module-box">
-      <watch-charts></watch-charts>
-    </div>
-    <div class="module-box"></div>
-    <div class="module-box"></div>
-    <div class="module-box"></div>
-    <div class="module-box"></div>
-    <div class="module-box"></div>
+    <watch-charts class="module-box" :chartdata="charts.watch"></watch-charts>
+    <ring-chart class="module-box" :chartdata="charts.ring[0]"></ring-chart>
+    <ring-chart class="module-box" :chartdata="charts.ring[1]"></ring-chart>
+    <map-chart class="module-box" :chartdata="charts.map[0]"></map-chart>
+    <word-chart class="module-box" :chartdata="charts.keyword[0]"></word-chart>
+    <hybird-chart class="module-box" :chartdata="charts.ring[0]"></hybird-chart>
   </div>
 </template>
 
 <script>
-import datePick from '@/components/date-pick'
-import watchCharts from '@/components/watch-charts'
 export default {
   name: '',
-  components: {
-    datePick,
-    watchCharts
-  },
   data () {
-    return {}
+    return {
+      time: [new Date(), new Date()]
+    }
   }
 }
 </script>
@@ -35,7 +29,7 @@ export default {
   grid-template-rows: 3rem 1fr 1fr 1fr;
   grid-row-gap: 1rem;
   grid-column-gap: 1rem;
-  height:75vw;
+  height:80vw;
 }
 .module-box:nth-child(1) {
   grid-area: 1/1/2/4;

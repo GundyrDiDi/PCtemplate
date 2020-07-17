@@ -43,6 +43,7 @@ a {
   --xsfont: calc(@rem * 0.7);
   --sfont: calc(@rem * 0.8);
   --mfont: calc(@rem * 1);
+  --m2font: calc(@rem * 1.05);
   --xmfont: calc(@rem * 1.25);
   --lfont: calc(@rem * 1.33);
   --xl2font: calc(@rem * 1.5);
@@ -136,8 +137,13 @@ a {
 .el-menu-item{
   font-size:var(--sfont);
 }
-.el-button{
+.el-input__inner{
+  height:2rem;
+  line-height:2rem;
   font-size:var(--sfont);
+}
+.el-button{
+  font-size:var(--xsfont);
   padding:.5rem 1rem;
 }
 .el-button--small{
@@ -168,6 +174,32 @@ a {
   position: relative;
   &:hover {
     color: desaturate(@fontcolor, 50%) !important;
+  }
+}
+.p-title{
+  font-size:var(--mfont);
+  text-align: left;
+  padding:0 1rem;
+  &::before{
+    content:'';
+    display: block;
+    float:left;
+    height:1.1rem;
+    border-left:.4rem solid var(--prcol);
+    margin-right:.7rem;
+  }
+}
+.auth-des{
+  text-align: center;
+  font-size:var(--xsfont);
+  margin:.5rem 0;
+  color:#aaa;
+  letter-spacing: 1px;
+  font-family: "幼圆";
+  .count{
+    margin:0 1rem 0 .2rem;
+    color:#e4393c;
+    .bolder()
   }
 }
 </style>

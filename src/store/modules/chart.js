@@ -74,7 +74,6 @@ const map = () => ({
       show: false
     }
   ],
-
   series: [
     {
       name: 'Liver',
@@ -470,7 +469,6 @@ export default {
   mutations: {},
   actions: {
     _getdata (store, v) {
-      console.log(v)
       return Axios.get(v.api)
     }
   }

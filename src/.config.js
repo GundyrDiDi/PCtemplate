@@ -87,15 +87,7 @@ export default {
     hotlive2: require('@/assets/img/热门直播2.png'),
     hotlive3: require('@/assets/img/热门直播3.png'),
     whale: require('@/assets/img/whale.png'),
-    overview: require('@/assets/img/home/overview.png'),
-    hosts: require('@/assets/img/home/hosts.png'),
-    ins: require('@/assets/img/home/ins.png'),
-    goods: require('@/assets/img/home/goods.png'),
-    hotlive: require('@/assets/img/home/hotlive.png'),
-    report: require('@/assets/img/home/report.png'),
-    follow: require('@/assets/img/home/follow.png'),
-    vip: require('@/assets/img/home/vip.png'),
-    advice: require('@/assets/img/home/advice.png')
+    collapse: require('@/assets/img/home/collapse.png')
   },
   icons: {},
   routes: [
@@ -114,7 +106,7 @@ export default {
     },
     {
       path: '/',
-      redirect: to => ({ name: 'overview' })
+      redirect: to => ({ name: 'hosts' })
     }
   ],
   enternavs: [
@@ -143,11 +135,10 @@ export default {
       charts: {
         watch: {
           uvpv: {
-            url: 'abv',
-            _params: { a: 1 }
+            url: 'uvpv'
           },
           shownum: {
-            url: ''
+            url: 'shownum'
           },
           hostnum: {
             url: ''
@@ -155,12 +146,28 @@ export default {
           goodnum: {
             url: ''
           }
+        },
+        ring: {
+          typeofhost: {
+            url: 'typeofhost'
+          },
+          levelofhost: {
+            url: 'levelofhost'
+          }
+        },
+        map: {
+          district: {
+            url: 'district'
+          }
+        },
+        keyword: {
+          roomtitle: {
+            url: 'roomtitle'
+          }
         }
       }
     },
-    post: {
-
-    }
+    post: {}
   },
   charts: {
     watch: [
@@ -184,62 +191,98 @@ export default {
         name: 'goodnum',
         data: 'charts/watch/goodnum'
       }
+    ],
+    ring: [
+      {
+        title: '主播类型',
+        name: 'typeofhost',
+        api: 'charts/ring/typeofhost'
+      },
+      {
+        title: '主播等级分布',
+        name: 'levelofhost',
+        api: 'charts/ring/levelofhost'
+      }
+    ],
+    map: [
+      {
+        title: '直播间地区分布',
+        name: 'district',
+        api: 'charts/map/district'
+      }
+    ],
+    keyword: [
+      {
+        title: '直播间标题词云分布',
+        name: 'roomtitle',
+        api: 'charts/keyword/roomtitle'
+      }
+    ],
+    hybird: [
+      {
+        title: '直播流量分析',
+        name: 'roteofflow',
+        api: 'charts/keyword/roteofflow'
+      }
     ]
   },
+  richFilter: [
+
+  ],
   treemenu: [
     {
       path: '/home/overview',
       name: 'overview',
       component: () => import('@/views/Home/components/overview.vue'),
-      meta: { title: '直播大盘' }
+      meta: { title: '直播大盘', icon: 'icon-fenxi' }
     },
     {
       path: '/home/hosts',
       name: 'hosts',
       component: () => import('@/views/Home/components/hosts.vue'),
-      meta: { title: '主播' }
+      meta: { title: '主播', icon: 'icon-ren' }
     },
     {
       path: '/home/ins',
       name: 'ins',
       component: () => import('@/views/Home/components/ins.vue'),
-      meta: { title: '机构' }
+      meta: { title: '机构', icon: 'icon-jigou' }
     },
     {
       path: '/home/goods',
       name: 'goods',
       component: () => import('@/views/Home/components/goods.vue'),
-      meta: { title: '商品' }
+      meta: { title: '商品', icon: 'icon-shangpin' }
     },
     {
       path: '/home/hotlive',
       name: 'hotlive',
       component: () => import('@/views/Home/components/hotlive.vue'),
-      meta: { title: '人气直播' }
+      meta: { title: '人气直播', icon: 'icon-remen' }
     },
-    {
-      path: '/home/report',
-      name: 'report',
-      component: () => import('@/views/Home/components/hotlive.vue'),
-      meta: { title: '行业专题报告' }
-    },
+    // {
+    //   path: '/home/report',
+    //   name: 'report',
+    //   component: () => import('@/views/Home/components/hotlive.vue'),
+    //   meta: { title: '行业专题报告' ,icon:'fenxi'}
+    // },
     {
       path: '/home/follow',
       name: 'follow',
       component: () => import('@/views/Home/components/follow.vue'),
-      meta: { title: '我的关注' }
+      meta: { title: '我的关注', icon: 'icon-guanzhu' }
     },
     {
       path: '/home/vip',
       name: 'vip',
       component: () => import('@/views/Home/components/vip.vue'),
-      meta: { title: '会员套餐' }
+      meta: { title: '会员套餐', icon: 'icon-huiyuan' }
     },
     {
       path: '/home/advice',
       name: 'advice',
       component: () => import('@/views/Home/components/advice.vue'),
-      meta: { title: '意见和反馈' }
+      meta: { title: '意见和反馈', icon: 'icon-fankui' }
     }
   ],
   liverlist: [

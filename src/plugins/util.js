@@ -51,4 +51,24 @@ export function randomnum (max, min = 0) {
   return parseInt(min + Math.random() * (max - min))
 }
 
-export function a () {}
+export function colorRGBtoHex (rgb) {
+  const [r, g, b] = rgb.match(/\d+/g).map(v => parseInt(v))
+  return '#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)
+}
+
+export function formatNumber (num) {
+  return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+}
+
+export function mergeObject (obj1, obj2) {
+  return Object.entries(obj1).reduce((obj2, [key, value]) => {
+    if (key in obj2) {
+      if (typeof obj1[key] === 'object' && typeof obj2[key] === 'object') {
+        obj2[key] = mergeObject(obj1[key], obj2[key])
+      }
+    } else {
+      obj2[key] = value
+    }
+    return obj2
+  }, obj2)
+}

@@ -5,7 +5,7 @@
         <img :src="imgs.logo" alt />
         <span class="s-title">{{logoname}}</span>
         <div class="shrink flex-center" :class="{flip:collapse}" @click="collapse=!collapse">
-          <i class="iconfont icon-shousuocaidan"></i>
+          <img :src="imgs.collapse" alt="">
         </div>
       </div>
       <div class="notify flex-center">
@@ -19,7 +19,7 @@
         </div>
         <div class="f-r">
           <div class="auth">{{user.auth}}</div>
-          <div class="exit">退出</div>
+          <div class="exit" @click="$router.push({name:'Enter'})">退出</div>
         </div>
       </div>
     </header>
@@ -65,17 +65,16 @@ header {
   }
   .logo {
     width:60%;
-    img {
+    >img {
       height: 1.5rem;
       margin-right: 0.5rem;
     }
   }
   .shrink {
     position: relative;
-    top: 0.1rem;
+    top: 0.3rem;
     height: 60%;
     width: 2rem;
-    margin-left: 0.5rem;
     border-radius: 0.2rem;
     cursor: pointer;
     transition: all 0.2s linear;
@@ -88,9 +87,8 @@ header {
     &:active {
       background: rgba(0, 127, 253, 0.1);
     }
-    i {
-      position: absolute;
-      font-size: var(--mfont);
+    img{
+      height:1rem;
     }
   }
   .notify>div{
@@ -127,7 +125,7 @@ header {
       cursor: pointer;
       color:#aaa;
       &:hover{
-        color:#333;
+        color:var(--prcol);
       }
     }
   }

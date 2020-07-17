@@ -11,7 +11,6 @@ export default {
   name: 'main-chart',
   data () {
     return {
-      chart: null,
       scale: 1
     }
   },
