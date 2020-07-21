@@ -1,31 +1,89 @@
 <template>
-  <div id="host">
-    <div class="module-box flex">
-      <div class="flex searchbox">
-        <el-input placeholder="搜索主播名称" v-model="hostWord"></el-input>
-        <el-button type="primary">搜索主播</el-button>
+  <div id="host" class="flex">
+    <transition
+    enter-active-class="animated fast fadeInLeft"
+    leave-active-class="animated fast fadeOutLeft"
+    >
+    <div v-show="$route.name==='hosts'">
+      <div class="module-box flex">
+        <div class="flex searchbox">
+          <el-input placeholder="搜索主播名称" v-model="hostWord"></el-input>
+          <el-button type="primary">搜索主播</el-button>
+        </div>
+        <div class="flex-ter rich-filter">
+          <el-button type="default" size="small" @click="showFilter=true">高级筛选器</el-button>
+        </div>
       </div>
-      <div class="flex-ter rich-filter">
-        <el-button type="default" size="small" @click="showFilter=true">高级筛选器</el-button>
+      <rich-filter @update="filterLabel=$event" :show.sync="showFilter" :formrule="richFilter"></rich-filter>
+      <div class="module-box filter-label flex" v-if="filterLabel.length">
+        <div v-for="(v,i) in filterLabel" :key="v.name" class="label">
+          {{v.label}}： <div v-html="format(v)"></div>
+          <i class="el-icon-close" @click="removelabel(v,i)"></i>
+        </div>
       </div>
+      <table-paganation :condition="filterLabel" class="module-box hostslist" v-bind="hostslist"></table-paganation>
     </div>
-    <rich-filter :show.sync="showFilter"></rich-filter>
+    </transition>
+    <transition
+    enter-active-class="animated fast fadeInRight"
+    leave-active-class="animated fast fadeOutRight">
+      <router-view></router-view>
+    </transition>
   </div>
 </template>
 
 <script>
 export default {
-  name: '',
+  name: 'hosts',
   data () {
     return {
       hostWord: '',
-      showFilter: false
+      showFilter: false,
+      filterLabel: [],
+      tableData: []
+    }
+  },
+  methods: {
+    format (v) {
+      if (Array.isArray(v.value)) {
+        if (v.component === 'range') {
+          return v.value.map(v2 => v2 + v.attrs.unit).join(' - ')
+        } else if (v.component === 'select') {
+          return v.slot.filter(v2 => v.value.some(v3 => v3 === v2.attrs.value)).map(v => `<span>${v.attrs.label}</span>`).join('')
+        }
+      }
+    },
+    removelabel (v, i) {
+      v.value = ''
+      this.filterLabel.splice(i, 1)
+    }
+  },
+  watch: {
+    filterLabel (v) {
+      console.log(v)
     }
   }
 }
 </script>
 
 <style scoped lang="less">
+#host{
+  position: relative;
+  >div{
+    position:absolute;
+    width:100%;
+  }
+}
+.rich-filter{
+    flex:1;
+    padding-left:2rem;
+  }
+  .module-box{
+    margin-bottom:1rem;
+  }
+  .hostslist{
+    min-height:60vh;
+  }
 </style>
 <style lang="less">
 #host {
@@ -38,9 +96,31 @@ export default {
       border-radius: 0 4px 4px 0;
     }
   }
-  .rich-filter{
-    flex:1;
-    padding-left:2rem;
+  .filter-label{
+    .label{
+      color:#999;
+      margin:.3rem;
+      padding:.1rem .5rem;
+      font-size:var(--xs2font);
+      border:1px dashed var(--prcol);
+      border-radius:2px;
+      >div{
+        display: inline-block;
+        color:var(--prcol)
+      }
+      span{
+        display: inline-block;
+        margin:0 .15rem;
+      }
+    }
+  }
+  .el-icon-close{
+    margin-left:3px;
+    cursor: pointer;
+    opacity: .5;
+    &:hover{
+      opacity: 1;
+    }
   }
 }
 </style>

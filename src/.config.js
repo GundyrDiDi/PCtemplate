@@ -1,8 +1,10 @@
+import { calcRange } from '@/plugins/util'
 export default {
   user: {
     name: 'CHENFAN',
     expire: '永久',
-    auth: '免费版'
+    auth: '免费版',
+    followlist: []
   },
   tour: {},
   name: '鲸宸数据',
@@ -165,6 +167,23 @@ export default {
             url: 'roomtitle'
           }
         }
+      },
+      form: {
+        range: {
+          default: {
+            url: 'range'
+          }
+        },
+        options: {
+          default: {
+            url: 'options'
+          }
+        }
+      },
+      tables: {
+        hostslist: {
+          url: 'hostslist'
+        }
       }
     },
     post: {}
@@ -226,9 +245,257 @@ export default {
       }
     ]
   },
-  richFilter: [
-
-  ],
+  tables: {
+    hostslist: {
+      param: {
+        size: 1,
+        sizeOpts: [1, 2, 3, 4],
+        page: 1
+      },
+      events: {
+        follow (row, column) {},
+        detail (row, column) {
+          this.$store.commit('host/actHost', row)
+          this.$router.push({ name: 'hostDetail' })
+        }
+      },
+      api: 'tables/hostslist',
+      column: [
+        { key: 'name', title: '主播名称' },
+        { key: 'fansnum', title: '粉丝数', sortable: true },
+        { key: 'favonum', title: '最爱TA', sortable: true },
+        { key: 'prainum', title: '点赞数', sortable: true },
+        { key: 'district', title: '所属区域' },
+        { key: 'type', title: '主播类型' },
+        { key: 'goodat', title: '擅长领域' },
+        {
+          key: 'money30day',
+          title: '近30天销售额(估)',
+          sortable: true,
+          width: 150
+        },
+        {
+          key: 'amount30day',
+          title: '近30天销量(估)',
+          sortable: true,
+          width: 150
+        },
+        {
+          key: 'price30day',
+          title: '近30天客单价(估)',
+          sortable: true,
+          width: 150
+        },
+        {
+          key: 'action',
+          title: '操作',
+          action: [
+            {
+              event: 'follow',
+              class: 'fa fa-star',
+              on: 'click',
+              tooltip: '关注'
+            },
+            {
+              event: 'detail',
+              class: 'fa fa-ellipsis-h',
+              on: 'click',
+              tooltip: '查看详情'
+            }
+          ]
+        }
+      ]
+    }
+  },
+  forms: {
+    richFilter: [
+      {
+        api: 'form/range/default',
+        name: 'fansnum',
+        label: '粉丝数量',
+        rule: [],
+        component: 'range',
+        attrs: {
+          value: [0, 9999],
+          min: -Infinity,
+          max: Infinity
+        },
+        type: 'attrs',
+        pipe: calcRange
+      },
+      {
+        api: 'form/range/default',
+        name: 'showcount',
+        label: '开播场次',
+        rule: [],
+        component: 'range',
+        attrs: {
+          value: [0, 9999],
+          min: -Infinity,
+          max: Infinity
+        },
+        type: 'attrs',
+        pipe: calcRange
+      },
+      {
+        api: 'form/range/default',
+        name: 'money30day',
+        label: '近30天销售额(估)',
+        rule: [],
+        component: 'range',
+        attrs: {
+          value: [0, 9999],
+          min: -Infinity,
+          max: Infinity
+        },
+        type: 'attrs',
+        pipe: calcRange
+      },
+      {
+        api: 'form/range/default',
+        name: 'amount30day',
+        label: '近30天销量(估)',
+        rule: [],
+        component: 'range',
+        attrs: {
+          value: [0, 9999],
+          min: -Infinity,
+          max: Infinity
+        },
+        type: 'attrs',
+        pipe: calcRange
+      },
+      {
+        api: 'form/range/default',
+        name: 'watch7day',
+        label: '近7天场均观看次数',
+        rule: [],
+        component: 'range',
+        attrs: {
+          value: [0, 9999],
+          min: -Infinity,
+          max: Infinity
+        },
+        type: 'attrs',
+        pipe: calcRange
+      },
+      {
+        api: 'form/range/default',
+        name: 'price30day',
+        label: '近30天客单价(估)',
+        rule: [],
+        component: 'range',
+        attrs: {
+          value: [0, 9999],
+          min: -Infinity,
+          max: Infinity
+        },
+        type: 'attrs',
+        pipe: calcRange
+      },
+      {
+        api: 'form/range/default',
+        name: 'comment7day',
+        label: '近7天场均评论数',
+        rule: [],
+        component: 'range',
+        attrs: {
+          value: [0, 9999],
+          min: -Infinity,
+          max: Infinity
+        },
+        type: 'attrs',
+        pipe: calcRange
+      },
+      {
+        api: 'form/range/default',
+        name: 'praise7day',
+        label: '近7天场均点赞数',
+        rule: [],
+        component: 'range',
+        attrs: {
+          value: [0, 9999],
+          min: -Infinity,
+          max: Infinity
+        },
+        type: 'attrs',
+        pipe: calcRange
+      },
+      {
+        value: [1, 2, 3, 4],
+        api: 'form/options/default',
+        name: 'typeofhost',
+        label: '播主类型',
+        rule: [],
+        component: 'select',
+        attrs: {
+          multiple: true
+        },
+        type: 'slot',
+        slot: {
+          component: 'option',
+          attrs: {
+            label: '',
+            value: ''
+          }
+        }
+      },
+      {
+        api: 'form/options/default',
+        name: 'district',
+        label: '所属地区',
+        rule: [],
+        component: 'select',
+        attrs: {
+          multiple: true
+        },
+        type: 'slot',
+        slot: {
+          component: 'option',
+          attrs: {
+            label: '',
+            value: ''
+          }
+        }
+      },
+      {
+        api: 'form/options/default',
+        name: 'levelofhost',
+        label: '播主等级',
+        rule: [],
+        component: 'select',
+        attrs: {
+          multiple: true
+        },
+        type: 'slot',
+        slot: {
+          component: 'option',
+          attrs: {
+            label: '',
+            value: ''
+          }
+        }
+      },
+      {
+        api: 'form/options/default',
+        name: 'goodat',
+        label: '擅长领域',
+        rule: [],
+        component: 'select',
+        attrs: {
+          multiple: true
+        },
+        type: 'slot',
+        slot: {
+          component: 'option',
+          attrs: {
+            label: '',
+            value: ''
+          }
+        }
+      }
+    ]
+  },
   treemenu: [
     {
       path: '/home/overview',
@@ -240,7 +507,15 @@ export default {
       path: '/home/hosts',
       name: 'hosts',
       component: () => import('@/views/Home/components/hosts.vue'),
-      meta: { title: '主播', icon: 'icon-ren' }
+      meta: { title: '主播', icon: 'icon-ren' },
+      children: [
+        {
+          path: '/home/hosts/detail',
+          name: 'hostDetail',
+          component: () => import('@/views/Home/components/hostDetail.vue'),
+          meta: { title: '主播详情', second: true }
+        }
+      ]
     },
     {
       path: '/home/ins',

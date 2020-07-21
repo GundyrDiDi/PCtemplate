@@ -256,7 +256,35 @@ const mockdata = {
     { name: '供应商20', value: 265 },
     { name: '供应商21', value: 265 },
     { name: '供应商22', value: 265 }
-  ]
+  ],
+  options: [
+    { label: 'Lv1', value: 1 },
+    { label: 'Lv2', value: 2 },
+    { label: 'Lv3', value: 3 },
+    { label: 'Lv4', value: 4 },
+    { label: 'Lv5', value: 5 }
+  ],
+  range: {
+    name: '',
+    min: 36543,
+    max: 34567876
+  },
+  hostslist: {
+    data: new Array(1).fill(
+      {
+        name: '1',
+        fansnum: '1',
+        favonum: '1',
+        prainum: '1',
+        district: '1',
+        type: '1',
+        goodat: '1',
+        money30day: '1',
+        amount30day: '1',
+        price30day: '1'
+      }),
+    total: 10
+  }
 }
 Object.entries(mockdata).forEach(([api, redata]) => {
   Mock.mock(api, redata)

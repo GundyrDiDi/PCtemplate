@@ -8,6 +8,8 @@ import mapChart from '@/components/map-chart'
 import wordChart from '@/components/word-chart'
 import hybirdChart from '@/components/hybird-chart'
 import richFilter from '@/components/rich-filter'
+import elRange from '@/components/el-range'
+import tablePaganation from '@/components/table-paganation'
 
 Vue.mixin({
   components: {
@@ -17,6 +19,8 @@ Vue.mixin({
     mapChart,
     wordChart,
     hybirdChart,
-    richFilter
+    richFilter,
+    elRange,
+    tablePaganation
   }
 })

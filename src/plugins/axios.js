@@ -30,6 +30,7 @@ _axios.get = function (url, params) {
 }
 _axios.interceptors.request.use(
   async function (config) {
+    // 生产环境删除
     await wait(500)
     const { method, url } = config
     let data = {}

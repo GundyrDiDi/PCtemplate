@@ -11,7 +11,9 @@ Vue.use(VueRouter)
 const getroutechildren = routes => {
   return routes.map(v => {
     if (v.children) {
-      v.children = getroutechildren(config[v.children])
+      v.children = getroutechildren(
+        typeof v.children === 'string' ? config[v.children] : v.children
+      )
     }
     return v
   })

@@ -72,3 +72,23 @@ export function mergeObject (obj1, obj2) {
     return obj2
   }, obj2)
 }
+export function limitRequest (ajax, apis, limit = 10) {}
+
+export function numberRange (val, min, max) {
+  return Math.max(min, Math.min(val, max))
+}
+
+export function calcRange ({ min, max }, props = {}) {
+  const units = ['', '万', '亿']
+  let step = parseInt((max - min) / 1).toString()
+  step = step.slice(0, 1).padEnd(step.length, '0')
+  const wei = parseInt(step.length / 5)
+  props.base = 10 ** (wei * 4)
+  props.unit = units[wei]
+  props.min = Math.floor(min / props.base)
+  props.max = Math.ceil(max / props.base)
+  props.value = [props.min, props.max]
+  props.step = 1
+  props.formatTooltip = val => val + props.unit
+  return props
+}

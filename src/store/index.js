@@ -1,8 +1,11 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import login from './modules/login'
+import user from './modules/user'
 import variable from './modules/var'
 import chart from './modules/chart'
+import forms from './modules/forms'
+import tables from './modules/table'
+import host from './modules/host'
 Vue.use(Vuex)
 const root = {
   // everyStore中命名modules
@@ -12,9 +15,12 @@ const root = {
   mutations: {},
   actions: {},
   modules: {
-    login,
+    user,
     variable,
-    chart
+    chart,
+    forms,
+    tables,
+    host
   },
   plugins: []
 }

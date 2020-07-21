@@ -2,9 +2,13 @@ import config from '@/.config.js'
 export default {
   namespaced: true,
   state: {
-    user: config.user
+    ...config.forms
   },
   getters: {},
   mutations: {},
-  actions: {}
+  actions: {
+    _getdata (store, v) {
+      return Axios.get(v.api)
+    }
+  }
 }

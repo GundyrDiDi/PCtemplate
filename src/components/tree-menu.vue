@@ -1,6 +1,6 @@
 <template>
   <el-menu :collapse="collapse" :default-active="activeIndex">
-    <el-menu-item v-for="(v,i) in treemenu" :key="i" :index="i.toString()">
+    <el-menu-item v-for="(v,i) in _treemenu" :key="i" :index="i.toString()">
       <div @click="go(v,i)" class="menu-item" :class="{active:i.toString()===activeIndex}">
         <!-- <img :src="imgs[v.name]" alt=""> -->
         <i class="iconfont" :class="v.meta.icon"></i>
@@ -13,9 +13,15 @@
 <script>
 export default {
   name: 'tree-menu',
+  props: ['menu', 'collapse'],
   data () {
     return {
       activeIndex: '0'
+    }
+  },
+  computed: {
+    _treemenu () {
+      return this.menu.filter(v => !v.meta.second)
     }
   },
   methods: {
@@ -26,10 +32,17 @@ export default {
       }
     }
   },
-  mounted () {
-    this.activeIndex = (this.treemenu.findIndex(v => v.name === this.$route.name)).toString()
+  watch: {
+    $route () {
+      const index = (this._treemenu.findIndex(v => v.name === this.$route.name)).toString()
+      if (index !== '-1') {
+        this.activeIndex = index
+      }
+    }
   },
-  props: ['collapse']
+  mounted () {
+    this.activeIndex = (this._treemenu.findIndex(v => v.name === this.$route.name)).toString()
+  }
 }
 </script>
 
@@ -39,11 +52,16 @@ export default {
     padding: 0 20px;
     border-left:4px solid transparent;
     border-right:4px solid transparent;
+    background:#fff;
     &.active{
       border-left-color: var(--prcol);
+      background:var(--lbgcol);
       .iconfont{
         color:var(--prcol)
       }
+    }
+    &:hover{
+      background:var(--lbgcol);
     }
     .iconfont{
       font-size:var(--mfont);
