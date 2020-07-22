@@ -90,6 +90,7 @@ export default {
         api,
         param
       })
+      console.log(data)
       this.loading = false
       this.data = data
       this.total = total
@@ -116,6 +117,9 @@ export default {
     }
     .fa-star,.fa-star-o{
       color:#ffd334;
+    }
+    .fa-play{
+      color:var(--prcol)
     }
     .fa-ellipsis-h{
       color:var(--prcol)

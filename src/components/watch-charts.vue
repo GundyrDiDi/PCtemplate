@@ -1,5 +1,5 @@
 <template>
-<div class="flex-col">
+<div class="watch-charts flex-col">
   <el-tabs v-model="actTab">
     <el-tab-pane
       v-for="v in chartdata"
@@ -16,7 +16,7 @@
 <script>
 export default {
   name: 'watch-charts',
-  props: ['chartdata'],
+  props: ['chartdata', 'param'],
   data () {
     return {
       l: false,
@@ -25,10 +25,11 @@ export default {
     }
   },
   methods: {
-    series ({ item, line, area }) {
+    series ({ item, line, area }, i) {
       return {
         type: 'line',
         smooth: true,
+        yAxisIndex: i,
         // showSymbol: false,
         itemStyle: {
           color: item,
@@ -80,6 +81,8 @@ export default {
           ...this.lineStyle[i]
         }
       })
+      this.option.yAxis = data.map(v => this.option._yAxis(v.name))
+      console.log(this.option.yAxis)
       this.ct.setOption(this.option)
     }
   },
@@ -93,7 +96,13 @@ export default {
     this.ct = this.$echarts(this.$refs.c)
     this.option = {
       tooltip: {
-        trigger: 'axis'
+        trigger: 'axis',
+        axisPointer: {
+          type: 'cross',
+          crossStyle: {
+            color: '#999'
+          }
+        }
       },
       legend: {
         data: null
@@ -120,15 +129,18 @@ export default {
           show: false
         }
       },
-      yAxis: [{
-        type: 'value',
-        splitNumber: 4,
-        splitLine: {
-          lineStyle: {
-            color: 'rgba(0,0,0,.1)'
+      _yAxis (name) {
+        return {
+          name,
+          type: 'value',
+          splitNumber: 4,
+          splitLine: {
+            lineStyle: {
+              color: 'rgba(0,0,0,.1)'
+            }
           }
         }
-      }]
+      }
     }
     this.lineStyle = [
       {
@@ -141,7 +153,7 @@ export default {
         line: ['#ff874b', '#ff6b71'],
         area: [[0, 0.6], [0.6, 0.2], [0.8, 0.1]]
       }
-    ].map(v => this.series(v))
+    ].map((v, i) => this.series(v, i))
   }
 }
 </script>

@@ -32,7 +32,9 @@ const router = new VueRouter({
 })
 // 路由守卫
 router.beforeEach((to, from, next) => {
-  document.title = (to.meta.title ? to.meta.title + '-' : '') + config.name
+  requestAnimationFrame(() => {
+    document.title = (to.meta.title ? to.meta.title + '-' : '') + config.name
+  })
   NProgress.start()
   next()
 })

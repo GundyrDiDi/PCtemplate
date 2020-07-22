@@ -43,35 +43,35 @@ const mockdata = {
       data: [
         {
           name: '2020-06-10',
-          value: '240'
+          value: '2240'
         },
         {
           name: '2020-06-11',
-          value: '220'
+          value: '2220'
         },
         {
           name: '2020-06-12',
-          value: '185'
+          value: '1285'
         },
         {
           name: '2020-06-13',
-          value: '175'
+          value: '1275'
         },
         {
           name: '2020-06-14',
-          value: '220'
+          value: '2220'
         },
         {
           name: '2020-06-15',
-          value: '310'
+          value: '3210'
         },
         {
           name: '2020-06-16',
-          value: '222'
+          value: '2222'
         },
         {
           name: '2020-06-17',
-          value: '135'
+          value: '2135'
         }
       ]
     }
@@ -270,19 +270,32 @@ const mockdata = {
     max: 34567876
   },
   hostslist: {
-    data: new Array(1).fill(
-      {
-        name: '1',
-        fansnum: '1',
-        favonum: '1',
-        prainum: '1',
-        district: '1',
-        type: '1',
-        goodat: '1',
-        money30day: '1',
-        amount30day: '1',
-        price30day: '1'
-      }),
+    data: new Array(1).fill({
+      name: '谢广坤',
+      fansnum: '1',
+      favonum: '1',
+      prainum: '1',
+      district: '1',
+      type: '1',
+      goodat: '1',
+      money30day: '1',
+      amount30day: '1',
+      price30day: '1'
+    }),
+    total: 10
+  },
+  hostrecord: {
+    data: new Array(1).fill({
+      liveinfo: '谢广坤',
+      livetime: '1',
+      uv: '1',
+      pv: '1',
+      fansofraise: '1',
+      goodnum: '1',
+      money: '1',
+      amount: '1',
+      price: '1'
+    }),
     total: 10
   }
 }

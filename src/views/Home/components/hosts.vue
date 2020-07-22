@@ -1,32 +1,34 @@
 <template>
   <div id="host" class="flex">
     <transition
-    enter-active-class="animated fast fadeInLeft"
-    leave-active-class="animated fast fadeOutLeft"
+      enter-active-class="animated fast fadeInLeft"
+      leave-active-class="animated fast fadeOutLeft"
     >
-    <div v-show="$route.name==='hosts'">
-      <div class="module-box flex">
-        <div class="flex searchbox">
-          <el-input placeholder="搜索主播名称" v-model="hostWord"></el-input>
-          <el-button type="primary">搜索主播</el-button>
+      <div v-show="$route.name==='hosts'">
+        <div class="module-box flex">
+          <div class="flex searchbox">
+            <el-input placeholder="搜索主播名称" v-model="hostWord"></el-input>
+            <el-button type="primary">搜索主播</el-button>
+          </div>
+          <div class="flex-ter rich-filter">
+            <el-button type="default" size="small" @click="showFilter=true">高级筛选器</el-button>
+          </div>
         </div>
-        <div class="flex-ter rich-filter">
-          <el-button type="default" size="small" @click="showFilter=true">高级筛选器</el-button>
+        <rich-filter @update="filterLabel=$event" :show.sync="showFilter" :formrule="richFilter"></rich-filter>
+        <div class="module-box filter-label flex" v-if="filterLabel.length">
+          <div v-for="(v,i) in filterLabel" :key="v.name" class="label">
+            {{v.label}}：
+            <div v-html="format(v)"></div>
+            <i class="el-icon-close" @click="removelabel(v,i)"></i>
+          </div>
         </div>
+        <table-paganation :condition="filterLabel" class="module-box hostslist" v-bind="hostslist"></table-paganation>
       </div>
-      <rich-filter @update="filterLabel=$event" :show.sync="showFilter" :formrule="richFilter"></rich-filter>
-      <div class="module-box filter-label flex" v-if="filterLabel.length">
-        <div v-for="(v,i) in filterLabel" :key="v.name" class="label">
-          {{v.label}}： <div v-html="format(v)"></div>
-          <i class="el-icon-close" @click="removelabel(v,i)"></i>
-        </div>
-      </div>
-      <table-paganation :condition="filterLabel" class="module-box hostslist" v-bind="hostslist"></table-paganation>
-    </div>
     </transition>
     <transition
-    enter-active-class="animated fast fadeInRight"
-    leave-active-class="animated fast fadeOutRight">
+      enter-active-class="animated fast fadeInRight"
+      leave-active-class="animated fast fadeOutRight"
+    >
       <router-view></router-view>
     </transition>
   </div>
@@ -49,7 +51,10 @@ export default {
         if (v.component === 'range') {
           return v.value.map(v2 => v2 + v.attrs.unit).join(' - ')
         } else if (v.component === 'select') {
-          return v.slot.filter(v2 => v.value.some(v3 => v3 === v2.attrs.value)).map(v => `<span>${v.attrs.label}</span>`).join('')
+          return v.slot
+            .filter(v2 => v.value.some(v3 => v3 === v2.attrs.value))
+            .map(v => `<span>${v.attrs.label}</span>`)
+            .join('')
         }
       }
     },
@@ -67,28 +72,30 @@ export default {
 </script>
 
 <style scoped lang="less">
-#host{
+#host {
   position: relative;
-  >div{
-    position:absolute;
-    width:100%;
+  height:100%;
+  width:100%;
+  > div {
+    position: absolute;
+    width: 100%;
   }
 }
-.rich-filter{
-    flex:1;
-    padding-left:2rem;
-  }
-  .module-box{
-    margin-bottom:1rem;
-  }
-  .hostslist{
-    min-height:60vh;
-  }
+.rich-filter {
+  flex: 1;
+  padding-left: 2rem;
+}
+.module-box {
+  margin-bottom: 1rem;
+}
+.hostslist {
+  min-height: 60vh;
+}
 </style>
 <style lang="less">
 #host {
-  .searchbox{
-    width:40%;
+  .searchbox {
+    width: 40%;
     .el-input__inner {
       border-radius: 4px 0 0 4px;
     }
@@ -96,29 +103,29 @@ export default {
       border-radius: 0 4px 4px 0;
     }
   }
-  .filter-label{
-    .label{
-      color:#999;
-      margin:.3rem;
-      padding:.1rem .5rem;
-      font-size:var(--xs2font);
-      border:1px dashed var(--prcol);
-      border-radius:2px;
-      >div{
+  .filter-label {
+    .label {
+      color: #999;
+      margin: 0.3rem;
+      padding: 0.1rem 0.5rem;
+      font-size: var(--xs2font);
+      border: 1px dashed var(--prcol);
+      border-radius: 2px;
+      > div {
         display: inline-block;
-        color:var(--prcol)
+        color: var(--prcol);
       }
-      span{
+      span {
         display: inline-block;
-        margin:0 .15rem;
+        margin: 0 0.15rem;
       }
     }
   }
-  .el-icon-close{
-    margin-left:3px;
+  .el-icon-close {
+    margin-left: 3px;
     cursor: pointer;
-    opacity: .5;
-    &:hover{
+    opacity: 0.5;
+    &:hover {
       opacity: 1;
     }
   }

@@ -10,6 +10,8 @@ import hybirdChart from '@/components/hybird-chart'
 import richFilter from '@/components/rich-filter'
 import elRange from '@/components/el-range'
 import tablePaganation from '@/components/table-paganation'
+import anchorNav from '@/components/anchor-nav'
+import anchorMenu from '@/components/anchor-menu'
 
 Vue.mixin({
   components: {
@@ -21,6 +23,8 @@ Vue.mixin({
     hybirdChart,
     richFilter,
     elRange,
-    tablePaganation
+    tablePaganation,
+    anchorNav,
+    anchorMenu
   }
 })

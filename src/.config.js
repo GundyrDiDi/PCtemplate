@@ -70,7 +70,7 @@ export default {
     }
   ],
   notify: {
-    msg: '点击关注服务号，可接收更多资源哦！'
+    msg: '点击关注服务号，可接收更多资讯哦！'
   },
   imgs: {
     logo: require('@/assets/img/logo.png'),
@@ -97,6 +97,7 @@ export default {
       path: '/home',
       name: 'Home',
       component: () => import('@/views/Home/home.vue'),
+      meta: { title: '主页' },
       children: 'treemenu'
     },
     {
@@ -149,6 +150,9 @@ export default {
             url: ''
           }
         },
+        hostvalue: {
+
+        },
         ring: {
           typeofhost: {
             url: 'typeofhost'
@@ -183,6 +187,9 @@ export default {
       tables: {
         hostslist: {
           url: 'hostslist'
+        },
+        hostrecord: {
+          url: 'hostrecord'
         }
       }
     },
@@ -208,6 +215,33 @@ export default {
       {
         title: '直播商品数/品牌数',
         name: 'goodnum',
+        data: 'charts/watch/goodnum'
+      }
+    ],
+    hostvalue: [
+      {
+        title: '粉丝变化趋势',
+        name: 'fansflow',
+        api: 'charts/watch/uvpv'
+      },
+      {
+        title: '观看UV/观看PV',
+        name: 'uvpv',
+        api: 'charts/watch/shownum'
+      },
+      {
+        title: '点赞数',
+        name: 'favonum',
+        api: 'charts/watch/hostnum'
+      },
+      {
+        title: '评论数',
+        name: 'commentnum',
+        data: 'charts/watch/goodnum'
+      },
+      {
+        title: '销售额(估)/销量(估)',
+        name: 'moneyamount',
         data: 'charts/watch/goodnum'
       }
     ],
@@ -244,6 +278,7 @@ export default {
         api: 'charts/keyword/roteofflow'
       }
     ]
+
   },
   tables: {
     hostslist: {
@@ -301,6 +336,42 @@ export default {
               class: 'fa fa-ellipsis-h',
               on: 'click',
               tooltip: '查看详情'
+            }
+          ]
+        }
+      ]
+    },
+    hostrecord: {
+      param: {
+        size: 10,
+        sizeOpts: [10],
+        page: 1
+      },
+      events: {
+        playlive () {
+
+        }
+      },
+      api: 'tables/hostrecord',
+      column: [
+        { key: 'liveinfo', title: '直播信息' },
+        { key: 'livetime', title: '直播时间' },
+        { key: 'uv', title: 'UV' },
+        { key: 'pv', title: 'PV' },
+        { key: 'fansofraise', title: '直播涨粉' },
+        { key: 'goodnum', title: '商品数' },
+        { key: 'money', title: '销售额(估)' },
+        { key: 'amount', title: '销量(估)' },
+        { key: 'price', title: '客单价(估)' },
+        {
+          key: 'action',
+          title: '操作',
+          action: [
+            {
+              event: 'playlive',
+              class: 'fa fa-play',
+              on: 'click',
+              tooltip: '观看直播'
             }
           ]
         }

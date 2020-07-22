@@ -103,6 +103,11 @@ export default {
       this.form.time = this.quickset(v)
     }
   },
+  watch: {
+    time () {
+      this.form.time = this.time
+    }
+  },
   mounted () {
     this.form.time = this.time
   }

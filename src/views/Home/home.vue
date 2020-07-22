@@ -14,11 +14,11 @@
       <div class="user flex-center">
         <img class="brcircle" :src="imgs.head" alt />
         <div class="info">
-          <div>{{user.name}}</div>
-          <div>使用权限: {{user.expire}}</div>
+          <div>{{User.name}}</div>
+          <div>使用权限: {{User.expire}}</div>
         </div>
         <div class="f-r">
-          <div class="auth">{{user.auth}}</div>
+          <div class="auth">{{User.auth}}</div>
           <div class="exit" @click="$router.push({name:'Enter'})">退出</div>
         </div>
       </div>
@@ -147,12 +147,14 @@ header {
     }
   }
   .panel{
+    position:relative;
     padding:1rem;
     flex:1;
     height:100%;
     overflow:auto;
     min-width:760px;
     background:var(--lbgcol);
+    scroll-behavior: smooth;
   }
 }
 </style>
