@@ -12,6 +12,7 @@ import elRange from '@/components/el-range'
 import tablePaganation from '@/components/table-paganation'
 import anchorNav from '@/components/anchor-nav'
 import anchorMenu from '@/components/anchor-menu'
+import raceChart from '@/components/race-chart'
 
 Vue.mixin({
   components: {
@@ -25,6 +26,7 @@ Vue.mixin({
     elRange,
     tablePaganation,
     anchorNav,
-    anchorMenu
+    anchorMenu,
+    raceChart
   }
 })

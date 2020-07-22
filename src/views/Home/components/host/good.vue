@@ -1,10 +1,12 @@
 <template>
-  <div></div>
+  <div>
+    <table-paganation v-bind="hostgood"></table-paganation>
+  </div>
 </template>
 
 <script>
 export default {
-  name: 'brief',
+  name: 'good',
   data () {
     return {}
   }

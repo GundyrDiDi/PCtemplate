@@ -82,7 +82,6 @@ export default {
         }
       })
       this.option.yAxis = data.map(v => this.option._yAxis(v.name))
-      console.log(this.option.yAxis)
       this.ct.setOption(this.option)
     }
   },

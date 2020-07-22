@@ -150,9 +150,8 @@ export default {
             url: ''
           }
         },
-        hostvalue: {
-
-        },
+        hostvalue: {},
+        fanspicture: {},
         ring: {
           typeofhost: {
             url: 'typeofhost'
@@ -245,6 +244,14 @@ export default {
         data: 'charts/watch/goodnum'
       }
     ],
+    bar: {},
+    fanspicture: [
+      { title: '性别比例', name: 'fansgender', api: 'charts/ring/typeofhost' },
+      { title: '年龄分布', name: 'fansage', api: 'charts/ring/typeofhost' },
+      { title: '消费偏好', name: 'fanscost', api: 'charts/ring/typeofhost' },
+      { title: '生活偏好', name: 'fanshobby', api: 'charts/ring/typeofhost' },
+      { title: '城市分布', name: 'fansdistrct', api: 'charts/map/district' }
+    ],
     ring: [
       {
         title: '主播类型',
@@ -278,7 +285,6 @@ export default {
         api: 'charts/keyword/roteofflow'
       }
     ]
-
   },
   tables: {
     hostslist: {
@@ -348,9 +354,7 @@ export default {
         page: 1
       },
       events: {
-        playlive () {
-
-        }
+        playlive () {}
       },
       api: 'tables/hostrecord',
       column: [
@@ -375,6 +379,28 @@ export default {
             }
           ]
         }
+      ]
+    },
+    hostgood: {
+      param: {
+        size: 10,
+        sizeOpts: [10],
+        page: 1
+      },
+      events: {
+        playlive () {}
+      },
+      api: 'tables/hostrecord',
+      column: [
+        { key: 'goodname', title: '商品' },
+        { key: 'brand', title: '品牌' },
+        { key: 'livenum', title: '直播次数', sortable: true },
+        { key: 'liveamount', title: '直播销量(估)', sortable: true },
+        { key: 'livemoney', title: '直播销售额(估)', sortable: true },
+        { key: 'relativehost', title: '关联主播数', sortable: true },
+        { key: 'relativelive', title: '关联直播数', sortable: true },
+        { key: 'goodamount', title: '累计直播销量(估)', sortable: true },
+        { key: 'goodmoney', title: '累计直播销售额(估)', sortable: true }
       ]
     }
   },

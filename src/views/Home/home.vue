@@ -9,7 +9,7 @@
         </div>
       </div>
       <div class="notify flex-center">
-        <div>{{notify.msg}}</div>
+        <el-button type="primary">{{notify.msg}}</el-button>
       </div>
       <div class="user flex-center">
         <img class="brcircle" :src="imgs.head" alt />
@@ -94,13 +94,11 @@ header {
       height:1rem;
     }
   }
-  .notify>div{
-    // height:1.5rem;
-    color:var(--dbcol);
+  .notify>.el-button{
     background:var(--prcol);
     border-radius:1rem;
     padding:.2rem .5rem;
-    font-size:var(--xsfont)
+    font-size:var(--xsfont);
   }
   .user{
     flex:1;

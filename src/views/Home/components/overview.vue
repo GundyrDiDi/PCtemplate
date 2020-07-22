@@ -8,7 +8,7 @@
     <ring-chart class="module-box" :chartdata="charts.ring[1]"></ring-chart>
     <map-chart class="module-box" :chartdata="charts.map[0]"></map-chart>
     <word-chart class="module-box" :chartdata="charts.keyword[0]"></word-chart>
-    <hybird-chart class="module-box" :chartdata="charts.ring[0]"></hybird-chart>
+    <hybird-chart class="module-box" :chartdata="charts.hybird"></hybird-chart>
   </div>
 </template>
 

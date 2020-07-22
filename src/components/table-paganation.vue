@@ -90,7 +90,6 @@ export default {
         api,
         param
       })
-      console.log(data)
       this.loading = false
       this.data = data
       this.total = total
