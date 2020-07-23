@@ -189,6 +189,9 @@ a {
     margin-right:.7rem;
   }
 }
+.pointer{
+  cursor: pointer;
+}
 .auth-des{
   text-align: center;
   font-size:var(--xsfont);

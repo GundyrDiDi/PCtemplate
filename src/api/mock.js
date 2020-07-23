@@ -297,7 +297,20 @@ const mockdata = {
       price: '1'
     }),
     total: 10
-  }
+  },
+  catalog: [
+    { label: '女装' },
+    { label: '潮店' },
+    { label: '母婴' },
+    { label: '生活' },
+    { label: '买全球' },
+    { label: '男士' },
+    { label: '珠宝' },
+    { label: '鲜花萌宠' },
+    { label: '活动' },
+    { label: '村播' },
+    { label: '家电' }
+  ]
 }
 Object.entries(mockdata).forEach(([api, redata]) => {
   Mock.mock(api, redata)

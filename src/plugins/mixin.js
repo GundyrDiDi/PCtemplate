@@ -13,6 +13,7 @@ import tablePaganation from '@/components/table-paganation'
 import anchorNav from '@/components/anchor-nav'
 import anchorMenu from '@/components/anchor-menu'
 import raceChart from '@/components/race-chart'
+import selectCollapse from '@/components/select-collapse'
 
 Vue.mixin({
   components: {
@@ -27,6 +28,7 @@ Vue.mixin({
     tablePaganation,
     anchorNav,
     anchorMenu,
-    raceChart
+    raceChart,
+    selectCollapse
   }
 })

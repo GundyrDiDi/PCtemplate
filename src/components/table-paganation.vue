@@ -1,6 +1,8 @@
 <template>
   <div>
-    <Table :loading="loading" size="small" :columns="column" :data="data"></Table>
+    <Table :loading="loading" size="small" :columns="column" :data="data"
+    @on-sort-change="sortchange"
+    ></Table>
     <Page
     v-if="data.length<=total"
     :total="total"
@@ -82,6 +84,9 @@ export default {
   methods: {
     dispatch ({ row, column }, event) {
       this.events[event].call(this, row, column)
+    },
+    sortchange () {
+      this.request()
     },
     async request () {
       this.loading = true

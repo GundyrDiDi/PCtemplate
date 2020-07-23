@@ -15,13 +15,15 @@
           </div>
         </div>
         <rich-filter @update="filterLabel=$event" :show.sync="showFilter" :formrule="richFilter"></rich-filter>
-        <div class="module-box filter-label flex" v-if="filterLabel.length">
+        <transition-group tag="div"
+        enter-active-class="animated zoomIn faster" leave-active-class="animated zoomOut faster"
+        class="module-box filter-label flex" v-if="filterLabel.length">
           <div v-for="(v,i) in filterLabel" :key="v.name" class="label">
             {{v.label}}：
             <div v-html="format(v)"></div>
             <i class="el-icon-close" @click="removelabel(v,i)"></i>
           </div>
-        </div>
+        </transition-group>
         <table-paganation :condition="filterLabel" class="module-box hostslist" v-bind="hostslist"></table-paganation>
       </div>
     </transition>

@@ -180,6 +180,9 @@ export default {
         options: {
           default: {
             url: 'options'
+          },
+          catalog: {
+            url: 'catalog'
           }
         }
       },
@@ -289,6 +292,10 @@ export default {
   tables: {
     hostslist: {
       param: {
+        sort: {
+          key: '',
+          order: 0
+        },
         size: 1,
         sizeOpts: [1, 2, 3, 4],
         page: 1
@@ -349,6 +356,10 @@ export default {
     },
     hostrecord: {
       param: {
+        sort: {
+          key: '',
+          order: 0
+        },
         size: 10,
         sizeOpts: [10],
         page: 1
@@ -383,6 +394,10 @@ export default {
     },
     hostgood: {
       param: {
+        sort: {
+          key: '',
+          order: 0
+        },
         size: 10,
         sizeOpts: [10],
         page: 1
@@ -401,6 +416,52 @@ export default {
         { key: 'relativelive', title: '关联直播数', sortable: true },
         { key: 'goodamount', title: '累计直播销量(估)', sortable: true },
         { key: 'goodmoney', title: '累计直播销售额(估)', sortable: true }
+      ]
+    },
+    inslist: {
+      param: {
+        sort: {
+          key: '',
+          order: 0
+        },
+        size: 10,
+        sizeOpts: [10, 20, 30, 40],
+        page: 1
+      },
+      api: 'tables/hostrecord',
+      column: [
+        { key: 'insinfo', title: '机构信息', width: 300 },
+        { key: 'insscore', title: '机构得分', sortable: true },
+        { key: 'fansnum', title: '覆盖粉丝数量', sortable: true },
+        { key: 'amountgood', title: '合作商品数', sortable: true },
+        { key: 'amountshop', title: '合作店铺数', sortable: true },
+        {
+          key: 'amounthost',
+          title: '旗下大咖',
+          width: 350,
+          className: 'text-center'
+        }
+      ]
+    },
+    goodslist: {
+      param: {
+        sort: {
+          key: 'livemoney',
+          order: 0
+        },
+        size: 10,
+        sizeOpts: [10, 20, 30, 40],
+        page: 1
+      },
+      api: 'tables/hostrecord',
+      column: [
+        { key: 'goodname', title: '商品', width: 350 },
+        { key: 'catalog1', title: '一级类目' },
+        { key: 'brand', title: '品牌' },
+        { key: 'brand', title: '关联主播数', sortable: true },
+        { key: 'livenum', title: '关联直播数', sortable: true },
+        { key: 'liveamount', title: '直播销量(估)', sortable: true },
+        { key: 'livemoney', title: '直播销售额(估)', sortable: true }
       ]
     }
   },
@@ -591,6 +652,40 @@ export default {
           }
         }
       }
+    ],
+    catalog: {
+      api: 'form/options/catalog',
+      label: '一级类目',
+      name: 'catalog1',
+      attrs: {
+        mode: [0, 1]
+      }
+    },
+    goodrelative: [
+      {
+        api: 'form/range/default',
+        label: '关注主播数量',
+        name: 'relativehost',
+        attrs: {
+          value: [0, 9999],
+          min: -Infinity,
+          max: Infinity
+        },
+        type: 'attrs',
+        pipe: calcRange
+      },
+      {
+        api: 'form/range/default',
+        label: '关注直播数量',
+        name: 'relativelive',
+        attrs: {
+          value: [0, 9999],
+          min: -Infinity,
+          max: Infinity
+        },
+        type: 'attrs',
+        pipe: calcRange
+      }
     ]
   },
   treemenu: [
@@ -615,9 +710,9 @@ export default {
       ]
     },
     {
-      path: '/home/ins',
-      name: 'ins',
-      component: () => import('@/views/Home/components/ins.vue'),
+      path: '/home/inst',
+      name: 'inst',
+      component: () => import('@/views/Home/components/inst.vue'),
       meta: { title: '机构', icon: 'icon-jigou' }
     },
     {

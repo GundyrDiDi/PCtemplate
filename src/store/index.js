@@ -6,6 +6,7 @@ import chart from './modules/chart'
 import forms from './modules/forms'
 import tables from './modules/table'
 import host from './modules/host'
+import route from './modules/route'
 Vue.use(Vuex)
 const root = {
   // everyStore中命名modules
@@ -20,7 +21,8 @@ const root = {
     chart,
     forms,
     tables,
-    host
+    host,
+    myroute: route
   },
   plugins: []
 }
