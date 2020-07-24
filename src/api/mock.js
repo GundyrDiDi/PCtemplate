@@ -270,8 +270,8 @@ const mockdata = {
     max: 34567876
   },
   hostslist: {
-    data: new Array(1).fill({
-      name: '谢广坤',
+    data: Array.from({ length: 3 }, (v, i) => ({
+      name: '谢广坤' + i,
       fansnum: '1',
       favonum: '1',
       prainum: '1',
@@ -281,7 +281,7 @@ const mockdata = {
       money30day: '1',
       amount30day: '1',
       price30day: '1'
-    }),
+    })),
     total: 10
   },
   hostrecord: {
@@ -310,6 +310,100 @@ const mockdata = {
     { label: '活动' },
     { label: '村播' },
     { label: '家电' }
+  ],
+  followlist: [
+    {
+      head: '',
+      name: '雪梨'
+    },
+    {
+      head: '',
+      name: '雪梨2'
+    },
+    {
+      head: '',
+      name: '雪梨3'
+    },
+    {
+      head: '',
+      name: '雪梨4'
+    },
+    {
+      head: '',
+      name: '雪梨5'
+    },
+    {
+      head: '',
+      name: '雪梨6'
+    },
+    {
+      head: '',
+      name: '雪梨7'
+    },
+    {
+      head: '',
+      name: '雪梨8'
+    },
+    {
+      head: '',
+      name: '雪梨9'
+    },
+    {
+      head: '',
+      name: '雪梨11'
+    },
+    {
+      head: '',
+      name: '雪梨12'
+    },
+    {
+      head: '',
+      name: '雪梨13'
+    },
+    {
+      head: '',
+      name: '雪梨14'
+    },
+    {
+      head: '',
+      name: '雪梨15'
+    },
+    {
+      head: '',
+      name: '雪梨23'
+    },
+    {
+      head: '',
+      name: '雪梨21'
+    },
+    {
+      head: '',
+      name: '雪梨22'
+    },
+    {
+      head: '',
+      name: '雪梨24'
+    },
+    {
+      head: '',
+      name: '雪梨25'
+    },
+    {
+      head: '',
+      name: '雪梨213'
+    },
+    {
+      head: '',
+      name: '雪梨222'
+    },
+    {
+      head: '',
+      name: '雪梨211'
+    },
+    {
+      head: '',
+      name: '雪梨2122'
+    }
   ]
 }
 Object.entries(mockdata).forEach(([api, redata]) => {

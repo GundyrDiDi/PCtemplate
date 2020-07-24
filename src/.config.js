@@ -4,6 +4,7 @@ export default {
     name: 'CHENFAN',
     expire: '永久',
     auth: '免费版',
+    club: '免费会员',
     followlist: []
   },
   tour: {},
@@ -18,57 +19,6 @@ export default {
     gip: '浙公网安备 33010602010329号'
   },
   keywords: [],
-  info: [
-    {
-      title: '大盘数据  一目了然',
-      msg:
-        '为用户提供简洁明了的大盘数据，可视化展现，支持数据下钻，帮助用户探寻数字背后的真相',
-      tab: {
-        component: 'multi-box',
-        props: {
-          inset: [
-            {
-              component: 'main-chart',
-              link: '',
-              chartData: 'map-liver-area',
-              title: '直播间地区分布'
-            },
-            {
-              component: 'main-chart',
-              link: '',
-              chartData: 'lineBar-people-total',
-              title: '淘宝直播大盘分析',
-              suffix: '一对一专业数据分析'
-            },
-            {
-              component: 'main-chart',
-              link: '',
-              chartData: 'rose-liver-level',
-              title: '主播等级分布',
-              suffix: '快速了解全网主播概况'
-            }
-          ]
-        }
-      }
-    },
-    {
-      title: '主播实力<br/>一览无余',
-      msg: '日常监控主播直播数<br/>对主播实力进行全面分析',
-      tab: {
-        component: 'main-list'
-      },
-      button: { name: '查看更多', link: '' }
-    },
-    {
-      title: '热门直播<br/>尽收眼底',
-      msg:
-        '每日罗列带货优秀的直播间及相关数据，帮助商家感知主播的实力，探寻与主播的合作机会',
-      tab: {
-        component: 'main-cards'
-      },
-      button: { name: '查看更多', link: '' }
-    }
-  ],
   notify: {
     msg: '点击关注服务号，可接收更多资讯哦！'
   },
@@ -91,7 +41,9 @@ export default {
     whale: require('@/assets/img/whale.png'),
     collapse: require('@/assets/img/home/collapse.png')
   },
-  icons: {},
+  paylist: {
+
+  },
   routes: [
     {
       path: '/home',
@@ -109,27 +61,7 @@ export default {
     },
     {
       path: '/',
-      redirect: to => ({ name: 'hosts' })
-    }
-  ],
-  enternavs: [
-    {
-      path: '/enter/entermain',
-      name: 'entermain',
-      component: () => import('@/views/Enter/components/entermain.vue'),
-      meta: { title: '首页' }
-    },
-    {
-      path: '/enter/info',
-      name: 'info',
-      component: () => import('@/views/Enter/components/info.vue'),
-      meta: { title: '产品介绍' }
-    },
-    {
-      path: '/enter/ask',
-      name: 'ask',
-      component: () => import('@/views/Enter/components/ask.vue'),
-      meta: { title: '合作咨询' }
+      redirect: to => ({ name: 'follow' })
     }
   ],
   api: {
@@ -192,6 +124,16 @@ export default {
         },
         hostrecord: {
           url: 'hostrecord'
+        }
+      },
+      user: {
+        followlist: {
+          url: 'followlist'
+        }
+      },
+      host: {
+        search: {
+          url: 'hostslist'
         }
       }
     },
@@ -463,6 +405,29 @@ export default {
         { key: 'liveamount', title: '直播销量(估)', sortable: true },
         { key: 'livemoney', title: '直播销售额(估)', sortable: true }
       ]
+    },
+    livelist: {
+      param: {
+        sort: {
+          key: 'livemoney',
+          order: 0
+        },
+        size: 10,
+        sizeOpts: [10, 20, 30, 40],
+        page: 1
+      },
+      api: 'tables/hostrecord',
+      column: [
+        { key: 'liveinfo', title: '直播信息', width: 250 },
+        { key: 'host', title: '主播' },
+        { key: 'watchpeople', title: '观看人数' },
+        { key: 'watchnum', title: '观看次数', sortable: true },
+        { key: 'raisefans', title: '直播涨粉数', sortable: true },
+        { key: 'goodnum', title: '商品数', sortable: true },
+        { key: 'money', title: '销售额(估)', sortable: true },
+        { key: 'amount', title: '销量(估)', sortable: true },
+        { key: 'price', title: '客单价(估)', sortable: true }
+      ]
     }
   },
   forms: {
@@ -653,6 +618,100 @@ export default {
         }
       }
     ],
+    hotlistfilter: [
+      {
+        api: 'form/range/default',
+        name: 'money',
+        label: '销售额(估)',
+        rule: [],
+        component: 'range',
+        attrs: {
+          value: [0, 9999],
+          min: -Infinity,
+          max: Infinity
+        },
+        type: 'attrs',
+        pipe: calcRange
+      },
+      {
+        api: 'form/range/default',
+        name: 'amount',
+        label: '销量(估)',
+        rule: [],
+        component: 'range',
+        attrs: {
+          value: [0, 9999],
+          min: -Infinity,
+          max: Infinity
+        },
+        type: 'attrs',
+        pipe: calcRange
+      },
+      {
+        api: 'form/range/default',
+        name: 'price',
+        label: '客单价',
+        rule: [],
+        component: 'range',
+        attrs: {
+          value: [0, 9999],
+          min: -Infinity,
+          max: Infinity
+        },
+        type: 'attrs',
+        pipe: calcRange
+      },
+      {
+        api: 'form/range/default',
+        name: 'watch',
+        label: '观看次数',
+        rule: [],
+        component: 'range',
+        attrs: {
+          value: [0, 9999],
+          min: -Infinity,
+          max: Infinity
+        },
+        type: 'attrs',
+        pipe: calcRange
+      },
+      {
+        api: 'form/range/default',
+        name: 'raise',
+        label: '直播涨粉数',
+        rule: [],
+        component: 'range',
+        attrs: {
+          value: [0, 9999],
+          min: -Infinity,
+          max: Infinity
+        },
+        type: 'attrs',
+        pipe: calcRange
+      },
+      {
+        api: 'form/range/default',
+        name: 'goodnum',
+        label: '单场直播商品数',
+        rule: [],
+        component: 'range',
+        attrs: {
+          value: [0, 9999],
+          min: -Infinity,
+          max: Infinity
+        },
+        type: 'attrs',
+        pipe: calcRange
+      },
+      {
+        api: 'form/options/default',
+        name: 'livetitle',
+        label: '直播标题',
+        rule: [],
+        component: 'input',
+        attrs: {}
+      }
+    ],
     catalog: {
       api: 'form/options/catalog',
       label: '一级类目',
@@ -750,6 +809,77 @@ export default {
       name: 'advice',
       component: () => import('@/views/Home/components/advice.vue'),
       meta: { title: '意见和反馈', icon: 'icon-fankui' }
+    }
+  ],
+  enternavs: [
+    {
+      path: '/enter/entermain',
+      name: 'entermain',
+      component: () => import('@/views/Enter/components/entermain.vue'),
+      meta: { title: '首页' }
+    },
+    {
+      path: '/enter/info',
+      name: 'info',
+      component: () => import('@/views/Enter/components/info.vue'),
+      meta: { title: '产品介绍' }
+    },
+    {
+      path: '/enter/ask',
+      name: 'ask',
+      component: () => import('@/views/Enter/components/ask.vue'),
+      meta: { title: '合作咨询' }
+    }
+  ],
+  info: [
+    {
+      title: '大盘数据  一目了然',
+      msg:
+        '为用户提供简洁明了的大盘数据，可视化展现，支持数据下钻，帮助用户探寻数字背后的真相',
+      tab: {
+        component: 'multi-box',
+        props: {
+          inset: [
+            {
+              component: 'main-chart',
+              link: '',
+              chartData: 'map-liver-area',
+              title: '直播间地区分布'
+            },
+            {
+              component: 'main-chart',
+              link: '',
+              chartData: 'lineBar-people-total',
+              title: '淘宝直播大盘分析',
+              suffix: '一对一专业数据分析'
+            },
+            {
+              component: 'main-chart',
+              link: '',
+              chartData: 'rose-liver-level',
+              title: '主播等级分布',
+              suffix: '快速了解全网主播概况'
+            }
+          ]
+        }
+      }
+    },
+    {
+      title: '主播实力<br/>一览无余',
+      msg: '日常监控主播直播数<br/>对主播实力进行全面分析',
+      tab: {
+        component: 'main-list'
+      },
+      button: { name: '查看更多', link: '' }
+    },
+    {
+      title: '热门直播<br/>尽收眼底',
+      msg:
+        '每日罗列带货优秀的直播间及相关数据，帮助商家感知主播的实力，探寻与主播的合作机会',
+      tab: {
+        component: 'main-cards'
+      },
+      button: { name: '查看更多', link: '' }
     }
   ],
   liverlist: [

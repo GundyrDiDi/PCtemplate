@@ -39,6 +39,18 @@ Vue.mixin({
         const io = new IntersectionObserver(cb, options)
         io.observe(ob)
       }
+    },
+    lazy: {
+      inserted (el, { arg, value }) {
+        const cb = entries => {
+          if (entries[0].isIntersecting) {
+            el[arg] = value
+            io.disconnect()
+          }
+        }
+        const io = new IntersectionObserver(cb)
+        io.observe(el)
+      }
     }
   }
 })

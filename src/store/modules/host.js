@@ -37,9 +37,16 @@ export default {
         label: '商品分析',
         component: () => import('@/views/Home/components/host/good.vue')
       }
-    ]
+    ],
+    hostsbackup: []
   },
   getters: {},
   mutations: {},
-  actions: {}
+  actions: {
+    _search (store, param) {
+      return Axios.get('host/search', param).then(res => {
+        store.commit('hostsbackup', res.data)
+      })
+    }
+  }
 }

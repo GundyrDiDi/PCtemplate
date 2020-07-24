@@ -1,28 +1,28 @@
 <template>
   <div id="home">
-    <header class="flex">
-      <div class="logo flex-ter">
-        <img :src="imgs.logo" alt />
-        <span class="s-title">{{logoname}}</span>
-        <div class="shrink flex-center" :class="{flip:collapse}" @click="collapse=!collapse">
-          <img :src="imgs.collapse" alt="">
+      <header class="flex">
+        <div class="logo flex-ter">
+          <img :src="imgs.logo" alt />
+          <span class="s-title">{{logoname}}</span>
+          <div class="shrink flex-center" :class="{flip:collapse}" @click="collapse=!collapse">
+            <img :src="imgs.collapse" alt="">
+          </div>
         </div>
-      </div>
-      <div class="notify flex-center">
-        <el-button type="primary">{{notify.msg}}</el-button>
-      </div>
-      <div class="user flex-center">
-        <img class="brcircle" :src="imgs.head" alt />
-        <div class="info">
-          <div>{{User.name}}</div>
-          <div>使用权限: {{User.expire}}</div>
+        <div class="notify flex-center">
+          <el-button type="primary">{{notify.msg}}</el-button>
         </div>
-        <div class="f-r">
-          <div class="auth">{{User.auth}}</div>
-          <div class="exit" @click="$router.push({name:'Enter'})">退出</div>
+        <div class="user flex-center">
+          <img class="brcircle" :src="imgs.head" alt />
+          <div class="info">
+            <div>{{User.name}}</div>
+            <div>使用权限: {{User.expire}}</div>
+          </div>
+          <div class="f-r">
+            <div class="auth">{{User.auth}}</div>
+            <div class="exit" @click="$router.push({name:'Enter'})">退出</div>
+          </div>
         </div>
-      </div>
-    </header>
+      </header>
     <div class="content flex">
       <tree-menu class="nav-tree" :collapse="collapse" :menu="treemenu"></tree-menu>
       <div class="panel">
@@ -53,9 +53,11 @@ export default {
 <style scoped lang="less">
 #home{
   height:100vh;
+  background:var(--lbgcol);
 }
 @height: calc(var(--base) * 3.5);
 header {
+  background:#fff;
   min-width:760px;
   height: @height;
   box-shadow: var(--lineshadow2);
@@ -135,10 +137,10 @@ header {
   height:calc(100% - @height);
   overflow: auto;
   .nav-tree{
+    background:#fff;
     padding-top:.5rem;
     height:100%;
     overflow:auto;
-    background:transparent;
     &:not(.el-menu--collapse){
       width:10rem;
       min-width:3rem;

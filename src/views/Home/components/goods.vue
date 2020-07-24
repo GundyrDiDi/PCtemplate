@@ -86,7 +86,7 @@ export default {
 <style scoped lang="less">
 .flex-ter{
   >div{
-    margin-right:1rem;
+    margin:0 1rem;
   }
   .date{
     width:7rem;

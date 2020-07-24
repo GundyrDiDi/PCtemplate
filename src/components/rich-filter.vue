@@ -1,5 +1,5 @@
 <template>
-  <Modal v-model="_show" width="60vw">
+  <Modal v-model="_show" width="60vw" class="rich">
     <header slot="header" class="p-title">
       高级筛选器
     </header>
@@ -39,6 +39,8 @@
 </template>
 
 <script>
+// import host from '@/views/Home'
+// console.log(host)
 export default {
   name: 'rich-filter',
   props: ['show', 'formrule'],
@@ -109,6 +111,8 @@ export default {
             return undefined
           }
           v.value = value
+        } else if (this.form[v.name]) {
+          v.value = this.form[v.name]
         }
       })
       this.$emit('update', this.formrule.filter(v => v.value))
@@ -155,7 +159,7 @@ footer{
 }
 </style>
 <style>
-  .ivu-modal{
+  .rich .ivu-modal{
     min-width:760px;
   }
   .el-form-item>label{

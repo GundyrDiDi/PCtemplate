@@ -1,4 +1,5 @@
 import config from '@/.config.js'
+import { loadimg } from '@/plugins/util'
 export default {
   namespaced: true,
   state: {
@@ -15,5 +16,13 @@ export default {
   },
   getters: {},
   mutations: {},
-  actions: {}
+  actions: {
+    loadimg ({ state }) {
+      return Promise.all(
+        Object.values(state.imgs).map(v => {
+          return loadimg(v)
+        })
+      )
+    }
+  }
 }

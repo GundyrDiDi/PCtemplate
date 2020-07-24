@@ -31,6 +31,7 @@ const router = new VueRouter({
     }
   }
 })
+let init = true
 // 路由守卫
 router.beforeEach((to, from, next) => {
   store.commit('myroute/push', to)
@@ -38,7 +39,14 @@ router.beforeEach((to, from, next) => {
     document.title = (to.meta.title ? to.meta.title + '-' : '') + config.name
   })
   NProgress.start()
-  next()
+  if (init) {
+    store.dispatch('variable/loadimg').then(() => {
+      init = false
+      next()
+    })
+  } else {
+    next()
+  }
 })
 router.afterEach(() => {
   NProgress.done()

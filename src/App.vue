@@ -61,7 +61,10 @@ a {
   0 0 4px 4px rgba(6, 119, 212, 0.03),
   0 0 8px 8px rgba(6, 119, 212, 0.03);
   --prcol:#299eff;
+  --sprcol:darken(#299eff,20%);
+  --prcolsd:#299eff33;
   --wacol:#ff9d26;
+  --swacol:darken(#ff9d26,10%);
   --dacol:#ff5a12;
   --decol:#727272;
   --bgcol:#e3f2ff;
@@ -94,6 +97,11 @@ a {
 }
 .s-title {
   font-size: var(--xmfont);
+  .bold();
+  .yahei();
+}
+.t-title {
+  font-size: var(--mfont);
   .bold();
   .yahei();
 }
@@ -150,6 +158,10 @@ a {
   font-size:var(--xs2font);
   padding:.4rem .8rem;
 }
+.el-button--mini{
+  font-size:var(--xxsfont);
+  padding:.3rem .8rem;
+}
 .el-button.el-button--light {
   background: @color;
   border: none;
@@ -166,6 +178,9 @@ a {
     background: darken(@color, 30%);
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
   }
+}
+.el-button--warning{
+  background:#ffc84c;
 }
 .link {
   cursor:pointer;

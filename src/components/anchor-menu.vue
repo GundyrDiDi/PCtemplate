@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="nav flex-bwn" :class="navClass" :style="move">
+    <div class="nav flex-bwn" :class="navClass" :style="move" ref="nav">
       <slot name="nav"></slot>
       <div class="flex-bwn menu">
         <div
@@ -72,13 +72,10 @@ export default {
   },
   async mounted () {
     requestAnimationFrame(() => {
-      // this.$refs.tabs.sort((a, b) =>
-      //   a.offsetTop - b.offsetTop
-      // )
-      const fontSize = Math.ceil(parseFloat(document.documentElement.style.fontSize))
+      const navtop = (this.$refs.nav.offsetTop + 1)
       this.$el.addEventListener('scroll', e => {
         const scrollTop = e.target.scrollTop
-        this.top = Math.max(0, scrollTop - fontSize)
+        this.top = Math.max(0, scrollTop - navtop)
         this.$refs.tabs.forEach((v, i) => {
           if (v.offsetTop <= scrollTop + this.threshold) {
             this.index = i

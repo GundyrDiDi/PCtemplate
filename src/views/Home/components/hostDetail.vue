@@ -22,7 +22,7 @@ export default {
   },
   computed: {
     crumb () {
-      const match = this.$route.matched.slice(1)
+      const match = this.myroute.history.slice(-2)
       match[match.length - 1].meta.title = this.actHost.name
       return match
     }
