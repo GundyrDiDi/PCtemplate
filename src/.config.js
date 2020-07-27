@@ -39,7 +39,10 @@ export default {
     hotlive2: require('@/assets/img/热门直播2.png'),
     hotlive3: require('@/assets/img/热门直播3.png'),
     whale: require('@/assets/img/whale.png'),
-    collapse: require('@/assets/img/home/collapse.png')
+    collapse: require('@/assets/img/home/collapse.png'),
+    dimandyellow: require('@/assets/img/vip/dimandyellow.png'),
+    dimandblue: require('@/assets/img/vip/dimandblue.png'),
+    dimandgray: require('@/assets/img/vip/dimandgray.png')
   },
   paylist: {
 

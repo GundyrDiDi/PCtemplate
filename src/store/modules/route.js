@@ -2,13 +2,13 @@ export default {
   namespaced: true,
   state: {
     history: [],
-    limit: 10
+    _limit: 10
   },
   getters: {},
   mutations: {
-    push ({ history, limit }, route) {
+    push ({ history, _limit }, route) {
       history.push(route)
-      if (history.length > limit) {
+      if (history.length > _limit) {
         history.shift()
       }
     }

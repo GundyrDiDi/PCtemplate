@@ -16,24 +16,27 @@
       </div>
       <div class="paylist flex">
         <div class="description">
-          <div class="s-title">{{paylist.label}}</div>
+          <div class="s-title" :style="top">{{paylist.label}}</div>
           <template v-for="(v,i) in paylist.catalog">
             <div :key="v.label">
-              <div class="coll-title" @click="collapsedetail(i)">
+              <div class="coll-title" @click="collapsedetail(v)">
                 <span class="pointer">{{v.label}}
-                <i class="el-icon-arrow-down"></i>
+                <i class="el-icon-arrow-down" :style="{transform:`rotate(${v.collapse?-90:0}deg)`}"></i>
                 </span>
               </div>
-              <div ref="detail">
+              <div ref="detail" :style="{height:v.collapse?'0px':heights[i]+'px'}">
                 <div class="line" v-for="v in v.children" :key="v.label">{{v.label}}</div>
               </div>
             </div>
           </template>
         </div>
         <div class="price flex">
-          <div v-for="v in levels" :key="v.label">
-            <div class="s-title">
-              <div>{{v.label}}</div>
+          <div v-for="v in levels" :key="v.label" class="level">
+            <div class="s-title" ref="priceTitle" :style="top">
+              <div>
+                <img class="dimand" :src="imgs[v.icon]" alt="">
+                {{v.label}}
+              </div>
               <div class="pricenum">{{v.price}}</div>
               <el-button type="warning" class="buy" size="small">
                 立即购买
@@ -42,7 +45,7 @@
             <template v-for="(v,i) in paylist.catalog">
             <div :key="v.label">
               <div class="coll-title"></div>
-              <div :style="{height:heights[i]}">
+              <div :style="{height:v.collapse?'0px':heights[i]+'px'}">
                 <div class="line" v-for="v in v.children" :key="v.label">{{v.label}}</div>
               </div>
             </div>
@@ -77,7 +80,8 @@ export default {
               { name: '', label: '直播间分布' },
               { name: '', label: '直播间标题词云分布' },
               { name: '', label: '直播流量与销售分布' }
-            ]
+            ],
+            collapse: false
           },
           {
             name: '',
@@ -86,7 +90,8 @@ export default {
               { name: '', label: '排序功能' },
               { name: '', label: '高级筛选' },
               { name: '', label: '销售数据(估)' }
-            ]
+            ],
+            collapse: false
           },
           {
             name: '',
@@ -107,7 +112,8 @@ export default {
                 label: '直播销售数据(估)',
                 sub: '销售商品、对应销售额、销售量、客单价'
               }
-            ]
+            ],
+            collapse: false
           },
           {
             name: '',
@@ -120,7 +126,8 @@ export default {
               { name: '', label: '查看商品明细' },
               { name: '', label: '查看销售额明细' },
               { name: '', label: '查看销量明细' }
-            ]
+            ],
+            collapse: false
           },
           {
             name: '',
@@ -131,7 +138,8 @@ export default {
               { name: '', label: '排序' },
               { name: '', label: '筛 选' },
               { name: '', label: '搜索' }
-            ]
+            ],
+            collapse: false
           },
           {
             name: '',
@@ -139,32 +147,40 @@ export default {
             children: [
               { name: '', label: '关注数' },
               { name: '', label: '开播提醒' }
-            ]
+            ],
+            collapse: false
           }
         ]
       },
       levels: [
-        { label: '免费版', price: '免费使用' },
-        { label: '标准版', price: '999/月', btn: '' },
-        { label: '高级版', price: '1499/月', btn: '' }
+        { label: '免费版', price: '免费使用', icon: 'dimandgray' },
+        { label: '标准版', price: '999/月', btn: '', icon: 'dimandblue' },
+        { label: '高级版', price: '1499/月', btn: '', icon: 'dimandyellow' }
       ],
-      heights: []
+      heights: [],
+      y: ''
+    }
+  },
+  computed: {
+    top () {
+      return { transform: `translateY(${this.y}px)` }
     }
   },
   methods: {
-    collapsedetail (i) {
-      this.$refs.detail[i].style.height = '0px'
-      this.$refs.detailvalue[i].style.height = '0px'
+    collapsedetail (v) {
+      v.collapse = !v.collapse
     }
   },
   mounted () {
     this.$refs.detail.forEach((v, i) => {
       const height = v.getBoundingClientRect().height
       this.heights[i] = height
-      v.style.height = height + 'px'
-      // this.$refs.detailvalue[i].style.height = height + 'px'
+      this.$forceUpdate()
     })
-    console.log(this.$refs.detailvalue)
+    const offsetTop = this.$refs.priceTitle[0].getBoundingClientRect().top - this.$el.parentNode.getBoundingClientRect().top
+    this.$el.parentNode.addEventListener('scroll', (e) => {
+      this.y = Math.max(0, e.target.scrollTop - offsetTop)
+    })
   }
 }
 </script>
@@ -202,21 +218,43 @@ export default {
   }
   .s-title {
     height:5rem;
+    background:#fff;
   }
   .coll-title {
+    // border-bottom:1px solid #ddd;
     color: var(--prcol);
     padding: 0.2rem 0;
     line-height:2rem;
     height:2.4rem;
     &+div{
       overflow:hidden;
-      transition:all .6s;
+      transition:all .3s ease-in-out;
+    }
+    i{
+      transition:all .3s ease-in-out;
     }
   }
   .price{
     width:75%;
     >div{
-      flex:1
+      flex:1;
+      position: relative;
+    }
+    .level{
+      transition:transform .3s;
+      overflow: hidden;
+    }
+    .level:hover{
+      z-index:1;
+      // transform: scale(1.001);
+      box-shadow:0 1px 3px 1px rgba(0,0,0,.1)
+    }
+    .dimand{
+      height:1.2rem;
+      position:absolute;
+      top:.4rem;
+      left:4.6rem;
+      filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.3));
     }
     .buy{
       transform:translateY(-.2rem);
