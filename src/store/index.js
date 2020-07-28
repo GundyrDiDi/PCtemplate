@@ -93,7 +93,7 @@ function mapkeys (str, module = root) {
   if (str === 'mutations' || str === 'actions') {
     keys = keys.reduce((acc, key) => {
       // 只有_开头才是传递到组件中使用的方法
-      if (key.includes('_')) {
+      if (key.startsWith('_')) {
         acc[module.name + key] = key
       }
       return acc

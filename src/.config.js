@@ -44,9 +44,6 @@ export default {
     dimandblue: require('@/assets/img/vip/dimandblue.png'),
     dimandgray: require('@/assets/img/vip/dimandgray.png')
   },
-  paylist: {
-
-  },
   routes: [
     {
       path: '/home',
