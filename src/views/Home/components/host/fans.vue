@@ -26,6 +26,7 @@ export default {
     }
   }
   .race-chart{
+    margin-top:2rem;
     height:20rem;
     padding:0 5rem;
   }

@@ -3,12 +3,12 @@
     <div class="module-box flex-center">
       <date-pick :time.sync="time"></date-pick>
     </div>
-    <watch-charts class="module-box" :chartdata="charts.watch"></watch-charts>
-    <ring-chart class="module-box" :chartdata="charts.ring[0]"></ring-chart>
-    <ring-chart class="module-box" :chartdata="charts.ring[1]"></ring-chart>
-    <map-chart class="module-box" :chartdata="charts.map[0]"></map-chart>
-    <word-chart class="module-box" :chartdata="charts.keyword[0]"></word-chart>
-    <hybird-chart class="module-box" :chartdata="charts.hybird"></hybird-chart>
+    <watch-charts class="module-box" :chartdata="charts.watch" :condition="time"></watch-charts>
+    <ring-chart class="module-box" :chartdata="charts.ring[0]" :condition="time"></ring-chart>
+    <ring-chart class="module-box" :chartdata="charts.ring[1]" :condition="time"></ring-chart>
+    <map-chart class="module-box" :chartdata="charts.map[0]" :condition="time"></map-chart>
+    <word-chart class="module-box" :chartdata="charts.keyword[0]" :condition="time"></word-chart>
+    <hybird-chart class="module-box" :chartdata="charts.hybird[0]" :condition="time"></hybird-chart>
   </div>
 </template>
 
@@ -17,7 +17,7 @@ export default {
   name: '',
   data () {
     return {
-      time: [new Date(), new Date()]
+      time: [new Date(Date.now() - 90 * 24 * 60 * 60 * 1000), new Date()]
     }
   }
 }

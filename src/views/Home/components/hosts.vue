@@ -6,22 +6,39 @@
     >
       <div v-show="$route.name==='hosts'">
         <div class="module-box flex">
-          <div class="flex searchbox">
-            <el-input placeholder="搜索主播名称" v-model="hostWord"></el-input>
-            <el-button type="primary">搜索主播</el-button>
-          </div>
+            <input-suggestion class="searchbox"
+              placeholder="搜索主播名称"
+              itemName="anchorName"
+              btntext="搜索主播"
+              :request="request"
+              @search="search"
+            >
+              <template slot-scope="{ item }">
+                <div class="suggestions flex-ter">
+                  <img :src="'http:'+item.anchorImg" alt="">
+                  <div>
+                    <div>{{item.anchorName}}</div>
+                    <div>{{item.mechanismName}}</div>
+                  </div>
+                  <div>粉丝: {{item.fansNum}}</div>
+                  <el-tag>{{item.skilledField}}</el-tag>
+                </div>
+              </template>
+            </input-suggestion>
           <div class="flex-ter rich-filter">
             <el-button type="default" size="small" @click="showFilter=true">高级筛选器</el-button>
           </div>
         </div>
-        <rich-filter @update="filterLabel=$event" :show.sync="showFilter" :formrule="richFilter"></rich-filter>
+        <rich-filter
+        v-if="loaded"
+        @update="filterLabel=$event"
+        :show.sync="showFilter" :formrule="richFilter"></rich-filter>
         <transition
         enter-active-class="animated fadeIn faster"
         leave-active-class="animated fadeOut faster"
         >
-          <transition-group tag="div"
-          enter-active-class="animated zoomIn faster" leave-active-class="animated zoomOut faster"
-          class="module-box filter-label flex" v-if="filterLabel.length">
+          <transition-group tag="div" name="list"
+          class="module-box filter-label flex-wrap" v-if="filterLabel.length">
             <div v-for="(v,i) in filterLabel" :key="v.name" class="label">
               {{v.label}}：
               <div v-html="format(v)"></div>
@@ -29,7 +46,8 @@
             </div>
           </transition-group>
         </transition>
-        <table-paganation :condition="filterLabel" class="module-box hostslist" v-bind="hostslist"></table-paganation>
+        <table-paganation ref="table"
+        :condition="condition" class="module-box hostslist" v-bind="hostslist"></table-paganation>
       </div>
     </transition>
     <transition
@@ -42,26 +60,52 @@
 </template>
 
 <script>
+// 文三路553号浙江中小企业大厦1926室 0571-89714790 1506210402
 export default {
   name: 'hosts',
   data () {
     return {
-      hostWord: '',
+      trustWord: '',
       showFilter: false,
-      filterLabel: []
+      filterLabel: [],
+      loaded: false
+    }
+  },
+  computed: {
+    condition () {
+      return {
+        anchorName: this.trustWord,
+        ...this.filterLabel.reduce((acc, v) => {
+          acc[v.name] = {
+            type: v.component,
+            value: v.value,
+            base: v.attrs.base
+          }
+          return acc
+        }, {})
+      }
     }
   },
   methods: {
+    // suggestions
+    request (param) {
+      const { api } = this.hostslist
+      const condition = { ...this.condition, ...param }
+      return this.tables_getdata({ api, page: 1, size: 6, condition })
+    },
+    search (trustWord) {
+      this.$refs.table.resetParam()
+      this.trustWord = trustWord
+    },
     format (v) {
-      if (Array.isArray(v.value)) {
-        if (v.component === 'range') {
-          return v.value.map(v2 => v2 + v.attrs.unit).join(' - ')
-        } else if (v.component === 'select') {
-          return v.slot
-            .filter(v2 => v.value.some(v3 => v3 === v2.attrs.value))
-            .map(v => `<span>${v.attrs.label}</span>`)
-            .join('')
-        }
+      if (v.component === 'range') {
+        return v.value.map(v2 => v2 + v.attrs.unit).join(' - ')
+      } else if (v.component === 'select') {
+        const value = Array.isArray(v.value) ? v.value : [v.value]
+        return v.slot
+          .filter(v2 => value.some(v3 => v3 === v2.attrs.value))
+          .map(v => `<span>${v.attrs.label}</span>`)
+          .join('')
       }
     },
     removelabel (v, i) {
@@ -69,10 +113,29 @@ export default {
       this.filterLabel.splice(i, 1)
     }
   },
-  watch: {
-    filterLabel (v) {
-      console.log(v)
+  async mounted () {
+    this.$refs.table.request()
+    if (!this.richFilter.loaded) {
+      await this.forms_getrange().then(data => {
+        this.richFilter.forEach(v => {
+          const res = data[v.name]
+          if (v.type === 'slot') {
+            const attrs = v.slot.attrs
+            v.slot = res.map(item => ({
+              component: v.slot.component,
+              attrs: Object.entries(attrs).reduce((acc, [k, v]) => {
+                const prop = v in item ? v : k
+                acc[k] = item[prop]
+                return acc
+              }, {})
+            }))
+          } else if (v.type === 'attrs') {
+            v.attrs = v.pipe(res)
+          }
+        })
+      })
     }
+    this.loaded = this.richFilter.loaded = true
   }
 }
 </script>
@@ -96,6 +159,16 @@ export default {
 }
 .hostslist {
   min-height: 60vh;
+}
+.suggestions{
+  font-size:var(--xxsfont);
+  line-height:1rem;
+  justify-content: space-around;
+  padding:0.2rem 0;
+  img{
+    width:2rem;
+    border-radius:50%;
+  }
 }
 </style>
 <style lang="less">
@@ -134,6 +207,21 @@ export default {
     &:hover {
       opacity: 1;
     }
+  }
+  .list-enter-active,
+  .list-leave-active {
+    transition: all .6s;
+  }
+  .list-enter,
+  .list-leave-to {
+    opacity: 0;
+    transform: scale(0);
+  }
+  .list-move {
+    transition: all .6s;
+  }
+  .list-leave-active {
+    position: absolute;
   }
 }
 </style>

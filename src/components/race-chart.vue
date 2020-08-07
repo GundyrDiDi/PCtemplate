@@ -31,7 +31,7 @@ export default {
     },
     async getdata () {
       this.l = true
-      const data = await this.chart_getdata(this.chartdata)
+      const data = await this.chart_getkeydata(this.chartdata)
       this.l = false
       this.ct.clear()
       this.option.yAxis = {
@@ -53,7 +53,7 @@ export default {
       }
     }
     this.option = {
-      color: '#07a2a4',
+      color: ['#0E7CE2', '#FF8352', '#E271DE', '#F8456B', '#00FFFF', '#4AEAB0'],
       tooltip: {
         trigger: 'axis',
         axisPointer: {
@@ -64,7 +64,7 @@ export default {
         left: '3%',
         right: '3%',
         bottom: '5%',
-        top: '12%',
+        top: '6%',
         // 是否包括坐标轴上的label
         containLabel: true
       },

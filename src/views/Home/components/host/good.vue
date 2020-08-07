@@ -1,6 +1,6 @@
 <template>
   <div>
-    <table-paganation v-bind="hostgood"></table-paganation>
+    <table-paganation ref="table" v-bind="hostgood" :condition="{}"></table-paganation>
   </div>
 </template>
 
@@ -9,6 +9,9 @@ export default {
   name: 'good',
   data () {
     return {}
+  },
+  mounted () {
+    this.$refs.table.request()
   }
 }
 </script>

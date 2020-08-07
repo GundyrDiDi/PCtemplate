@@ -7,30 +7,58 @@
         v-model="time"
         type="month"
         size="small"
+        value-format="yyyy-MM"
         placeholder="选择月">
       </el-date-picker>
-      <div class="flex searchbox">
-            <el-input size="small" placeholder="搜索机构或主播" v-model="insWord"></el-input>
-            <el-button size="small" type="primary">搜索</el-button>
-      </div>
+        <input-suggestion class="searchbox"
+          size="small"
+          placeholder="搜索机构或主播"
+          itemName="mechanismName"
+          :request="request"
+          @search="search"
+        >
+          <div class="suggestions flex-ter" slot-scope="{ item }">
+            <img :src="item.mechanismLogo"/>
+            <div>{{item.mechanismName}}</div>
+            <el-tag type="success">{{item.mechanismScore}}分</el-tag>
+          </div>
+        </input-suggestion>
     </div>
-    <table-paganation class="module-box inslist" :condition="condition" v-bind="inslist"></table-paganation>
+    <table-paganation ref="table" class="module-box inslist" :condition="condition" v-bind="inslist"></table-paganation>
   </div>
 </template>
 
 <script>
+// import { formatDate } from '@/plugins/util'
 export default {
   name: 'inst',
   data () {
     return {
-      insWord: '',
-      time: new Date()
+      trustWord: '',
+      time: '' // formatDate(new Date(), 'yyyy-MM')
     }
   },
   computed: {
     condition () {
-      return { month: this.time }
+      return {
+        monthId: this.time,
+        mechanismName: this.trustWord
+      }
     }
+  },
+  methods: {
+    request (param) {
+      const { api } = this.inslist
+      const condition = { ...this.condition, ...param }
+      return this.tables_getdata({ api, page: 1, size: 6, condition })
+    },
+    search (trustWord) {
+      this.$refs.table.resetParam()
+      this.trustWord = trustWord
+    }
+  },
+  mounted () {
+    this.$refs.table.request()
   }
 }
 </script>
@@ -44,12 +72,23 @@ export default {
     width:7rem;
   }
   .searchbox{
-    width:16rem;
+    width:18rem;
     font-size:var(--xs2font);
   }
 }
 .module-box{
   margin-bottom:1rem;
+}
+.suggestions{
+  font-size:var(--xxsfont);
+  line-height:1rem;
+  justify-content: space-around;
+  padding:0.2rem 0;
+  img{
+    width:2rem;
+    margin:2px 5px;
+    border-radius:50%;
+  }
 }
 </style>
 <style lang="less">
@@ -60,13 +99,6 @@ export default {
     }
     .el-button {
       border-radius: 0 4px 4px 0;
-    }
-  }
-  //表格列class
-  .text-center{
-    >div{
-      width:100%;
-      text-align: center;
     }
   }
 </style>

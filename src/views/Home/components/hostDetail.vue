@@ -6,7 +6,7 @@
       </el-breadcrumb>
     </template>
     <template class="content" v-for="v in hostDisplay" v-slot:[v.name]>
-      <component class="module-box" :key="v.name" :is="v.component"></component>
+      <component class="module-box" :key="v.name" :is="v.component" v-bind="v"></component>
     </template>
   </anchor-menu>
 </template>
@@ -17,15 +17,22 @@ export default {
   data () {
     return {
       index: 0,
-      top: 0
+      top: 0,
+      crumb: []
     }
   },
-  computed: {
-    crumb () {
-      const match = this.myroute.history.slice(-2)
-      match[match.length - 1].meta.title = this.actHost.name
-      return match
+  watch: {
+    hostName () {
+      this.crumb[this.crumb.length - 1].meta.title = this.hostName
     }
+  },
+  created () {
+    if (this.$route.params.host_id) {
+      localStorage.host_id = this.$route.params.host_id
+    }
+    this.$store.commit('host/hostId', localStorage.host_id)
+    const match = this.myroute.history.slice(-2)
+    this.crumb = match.length === 1 ? match[0].matched.slice(-2) : match
   }
 }
 </script>

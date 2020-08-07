@@ -31,6 +31,7 @@ const modules = everyStore(root)
 modules.forEach(bindMutations)
 
 const store = new Vuex.Store(root)
+
 const _registerModule = store.registerModule
 store.registerModule = function (module) {
   bindMutations(module)

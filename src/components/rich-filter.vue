@@ -12,7 +12,8 @@
         <el-form-item v-for="v in formrule" :key="v.name"
         :label="v.label"
         :prop="v.name">
-          <component v-model="form[v.name]"
+          <component
+          v-model="form[v.name]"
           :is="'el-'+v.component"
           v-bind="v.attrs">
             <template v-if="Array.isArray(v.slot)">
@@ -39,8 +40,6 @@
 </template>
 
 <script>
-// import host from '@/views/Home'
-// console.log(host)
 export default {
   name: 'rich-filter',
   props: ['show', 'formrule'],
@@ -68,47 +67,23 @@ export default {
       this.reset()
     }
   },
-  created () {
-    this.updateformrule(this.formrule)
-    this.reset()
-  },
   methods: {
-    async updateformrule (formrule) {
-      await Promise.all(formrule.map(v => {
-        if (!v.responed) {
-          return this.forms_getdata(v).then(res => {
-            v.responed = true
-            if (v.type === 'slot') {
-              res = Array.isArray(res) ? res : [res]
-              const attrs = v.slot.attrs
-              v.slot = res.map(item => ({
-                component: v.slot.component,
-                attrs: Object.entries(attrs).reduce((acc, [k, v]) => {
-                  const prop = v in item ? v : k
-                  acc[k] = item[prop]
-                  return acc
-                }, {})
-              }))
-            } else if (v.type === 'attrs') {
-              v.attrs = v.pipe(res)
-            }
-          })
-        }
-      }))
-      this.$emit('update', this.formrule.filter(v => v.value))
-    },
     check () {
       this.formrule.forEach(v => {
         if (v.component === 'range') {
           const [min, max] = this.form[v.name]
           if (min === v.attrs.min && max === v.attrs.max) {
-            return undefined
+            v.value = undefined
+            return
           }
           v.value = this.form[v.name]
         } else if (v.component === 'select') {
           const value = this.form[v.name]
-          if (value.length === v.slot.length || !value.length) {
-            return undefined
+          if (v.attrs.multiple) {
+            if (value.length === v.slot.length || !value.length) {
+              v.value = undefined
+              return
+            }
           }
           v.value = value
         } else if (this.form[v.name]) {
@@ -124,6 +99,9 @@ export default {
         return acc
       }, {})
     }
+  },
+  created () {
+    this.reset()
   }
 }
 </script>
@@ -160,10 +138,10 @@ footer{
 </style>
 <style>
   .rich .ivu-modal{
-    min-width:760px;
+    min-width:860px;
   }
   .el-form-item>label{
-    font-size:var(--xsfont);
+    font-size:var(--xs2font);
     /* text-align: center; */
   }
   .el-form-item:nth-child(odd)>label{

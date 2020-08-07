@@ -18,7 +18,7 @@
         <el-button
           size="small"
           v-for="v in buttons"
-          :key="v.nam"
+          :key="v.name"
           :type="v===btn?'primary':'default'"
           @click="quicksetvalue(v)"
         >{{v.name}}</el-button>
@@ -28,6 +28,7 @@
 </template>
 
 <script>
+import { formatDate } from '@/plugins/util.js'
 export default {
   name: 'date-pick',
   props: ['time'],
@@ -45,7 +46,7 @@ export default {
                 callback(new Error('请选择时间范围！'))
               } else if (start instanceof Date) {
                 callback()
-                this.$emit('update:time', value)
+                this.$emit('update:time', value.map(v => formatDate(v, this.format)))
               } else if (
                 new Date(end).toDateString() === new Date().toDateString()
               ) {
@@ -57,6 +58,8 @@ export default {
                 this.btn = null
                 if (Date.parse(start) > Date.now() || Date.parse(end) > Date.now()) {
                   callback(new Error('选择的时间范围大于当前日期！'))
+                } else {
+                  this.$emit('update:time', value)
                 }
               }
             },

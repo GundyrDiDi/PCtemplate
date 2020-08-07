@@ -32,9 +32,21 @@ export function throttle (fn, time) {
     if (exec) {
       fn.call(this, ...rest)
       exec = false
+      setTimeout(e => {
+        exec = true
+      }, time)
     }
-    setTimeout(e => {
-      exec = true
+  }
+}
+
+export function debounce (fn, time) {
+  let timer
+  return function (...rest) {
+    if (timer) {
+      clearTimeout(timer)
+    }
+    timer = setTimeout(e => {
+      fn.call(this, ...rest)
     }, time)
   }
 }
@@ -59,7 +71,28 @@ export function colorRGBtoHex (rgb) {
 export function formatNumber (num) {
   return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
 }
-
+export function addNumberUnit (
+  num,
+  units = [
+    { value: '万', wei: 4 },
+    { value: '亿', wei: 8 }
+  ],
+  exceed = 1
+) {
+  const str = parseInt(num).toString()
+  const unit = units.reverse().find(v => {
+    return str.slice(exceed).length / v.wei >= 1
+  })
+  if (unit) {
+    return (
+      (num / 10 ** unit.wei).toFixed(2).replace(/\.0{1,2}$/, '') + unit.value
+    )
+  } else {
+    return Number(num)
+      .toFixed(2)
+      .replace(/\.0{1,2}$/, '')
+  }
+}
 export function mergeObject (obj1, obj2) {
   return Object.entries(obj1).reduce((obj2, [key, value]) => {
     if (key in obj2) {
@@ -72,12 +105,60 @@ export function mergeObject (obj1, obj2) {
     return obj2
   }, obj2)
 }
-export function limitRequest (ajax, apis, limit = 10) {}
+export function arraytoObject (arr, prop) {
+  return arr.reduce((acc, v) => {
+    acc[v[prop]] = v
+    return acc
+  }, {})
+}
+export function limitRequest (ajax, apis, limit = 10) {
+  const head = apis.slice(0, limit)
+  const rest = apis.slice(limit)
+  const fn = res => {
+    if (rest.length > 0) {
+      return ajax(rest.shift()).then(fn)
+    } else {
+      return res
+    }
+  }
+  return Promise.all(head.map(api => ajax(api).then(fn)))
+}
 
 export function numberRange (val, min, max) {
   return Math.max(min, Math.min(val, max))
 }
 
+/* 搬运 */
+export function formatDate (date, fmt) {
+  if (/(y+)/.test(fmt)) {
+    fmt = fmt.replace(
+      RegExp.$1,
+      (date.getFullYear() + '').substr(4 - RegExp.$1.length)
+    )
+  }
+  const padLeftZero = str => {
+    return ('00' + str).substr(str.length)
+  }
+  const o = {
+    'M+': date.getMonth() + 1,
+    'd+': date.getDate(),
+    'h+': date.getHours(),
+    'm+': date.getMinutes(),
+    's+': date.getSeconds()
+  }
+  for (const k in o) {
+    if (new RegExp(`(${k})`).test(fmt)) {
+      const str = o[k] + ''
+      fmt = fmt.replace(
+        RegExp.$1,
+        RegExp.$1.length === 1 ? str : padLeftZero(str)
+      )
+    }
+  }
+  return fmt
+}
+
+/* not standard */
 export function calcRange ({ min, max }, props = {}) {
   const units = ['', '万', '亿']
   let step = parseInt((max - min) / 1).toString()

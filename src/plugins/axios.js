@@ -10,7 +10,7 @@ import { wait } from '@/plugins/util'
 // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
 const config = {
-  baseURL: process.env.baseURL || process.env.apiUrl || '',
+  baseURL: process.env.baseURL || process.env.apiUrl || api.baseURL,
   timeout: 60 * 1000 // Timeout
   // withCredentials: true, // Check cross-site Access-Control
 }
@@ -34,18 +34,21 @@ _axios.interceptors.request.use(
     await wait(500)
     const { method, url } = config
     let data = {}
-    const last = [method, ...url.split('/')].reduce((acc, v) => {
-      if (acc._params) {
-        data = { ...data, ...acc._params }
+    let _url = ''
+    url.split('/').reduce((acc, v) => {
+      if (typeof acc[v]._params === 'function') {
+        data = { ...data, ...acc[v]._params() }
+      }
+      if (acc[v].url) {
+        _url = acc[v].url
       }
       return acc[v]
-    }, api)
+    }, api[method])
     config[method === 'post' ? 'data' : 'params'] = {
       ...data,
-      ...last._params,
       ...(method === 'post' ? config.data : config.params)
     }
-    config.url = last.url
+    config.url = _url
     console.log(config)
     // Do something before request is sent
     return config

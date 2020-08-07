@@ -1,4 +1,28 @@
 import { calcRange } from '@/plugins/util'
+export const MAP = {
+  hosttype: {
+    1: '达人无店铺',
+    2: '达人有店铺',
+    3: '商家'
+  },
+  hostlevel: {
+    1: 'Lv 1',
+    2: 'Lv 2',
+    3: 'Lv 3',
+    4: 'Lv 4',
+    5: 'Lv 5'
+  },
+  //
+  liveTitle: 'liveinfo',
+  startTime: 'livetime',
+  addFansNum: 'fansofraise',
+  goodsCnt: 'goodnum',
+  salesAmt: 'money',
+  saleQty: 'amount',
+  perSalePrice: 'price',
+  liveImg: 'img',
+  videoId: 'link'
+}
 export default {
   user: {
     name: 'CHENFAN',
@@ -64,214 +88,255 @@ export default {
       redirect: to => ({ name: 'follow' })
     }
   ],
-  api: {
-    baseUrl: '',
-    get: {
-      charts: {
-        watch: {
-          uvpv: {
-            url: 'uvpv'
-          },
-          shownum: {
-            url: 'shownum'
-          },
-          hostnum: {
-            url: ''
-          },
-          goodnum: {
-            url: ''
-          }
-        },
-        hostvalue: {},
-        fanspicture: {},
-        ring: {
-          typeofhost: {
-            url: 'typeofhost'
-          },
-          levelofhost: {
-            url: 'levelofhost'
-          }
-        },
-        map: {
-          district: {
-            url: 'district'
-          }
-        },
-        keyword: {
-          roomtitle: {
-            url: 'roomtitle'
-          }
-        }
-      },
-      form: {
-        range: {
-          default: {
-            url: 'range'
-          }
-        },
-        options: {
-          default: {
-            url: 'options'
-          },
-          catalog: {
-            url: 'catalog'
-          }
-        }
-      },
-      tables: {
-        hostslist: {
-          url: 'hostslist'
-        },
-        hostrecord: {
-          url: 'hostrecord'
-        }
-      },
-      user: {
-        followlist: {
-          url: 'followlist'
-        }
-      },
-      host: {
-        search: {
-          url: 'hostslist'
-        }
-      }
-    },
-    post: {}
-  },
   charts: {
     watch: [
       {
         title: '观看人数(UV)/观看次数(PV)',
         name: 'uvpv',
-        api: 'charts/watch/uvpv'
+        api: 'charts/watch',
+        props: ['uv', 'pv']
       },
       {
         title: '开播场次/开播主播数',
         name: 'shownum',
-        api: 'charts/watch/shownum'
+        api: 'charts/watch',
+        props: ['liveCnt', 'anchorsCnt']
       },
       {
         title: '新增主播数/总主播数',
         name: 'hostnum',
-        api: 'charts/watch/hostnum'
+        api: 'charts/watch',
+        props: ['addAnchorsCnt', 'allAnchorsCnt']
       },
       {
         title: '直播商品数/品牌数',
         name: 'goodnum',
-        data: 'charts/watch/goodnum'
+        api: 'charts/watch',
+        props: ['goodsCnt', 'brandsCnt']
       }
     ],
     hostvalue: [
       {
         title: '粉丝变化趋势',
         name: 'fansflow',
-        api: 'charts/watch/uvpv'
+        api: 'host/value',
+        names: '新增粉丝数/总粉丝数',
+        props: ['addFansNum', 'fansNum']
       },
       {
         title: '观看UV/观看PV',
         name: 'uvpv',
-        api: 'charts/watch/shownum'
+        api: 'host/value',
+        props: ['totalUv', 'totalPv']
       },
       {
         title: '点赞数',
         name: 'favonum',
-        api: 'charts/watch/hostnum'
+        api: 'host/value',
+        props: ['totalPraiseNum']
       },
       {
         title: '评论数',
         name: 'commentnum',
-        data: 'charts/watch/goodnum'
+        api: 'host/value',
+        props: ['totalCommentNum']
       },
       {
         title: '销售额(估)/销量(估)',
         name: 'moneyamount',
-        data: 'charts/watch/goodnum'
+        api: 'host/value',
+        props: ['totalSaleAmt', 'totalSaleQty']
       }
     ],
     bar: {},
     fanspicture: [
-      { title: '性别比例', name: 'fansgender', api: 'charts/ring/typeofhost' },
-      { title: '年龄分布', name: 'fansage', api: 'charts/ring/typeofhost' },
-      { title: '消费偏好', name: 'fanscost', api: 'charts/ring/typeofhost' },
-      { title: '生活偏好', name: 'fanshobby', api: 'charts/ring/typeofhost' },
-      { title: '城市分布', name: 'fansdistrct', api: 'charts/map/district' }
+      {
+        title: '性别比例',
+        name: 'fansgender',
+        api: 'charts/fanspicture/gender',
+        props: {
+          name: {
+            label: 'attribute'
+          },
+          value: {
+            label: 'value'
+          }
+        }
+      },
+      {
+        title: '年龄分布',
+        name: 'fansage',
+        api: 'charts/fanspicture/age',
+        props: {
+          name: {
+            label: 'attribute'
+          },
+          value: {
+            label: 'value'
+          }
+        }
+      },
+      {
+        title: '消费偏好',
+        name: 'fanscost',
+        api: 'charts/fanspicture/career',
+        props: {
+          name: {
+            label: 'attribute'
+          },
+          value: {
+            label: 'value'
+          }
+        }
+      },
+      {
+        title: '生活偏好',
+        name: 'fanshobby',
+        api: 'charts/fanspicture/interest',
+        props: {
+          name: {
+            label: 'attribute'
+          },
+          value: {
+            label: 'value'
+          }
+        }
+      },
+      {
+        title: '城市分布',
+        name: 'fansdistrct',
+        api: 'charts/fanspicture/area',
+        props: {
+          name: {
+            label: 'attribute'
+          },
+          value: {
+            label: 'value'
+          }
+        }
+      }
     ],
     ring: [
       {
         title: '主播类型',
         name: 'typeofhost',
-        api: 'charts/ring/typeofhost'
+        api: 'charts/ring/typeofhost',
+        props: {
+          name: {
+            label: 'anchorType',
+            map: ['', '达人无店铺', '达人有店铺', '商家']
+          },
+          value: {
+            label: 'anchorTypeNum'
+          },
+          unit: '位'
+        }
       },
       {
         title: '主播等级分布',
         name: 'levelofhost',
-        api: 'charts/ring/levelofhost'
+        api: 'charts/ring/levelofhost',
+        props: {
+          name: {
+            label: 'anchorRank',
+            map: ['', 'Lv1', 'Lv2', 'Lv3', 'Lv4', 'Lv5']
+          },
+          value: {
+            label: 'anchorRankNum'
+          },
+          unit: '位'
+        }
       }
     ],
     map: [
       {
         title: '直播间地区分布',
         name: 'district',
-        api: 'charts/map/district'
+        api: 'charts/map/district',
+        props: {
+          name: {
+            label: 'liveRoomArea'
+          },
+          value: {
+            label: 'liveCnt'
+          }
+        }
       }
     ],
     keyword: [
       {
         title: '直播间标题词云分布',
         name: 'roomtitle',
-        api: 'charts/keyword/roomtitle'
+        api: 'charts/keyword/roomtitle',
+        props: {
+          name: {
+            label: 'keyWords'
+          },
+          value: {
+            label: 'keyWordsCnt'
+          }
+        }
       }
     ],
     hybird: [
       {
         title: '直播流量分析',
-        name: 'roteofflow',
-        api: 'charts/keyword/roteofflow'
+        name: 'liveofflow',
+        api: 'charts/liveofflow',
+        props: {
+          skilledField: () => ({ type: 'xAxis', name: '领域' }),
+          liveCnt: () => ({ type: 'line', name: '直播场次' }),
+          totalPv: () => ({ type: 'bar', name: '观看次数(PV)' }),
+          totalUv: () => ({ type: 'bar', name: '观看人数(UV)' })
+        }
       }
     ]
   },
   tables: {
     hostslist: {
-      param: {
-        sort: {
-          key: '',
-          order: 0
-        },
-        size: 1,
-        sizeOpts: [1, 2, 3, 4],
-        page: 1
-      },
       events: {
-        follow (row, column) {},
-        detail (row, column) {
-          this.$store.commit('host/actHost', row)
-          this.$router.push({ name: 'hostDetail' })
+        follow ({ row }) {},
+        detail ({ row }) {
+          this.$router.push({ name: 'hostDetail', params: { host_id: row.id } })
         }
       },
       api: 'tables/hostslist',
       column: [
-        { key: 'name', title: '主播名称' },
-        { key: 'fansnum', title: '粉丝数', sortable: true },
-        { key: 'favonum', title: '最爱TA', sortable: true },
-        { key: 'prainum', title: '点赞数', sortable: true },
-        { key: 'district', title: '所属区域' },
-        { key: 'type', title: '主播类型' },
-        { key: 'goodat', title: '擅长领域' },
         {
-          key: 'money30day',
+          key: 'anchorName',
+          title: '主播信息',
+          custom: [
+            {
+              tag: 'img',
+              src: 'anchorImg',
+              props: {
+                size: 'large'
+              }
+            },
+            { tag: 'span', text: 'anchorName' }
+          ],
+          width: 180
+        },
+        { key: 'fansNum', title: '粉丝数', sortable: true, width: 100 },
+        { key: 'favorNum', title: '最爱TA', sortable: true, width: 100 },
+        { key: 'totalPraiseNum', title: '点赞数', sortable: true, width: 100 },
+        { key: 'anchorArea', title: '所属区域', width: 100 },
+        { key: 'anchorType', title: '主播类型', width: 100 },
+        { key: 'skilledField', title: '擅长领域', width: 100 },
+        {
+          key: 'saleAmtPerLive_30d',
           title: '近30天销售额(估)',
           sortable: true,
           width: 150
         },
         {
-          key: 'amount30day',
+          key: 'saleQtyPerLive_30d',
           title: '近30天销量(估)',
           sortable: true,
           width: 150
         },
         {
-          key: 'price30day',
+          key: 'pvPerLive_30d',
           title: '近30天客单价(估)',
           sortable: true,
           width: 150
@@ -279,6 +344,7 @@ export default {
         {
           key: 'action',
           title: '操作',
+          width: 100,
           action: [
             {
               event: 'follow',
@@ -297,22 +363,29 @@ export default {
       ]
     },
     hostrecord: {
-      param: {
-        sort: {
-          key: '',
-          order: 0
-        },
-        size: 10,
-        sizeOpts: [10],
-        page: 1
-      },
       events: {
-        playlive () {}
+        playlive (row, column) {
+          window.open(row.link)
+        }
       },
-      api: 'tables/hostrecord',
+      api: 'host/record',
       column: [
-        { key: 'liveinfo', title: '直播信息' },
-        { key: 'livetime', title: '直播时间' },
+        {
+          key: 'liveinfo',
+          title: '直播信息',
+          width: 240,
+          custom: [
+            {
+              tag: 'img',
+              src: 'img',
+              props: {
+                size: 'large'
+              }
+            },
+            { tag: 'span', text: 'liveinfo' }
+          ]
+        },
+        { key: 'livetime', title: '直播时间', width: 200 },
         { key: 'uv', title: 'UV' },
         { key: 'pv', title: 'PV' },
         { key: 'fansofraise', title: '直播涨粉' },
@@ -335,87 +408,98 @@ export default {
       ]
     },
     hostgood: {
-      param: {
-        sort: {
-          key: '',
-          order: 0
-        },
-        size: 10,
-        sizeOpts: [10],
-        page: 1
-      },
-      events: {
-        playlive () {}
-      },
-      api: 'tables/hostrecord',
+      api: 'host/good',
       column: [
-        { key: 'goodname', title: '商品' },
-        { key: 'brand', title: '品牌' },
-        { key: 'livenum', title: '直播次数', sortable: true },
-        { key: 'liveamount', title: '直播销量(估)', sortable: true },
-        { key: 'livemoney', title: '直播销售额(估)', sortable: true },
-        { key: 'relativehost', title: '关联主播数', sortable: true },
-        { key: 'relativelive', title: '关联直播数', sortable: true },
-        { key: 'goodamount', title: '累计直播销量(估)', sortable: true },
-        { key: 'goodmoney', title: '累计直播销售额(估)', sortable: true }
+        {
+          key: 'taobaoGoodsName',
+          title: '商品',
+          custom: [
+            {
+              tag: 'img',
+              src: 'goodsImg'
+            },
+            { tag: 'span', text: 'taobaoGoodsName' }
+          ],
+          width: 300
+        },
+        { key: 'brandName', title: '品牌' },
+        { key: 'liveCnt', title: '直播次数', sortable: true },
+        { key: 'saleQty', title: '直播销量(估)', sortable: true },
+        { key: 'saleAmt', title: '直播销售额(估)', sortable: true },
+        { key: 'rel_anchorsCnt', title: '关联主播数', sortable: true },
+        { key: 'rel_liveCnt', title: '关联直播数', sortable: true },
+        { key: 'totalSaleQty', title: '累计直播销量(估)', sortable: true },
+        { key: 'totalSaleAmt', title: '累计直播销售额(估)', sortable: true }
       ]
     },
     inslist: {
-      param: {
-        sort: {
-          key: '',
-          order: 0
-        },
-        size: 10,
-        sizeOpts: [10, 20, 30, 40],
-        page: 1
+      events: {
+        detail (id) {
+          this.$router.push({ name: 'hostDetail', params: { host_id: id } })
+        }
       },
-      api: 'tables/hostrecord',
+      api: 'tables/inslist',
       column: [
-        { key: 'insinfo', title: '机构信息', width: 300 },
-        { key: 'insscore', title: '机构得分', sortable: true },
-        { key: 'fansnum', title: '覆盖粉丝数量', sortable: true },
-        { key: 'amountgood', title: '合作商品数', sortable: true },
-        { key: 'amountshop', title: '合作店铺数', sortable: true },
         {
-          key: 'amounthost',
+          key: 'mechanismName',
+          title: '机构信息',
+          width: 240,
+          custom: [
+            {
+              tag: 'img',
+              src: 'mechanismLogo',
+              props: {
+                size: 'large'
+              }
+            },
+            { tag: 'span', text: 'mechanismName' }
+          ]
+        },
+        { key: 'mechanismScore', title: '机构得分', sortable: true },
+        { key: 'mechanismFansNum', title: '覆盖粉丝数量', sortable: true },
+        { key: 'mechanismGoodsCnt', title: '合作商品数', sortable: true },
+        { key: 'mechanismShopsCnt', title: '合作店铺数', sortable: true },
+        {
+          key: 'anchorInfoDtos',
           title: '旗下大咖',
-          width: 350,
-          className: 'text-center'
+          width: 250,
+          async: {
+            event: 'detail',
+            tooltip: 'anchorName',
+            el: {
+              tag: 'img',
+              src: 'anchorImg',
+              on: 'click',
+              param: 'anchorId'
+            }
+          }
         }
       ]
     },
     goodslist: {
-      param: {
-        sort: {
-          key: 'livemoney',
-          order: 0
-        },
-        size: 10,
-        sizeOpts: [10, 20, 30, 40],
-        page: 1
-      },
-      api: 'tables/hostrecord',
+      api: 'tables/goodlist',
       column: [
-        { key: 'goodname', title: '商品', width: 350 },
-        { key: 'catalog1', title: '一级类目' },
+        {
+          key: 'taobaoGoodsName',
+          title: '商品',
+          custom: [
+            {
+              tag: 'img',
+              src: 'goodsImg'
+            },
+            { tag: 'span', text: 'taobaoGoodsName' }
+          ],
+          width: 300
+        },
+        { key: 'rootCategoryName', title: '一级类目' },
         { key: 'brand', title: '品牌' },
-        { key: 'brand', title: '关联主播数', sortable: true },
-        { key: 'livenum', title: '关联直播数', sortable: true },
-        { key: 'liveamount', title: '直播销量(估)', sortable: true },
-        { key: 'livemoney', title: '直播销售额(估)', sortable: true }
+        { key: 'anchorsCnt', title: '关联主播数', sortable: true },
+        { key: 'liveCnt', title: '关联直播数', sortable: true },
+        { key: 'totalSaleQty', title: '直播销量(估)', sortable: true },
+        { key: 'totalSaleAmt', title: '直播销售额(估)', sortable: true }
       ]
     },
     livelist: {
-      param: {
-        sort: {
-          key: 'livemoney',
-          order: 0
-        },
-        size: 10,
-        sizeOpts: [10, 20, 30, 40],
-        page: 1
-      },
       api: 'tables/hostrecord',
       column: [
         { key: 'liveinfo', title: '直播信息', width: 250 },
@@ -433,8 +517,7 @@ export default {
   forms: {
     richFilter: [
       {
-        api: 'form/range/default',
-        name: 'fansnum',
+        name: 'fansNum',
         label: '粉丝数量',
         rule: [],
         component: 'range',
@@ -447,8 +530,7 @@ export default {
         pipe: calcRange
       },
       {
-        api: 'form/range/default',
-        name: 'showcount',
+        name: 'liveCnt',
         label: '开播场次',
         rule: [],
         component: 'range',
@@ -461,8 +543,7 @@ export default {
         pipe: calcRange
       },
       {
-        api: 'form/range/default',
-        name: 'money30day',
+        name: 'saleAmtPerLive_30d',
         label: '近30天销售额(估)',
         rule: [],
         component: 'range',
@@ -475,8 +556,7 @@ export default {
         pipe: calcRange
       },
       {
-        api: 'form/range/default',
-        name: 'amount30day',
+        name: 'saleQtyPerLive_30d',
         label: '近30天销量(估)',
         rule: [],
         component: 'range',
@@ -489,9 +569,8 @@ export default {
         pipe: calcRange
       },
       {
-        api: 'form/range/default',
-        name: 'watch7day',
-        label: '近7天场均观看次数',
+        name: 'pvPerLive_30d',
+        label: '近30天场均观看次数',
         rule: [],
         component: 'range',
         attrs: {
@@ -503,8 +582,7 @@ export default {
         pipe: calcRange
       },
       {
-        api: 'form/range/default',
-        name: 'price30day',
+        name: 'perSalePricePerLive_30d',
         label: '近30天客单价(估)',
         rule: [],
         component: 'range',
@@ -517,9 +595,8 @@ export default {
         pipe: calcRange
       },
       {
-        api: 'form/range/default',
-        name: 'comment7day',
-        label: '近7天场均评论数',
+        name: 'commentNumPerLive_30d',
+        label: '近30天场均评论数',
         rule: [],
         component: 'range',
         attrs: {
@@ -531,9 +608,8 @@ export default {
         pipe: calcRange
       },
       {
-        api: 'form/range/default',
-        name: 'praise7day',
-        label: '近7天场均点赞数',
+        name: 'praiseNumPerLive_30d',
+        label: '近30天场均点赞数',
         rule: [],
         component: 'range',
         attrs: {
@@ -545,14 +621,12 @@ export default {
         pipe: calcRange
       },
       {
-        value: [1, 2, 3, 4],
-        api: 'form/options/default',
-        name: 'typeofhost',
+        name: 'type',
         label: '播主类型',
         rule: [],
         component: 'select',
         attrs: {
-          multiple: true
+          multiple: false
         },
         type: 'slot',
         slot: {
@@ -564,13 +638,12 @@ export default {
         }
       },
       {
-        api: 'form/options/default',
-        name: 'district',
+        name: 'area',
         label: '所属地区',
         rule: [],
         component: 'select',
         attrs: {
-          multiple: true
+          multiple: false
         },
         type: 'slot',
         slot: {
@@ -582,13 +655,12 @@ export default {
         }
       },
       {
-        api: 'form/options/default',
-        name: 'levelofhost',
+        name: 'level',
         label: '播主等级',
         rule: [],
         component: 'select',
         attrs: {
-          multiple: true
+          multiple: false
         },
         type: 'slot',
         slot: {
@@ -600,13 +672,12 @@ export default {
         }
       },
       {
-        api: 'form/options/default',
-        name: 'goodat',
+        name: 'skilledField',
         label: '擅长领域',
         rule: [],
         component: 'select',
         attrs: {
-          multiple: true
+          multiple: false
         },
         type: 'slot',
         slot: {
@@ -713,18 +784,20 @@ export default {
       }
     ],
     catalog: {
-      api: 'form/options/catalog',
+      api: 'forms/catalog/first',
       label: '一级类目',
-      name: 'catalog1',
+      name: 'rootCategoryName',
+      value: '',
       attrs: {
         mode: [0, 1]
       }
     },
     goodrelative: [
       {
-        api: 'form/range/default',
-        label: '关注主播数量',
-        name: 'relativehost',
+        label: '关联主播数量',
+        name: 'anchorsCnt',
+        component: 'range',
+        value: [0, 9999],
         attrs: {
           value: [0, 9999],
           min: -Infinity,
@@ -734,9 +807,10 @@ export default {
         pipe: calcRange
       },
       {
-        api: 'form/range/default',
-        label: '关注直播数量',
-        name: 'relativelive',
+        label: '关联直播数量',
+        name: 'liveCnt',
+        component: 'range',
+        value: [0, 9999],
         attrs: {
           value: [0, 9999],
           min: -Infinity,
@@ -761,7 +835,7 @@ export default {
       meta: { title: '主播', icon: 'icon-ren' },
       children: [
         {
-          path: '/home/hosts/detail',
+          path: '/home/hosts/detail/:host_id',
           name: 'hostDetail',
           component: () => import('@/views/Home/components/hostDetail.vue'),
           meta: { title: '主播详情', second: true }

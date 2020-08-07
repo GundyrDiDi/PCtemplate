@@ -11,7 +11,7 @@
 <script>
 export default {
   name: 'word-chart',
-  props: ['chartdata'],
+  props: ['chartdata', 'condition'],
   data () {
     return {
       l: false,
@@ -22,8 +22,11 @@ export default {
     chartdata: {
       handler () {
         this.getdata()
-      },
-      immediate: true
+      }
+      // immediate: true
+    },
+    condition () {
+      this.getdata()
     }
   },
   methods: {
@@ -31,7 +34,8 @@ export default {
     },
     async getdata () {
       this.l = true
-      const data = await this.chart_getdata(this.chartdata)
+      const [startTime, endTime] = this.condition
+      const data = await this.chart_getkeydata({ ...this.chartdata, startTime, endTime, num: 40 })
       this.l = false
       this.ct.clear()
       this.option.series[0].data = data.map((v, i) => {

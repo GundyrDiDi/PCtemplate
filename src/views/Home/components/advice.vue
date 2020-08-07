@@ -54,10 +54,10 @@ export default {
   methods: {
     updateadvice () {
       console.log(this.$alert)
-      this.$alert('人群包名称不能为空', '系统提示', {
-        confirmButtonText: '确定',
-        callback: action => {}
-      })
+      // this.$alert('人群包名称不能为空', '系统提示', {
+      //   confirmButtonText: '确定',
+      //   callback: action => {}
+      // })
       this.$refs.form.validate(valid => {
         console.log(valid)
       })

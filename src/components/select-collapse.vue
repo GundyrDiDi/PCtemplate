@@ -38,7 +38,7 @@
 <script>
 export default {
   name: 'select-collapse',
-  props: ['api', 'label', 'name', 'attrs', 'value'],
+  props: ['api', 'label', 'attrs', 'value'],
   data () {
     return {
       multiple: false,
@@ -64,6 +64,9 @@ export default {
     },
     val (val) {
       this.$listeners.input(val)
+    },
+    value (v) {
+      this.val = v
     }
   },
   methods: {
@@ -73,7 +76,9 @@ export default {
   },
   async mounted () {
     const { api } = this
-    this.options = await this.forms_getdata({ api })
+    this.options = await this.forms_getdata({ api }).then(res => {
+      return res.map(v => ({ label: v }))
+    })
     this.options.unshift({ label: '' })
     requestAnimationFrame(() => {
       this.minheight = this.$el.children[0].getBoundingClientRect().height

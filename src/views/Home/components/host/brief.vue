@@ -1,7 +1,7 @@
 <template>
   <div class="brief flex">
     <div class="flex-ter">
-      <img class="head" :src="imgs.head" alt="">
+      <img class="head avator-shadow" :src="actHost.img" alt="">
       <div class="attribute">
         <div class="s-title">{{actHost.name}}</div>
         <div class="flex info">
@@ -40,12 +40,10 @@
     <div class="ability">
       <div>
         以下数据为近
-        <el-dropdown trigger="click" placement="bottom-start">
-          <el-button size="small" type="primary">30</el-button>
+        <el-dropdown trigger="click" placement="bottom-start" @command="command">
+          <el-button size="small" type="primary">{{trustmenu}}</el-button>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>7</el-dropdown-item>
-            <el-dropdown-item>30</el-dropdown-item>
-            <el-dropdown-item>90</el-dropdown-item>
+            <el-dropdown-item v-for="v in dropmenu" :key="v" :command="v">{{v}}</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
         天数据
@@ -56,7 +54,8 @@
           <count-to class="s-title"
           :startVal="0"
           :duration="800"
-          :endVal="Number(v.value)"></count-to>
+          v-bind="getbind(v.name)"
+          ></count-to>
         </div>
       </div>
     </div>
@@ -66,25 +65,52 @@
 <script>
 export default {
   name: 'brief',
+  props: ['api'],
   data () {
     return {
       ability: [
-        { label: '场均观看PV', value: '28' },
-        { label: '场均观看UV', value: '28' },
-        { label: '场均点赞', value: '28' },
-        { label: '场均评论', value: '28' },
-        { label: '开播场次', value: '28' },
-        { label: '场均销售额', value: '28' },
-        { label: '场均销量', value: '28' },
-        { label: '场均客单价(估)', value: '28' }
-      ]
+        { label: '场均观看PV', name: 'pvPerLive' },
+        { label: '场均观看UV', name: 'uvPerLive' },
+        { label: '场均点赞', name: 'praiseNumPerLive' },
+        { label: '场均评论', name: 'commentNumPerLive' },
+        { label: '开播场次', name: 'liveCnt' },
+        { label: '场均销售额', name: 'saleAmtPerLive' },
+        { label: '场均销量', name: 'saleQtyPerLive' },
+        { label: '场均客单价(估)', name: 'perSalePricePerLive' }
+      ],
+      dropmenu: [
+        7, 15, 30, 60, 90
+      ],
+      trustmenu: 30,
+      actHost: {}
     }
   },
   methods: {
     coperate () {},
-    follow () {}
+    follow () {},
+    command (a) {
+      this.trustmenu = a
+    },
+    getbind (name) {
+      if (this.actHost[`${name}_${this.trustmenu}d`]) {
+        const [num, unit] = this.actHost[`${name}_${this.trustmenu}d`].toString().split(/\b(?=\D$)/)
+        return {
+          endVal: Number(num),
+          decimals: num.includes('.') ? 2 : 0,
+          suffix: unit
+        }
+      } else {
+        return { endVal: 0 }
+      }
+    }
   },
-  mounted () {}
+  async mounted () {
+    this.actHost = await this.host_getdetail({ api: this.api })
+      .then(res => this.host_maphost(res))
+    if (!this.hostName) {
+      this.$store.commit('host/hostName', this.actHost.name)
+    }
+  }
 }
 </script>
 
@@ -98,6 +124,7 @@ export default {
     height:6rem;
     width:6rem;
     margin-right:1.5rem;
+    border-radius:50%;
   }
   .attribute{
     flex:1;

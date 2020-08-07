@@ -16,7 +16,7 @@
 <script>
 export default {
   name: 'watch-charts',
-  props: ['chartdata', 'param'],
+  props: ['chartdata', 'condition'],
   data () {
     return {
       l: false,
@@ -69,8 +69,9 @@ export default {
     },
     async getdata () {
       this.l = true
+      const [startTime, endTime] = this.condition
       const tab = this.chartdata.find(v => v.name === this.actTab)
-      const data = await this.chart_getdata(tab)
+      const data = await this.chart_getmuldata({ ...tab, startTime, endTime })
       this.l = false
       this.ct.clear()
       this.option.legend.data = data.map(v => v.name)
@@ -86,7 +87,10 @@ export default {
     }
   },
   watch: {
-    async actTab () {
+    actTab () {
+      this.getdata()
+    },
+    condition () {
       this.getdata()
     }
   },
@@ -132,7 +136,6 @@ export default {
         return {
           name,
           type: 'value',
-          splitNumber: 4,
           splitLine: {
             lineStyle: {
               color: 'rgba(0,0,0,.1)'

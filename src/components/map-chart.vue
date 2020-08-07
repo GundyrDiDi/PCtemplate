@@ -11,7 +11,7 @@
 <script>
 export default {
   name: 'map-chart',
-  props: ['chartdata'],
+  props: ['chartdata', 'condition'],
   data () {
     return {
       l: false,
@@ -22,14 +22,18 @@ export default {
     chartdata: {
       handler () {
         this.getdata()
-      },
-      immediate: true
+      }
+      // immediate: true
+    },
+    condition () {
+      this.getdata()
     }
   },
   methods: {
     async getdata () {
       this.l = true
-      const data = await this.chart_getdata(this.chartdata)
+      const [startTime, endTime] = this.condition
+      const data = await this.chart_getkeydata({ ...this.chartdata, startTime, endTime, num: 40 })
       this.l = false
       this.ct.clear()
       this.ct.setOption(this.option({
@@ -56,7 +60,8 @@ export default {
         min = 0,
         max = 500,
         shadowColor = '#60ACFC',
-        areaColor = '#ff90cdcc',
+        areaColor = '#fff',
+        emphColor = '#ff90cdcc',
         data = []
       }
     ) {
@@ -95,7 +100,7 @@ export default {
           data,
           left: 'center',
           width: '100%',
-          roam: true,
+          // roam: true,
           zoom: 1,
           label: {
             emphasis: {
@@ -110,11 +115,11 @@ export default {
               areaColor,
               borderColor: '#fff',
               shadowColor,
-              shadowBlur: 2,
-              shadowOffsetY: 3
+              shadowBlur: 1,
+              shadowOffsetY: 1
             },
             emphasis: {
-              areaColor
+              areaColor: emphColor
             }
           }
         }]

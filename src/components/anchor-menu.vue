@@ -67,11 +67,12 @@ export default {
   },
   methods: {
     scroll (i) {
-      this.$refs.tabs[i].scrollIntoView()
+      this.$el.scrollTo(0, this.$refs.tabs[i].offsetTop - this.navheight)
     }
   },
   async mounted () {
     requestAnimationFrame(() => {
+      this.navheight = Math.ceil(this.$refs.nav.getBoundingClientRect().height)
       const navtop = (this.$refs.nav.offsetTop + 1)
       this.$el.addEventListener('scroll', e => {
         const scrollTop = e.target.scrollTop
