@@ -1,7 +1,13 @@
 import store from '@/store'
 export default {
   baseURL: 'http://10.228.88.46:8000/api',
+  // baseURL: 'http://10.228.88.9:8000/api',
   get: {
+    _params () {
+      return {
+        openid: store.state.user.openid
+      }
+    },
     charts: {
       watch: {
         url: 'liveRoom/getLiveOverViewByDay'
@@ -76,6 +82,12 @@ export default {
         first: {
           url: 'goods/getRootCategoryName'
         }
+      },
+      brands: {
+        url: 'goods/getBrandName'
+      },
+      hotfilter: {
+        url: 'liveRoom/getFilterData'
       }
     },
     tables: {
@@ -87,11 +99,9 @@ export default {
       },
       goodlist: {
         url: 'goods/findByMonthByPage'
-      }
-    },
-    user: {
-      followlist: {
-        url: 'followlist'
+      },
+      hotlive: {
+        url: 'liveRoom/findPopularLiveInfoByPage'
       }
     },
     host: {
@@ -100,11 +110,8 @@ export default {
           anchorId: store.state.host.hostId
         }
       },
-      search: {
-        url: 'hostslist'
-      },
       brief: {
-        url: 'anchor/findAllById'
+        url: 'anchor/queryAll'
       },
       value: {
         url: 'anchor/findByIdAndDay'
@@ -118,7 +125,36 @@ export default {
       good: {
         url: 'goods/queryAnalysis'
       }
+    },
+    user: {
+      search: {
+        url: 'premiere/queryAll'
+      },
+      auths: {
+        _params: {},
+        url: 'members/selectMemberAll'
+      }
     }
   },
-  post: {}
+  post: {
+    user: {
+      _params () {
+        return {
+          openid: '123'
+        }
+      },
+      followme: {
+        url: 'premiere/focusHost'
+      },
+      followlist: {
+        url: 'premiere/selectPremiereInfo'
+      },
+      notfollow: {
+        url: 'premiere/updateFocusStatus'
+      },
+      isnotice: {
+        url: 'premiere/updateById'
+      }
+    }
+  }
 }

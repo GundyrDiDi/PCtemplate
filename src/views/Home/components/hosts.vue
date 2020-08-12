@@ -208,20 +208,5 @@ export default {
       opacity: 1;
     }
   }
-  .list-enter-active,
-  .list-leave-active {
-    transition: all .6s;
-  }
-  .list-enter,
-  .list-leave-to {
-    opacity: 0;
-    transform: scale(0);
-  }
-  .list-move {
-    transition: all .6s;
-  }
-  .list-leave-active {
-    position: absolute;
-  }
 }
 </style>

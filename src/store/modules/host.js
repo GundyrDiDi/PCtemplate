@@ -4,7 +4,7 @@ export default {
   namespaced: true,
   state: {
     hostId: '',
-    hostName: '',
+    actHost: {},
     map: {
       anchorName: 'name',
       anchorType: {
@@ -29,13 +29,16 @@ export default {
       favorNum: {
         key: 'favonum',
         pipe: v => formatNumber(addNumberUnit(v))
+      },
+      premiereInfoDto: {
+        key: 'follow',
+        pipe: v => !!v.follow
       }
     },
     hostDisplay: [
       {
         name: 'brief',
         label: '主播简介',
-        api: 'host/brief',
         component: () => import('@/views/Home/components/host/brief.vue')
       },
       {
@@ -64,13 +67,14 @@ export default {
   getters: {},
   mutations: {},
   actions: {
-    _search (store, param) {
-      return Axios.get('host/search', param).then(res => {
-        store.commit('hostsbackup', res.data)
+    // 绑定在hostDeital组件的路由事件
+    setacthost (store, { param } = {}) {
+      return Axios.get('host/brief', param).then(res => {
+        return store.dispatch('_maphost', res.content[0]).then(res => {
+          store.commit('actHost', res)
+          return res.name
+        })
       })
-    },
-    _getdetail ({ state }, { api, param }) {
-      return Axios.get(api, param)
     },
     _maphost ({ state }, res) {
       const { map } = state

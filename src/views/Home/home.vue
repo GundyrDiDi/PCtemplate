@@ -47,6 +47,9 @@ export default {
   },
   components: {
     treeMenu
+  },
+  mounted () {
+
   }
 }
 </script>
@@ -62,7 +65,7 @@ header {
   height: @height;
   box-shadow: var(--lineshadow2);
   position:relative;
-  z-index: 2;
+  z-index: 10;
   padding: 0 2rem;
   cursor: default;
   .s-title{

@@ -9,7 +9,9 @@
         </el-form-item>
         <div class="text bolder">上传附件(可选)：</div>
         <el-form-item prop="snippet">
-          <el-upload drag multiple show-file-list :auto-upload="false" action :limit="3">
+          <el-upload
+          accept=".rar,.zip,.doc,.docx,.pdf,.jpg"
+          drag multiple show-file-list :auto-upload="false" action :limit="3">
             <i class="uploadicon el-icon-receiving"></i>
             <div>点击或将文件拖拽到此处上传</div>
             <div class="des">支持扩展名：.rar .zip .doc .docx .pdf .jpg...</div>
@@ -53,11 +55,6 @@ export default {
   },
   methods: {
     updateadvice () {
-      console.log(this.$alert)
-      // this.$alert('人群包名称不能为空', '系统提示', {
-      //   confirmButtonText: '确定',
-      //   callback: action => {}
-      // })
       this.$refs.form.validate(valid => {
         console.log(valid)
       })

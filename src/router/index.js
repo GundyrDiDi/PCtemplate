@@ -16,6 +16,9 @@ const getroutechildren = routes => {
         typeof v.children === 'string' ? config[v.children] : v.children
       )
     }
+    if (typeof v.beforeEnter === 'function') {
+      v.beforeEnter = v.beforeEnter.bind(store)
+    }
     return v
   })
 }
@@ -35,18 +38,23 @@ let init = true
 // 路由守卫
 router.beforeEach((to, from, next) => {
   store.commit('myroute/push', to)
-  requestAnimationFrame(() => {
-    document.title = (to.meta.title ? to.meta.title + '-' : '') + config.name
-  })
   NProgress.start()
   if (init) {
-    store.dispatch('variable/loadimg').then(() => {
+    Promise.all([
+      store.dispatch('user/getauths'),
+      store.dispatch('variable/loadimg')
+    ]).then(res => {
       init = false
       next()
     })
   } else {
     next()
   }
+})
+router.afterEach((to, from) => {
+  requestAnimationFrame(() => {
+    document.title = (to.meta.title ? to.meta.title + '-' : '') + config.name
+  })
 })
 router.afterEach(() => {
   NProgress.done()

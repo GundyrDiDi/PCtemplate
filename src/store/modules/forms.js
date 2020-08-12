@@ -60,6 +60,28 @@ export default {
         }
         return o
       })
+    },
+    _getbrand (store) {
+      return Axios.get('forms/brands').then(res => {
+        return res.filter(v => !/other/.test(v)).map(v => ({ name: v }))
+      })
+    },
+    _gethotfilter (store) {
+      return Axios.get('forms/hotfilter').then(res => {
+        console.log(res)
+        const o = {}
+        for (const k in res) {
+          if (k.startsWith('large_')) {
+            const name = k.slice(6)
+            o[name] = {
+              name,
+              max: res[k],
+              min: 0
+            }
+          }
+        }
+        return o
+      })
     }
   }
 }

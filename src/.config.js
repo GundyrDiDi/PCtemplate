@@ -24,13 +24,6 @@ export const MAP = {
   videoId: 'link'
 }
 export default {
-  user: {
-    name: 'CHENFAN',
-    expire: '永久',
-    auth: '免费版',
-    club: '免费会员',
-    followlist: []
-  },
   tour: {},
   name: '鲸宸数据',
   description: '淘宝主播商家、主播、MCN优选的淘宝直播AI数据平台',
@@ -66,7 +59,8 @@ export default {
     collapse: require('@/assets/img/home/collapse.png'),
     dimandyellow: require('@/assets/img/vip/dimandyellow.png'),
     dimandblue: require('@/assets/img/vip/dimandblue.png'),
-    dimandgray: require('@/assets/img/vip/dimandgray.png')
+    dimandgray: require('@/assets/img/vip/dimandgray.png'),
+    check: require('@/assets/img/vip/check.png')
   },
   routes: [
     {
@@ -295,7 +289,17 @@ export default {
   tables: {
     hostslist: {
       events: {
-        follow ({ row }) {},
+        // 关联到 brief.vue 的follow事件
+        follow ({ row }) {
+          this.user_followornot({ host: row.premiereInfoDto, vm: this }).then(
+            res => {
+              if (res.code === 200) {
+                this[res.not ? 'msgSuccess' : '$myalert'](res.obj + '！')
+                row.follow = !res.not
+              }
+            }
+          )
+        },
         detail ({ row }) {
           this.$router.push({ name: 'hostDetail', params: { host_id: row.id } })
         }
@@ -317,28 +321,33 @@ export default {
           ],
           width: 180
         },
-        { key: 'fansNum', title: '粉丝数', sortable: true, width: 100 },
-        { key: 'favorNum', title: '最爱TA', sortable: true, width: 100 },
-        { key: 'totalPraiseNum', title: '点赞数', sortable: true, width: 100 },
-        { key: 'anchorArea', title: '所属区域', width: 100 },
-        { key: 'anchorType', title: '主播类型', width: 100 },
-        { key: 'skilledField', title: '擅长领域', width: 100 },
+        { key: 'fansNum', title: '粉丝数', sortable: 'custom', minWidth: 80 },
+        { key: 'favorNum', title: '最爱TA', sortable: 'custom', minWidth: 80 },
+        {
+          key: 'totalPraiseNum',
+          title: '点赞数',
+          sortable: 'custom',
+          minWidth: 80
+        },
+        { key: 'anchorArea', title: '所属区域', minWidth: 80 },
+        { key: 'anchorType', title: '主播类型', minWidth: 80 },
+        { key: 'skilledField', title: '擅长领域', minWidth: 80 },
         {
           key: 'saleAmtPerLive_30d',
           title: '近30天销售额(估)',
-          sortable: true,
+          sortable: 'custom',
           width: 150
         },
         {
           key: 'saleQtyPerLive_30d',
           title: '近30天销量(估)',
-          sortable: true,
+          sortable: 'custom',
           width: 150
         },
         {
           key: 'pvPerLive_30d',
           title: '近30天客单价(估)',
-          sortable: true,
+          sortable: 'custom',
           width: 150
         },
         {
@@ -347,10 +356,11 @@ export default {
           width: 100,
           action: [
             {
+              change: 'follow',
               event: 'follow',
-              class: 'fa fa-star',
+              classes: ['fa fa-star-o', 'fa fa-star'],
               on: 'click',
-              tooltip: '关注'
+              tooltips: ['关注', '取消关注']
             },
             {
               event: 'detail',
@@ -364,7 +374,7 @@ export default {
     },
     hostrecord: {
       events: {
-        playlive (row, column) {
+        playlive ({ row }) {
           window.open(row.link)
         }
       },
@@ -423,13 +433,13 @@ export default {
           width: 300
         },
         { key: 'brandName', title: '品牌' },
-        { key: 'liveCnt', title: '直播次数', sortable: true },
-        { key: 'saleQty', title: '直播销量(估)', sortable: true },
-        { key: 'saleAmt', title: '直播销售额(估)', sortable: true },
-        { key: 'rel_anchorsCnt', title: '关联主播数', sortable: true },
-        { key: 'rel_liveCnt', title: '关联直播数', sortable: true },
-        { key: 'totalSaleQty', title: '累计直播销量(估)', sortable: true },
-        { key: 'totalSaleAmt', title: '累计直播销售额(估)', sortable: true }
+        { key: 'liveCnt', title: '直播次数', sortable: 'custom' },
+        { key: 'saleQty', title: '直播销量(估)', sortable: 'custom' },
+        { key: 'saleAmt', title: '直播销售额(估)', sortable: 'custom' },
+        { key: 'rel_anchorsCnt', title: '关联主播数', sortable: 'custom' },
+        { key: 'rel_liveCnt', title: '关联直播数', sortable: 'custom' },
+        { key: 'totalSaleQty', title: '累计直播销量(估)', sortable: 'custom' },
+        { key: 'totalSaleAmt', title: '累计直播销售额(估)', sortable: 'custom' }
       ]
     },
     inslist: {
@@ -455,10 +465,10 @@ export default {
             { tag: 'span', text: 'mechanismName' }
           ]
         },
-        { key: 'mechanismScore', title: '机构得分', sortable: true },
-        { key: 'mechanismFansNum', title: '覆盖粉丝数量', sortable: true },
-        { key: 'mechanismGoodsCnt', title: '合作商品数', sortable: true },
-        { key: 'mechanismShopsCnt', title: '合作店铺数', sortable: true },
+        { key: 'mechanismScore', title: '机构得分', sortable: 'custom' },
+        { key: 'mechanismFansNum', title: '覆盖粉丝数量', sortable: 'custom' },
+        { key: 'mechanismGoodsCnt', title: '合作商品数', sortable: 'custom' },
+        { key: 'mechanismShopsCnt', title: '合作店铺数', sortable: 'custom' },
         {
           key: 'anchorInfoDtos',
           title: '旗下大咖',
@@ -492,25 +502,39 @@ export default {
           width: 300
         },
         { key: 'rootCategoryName', title: '一级类目' },
-        { key: 'brand', title: '品牌' },
-        { key: 'anchorsCnt', title: '关联主播数', sortable: true },
-        { key: 'liveCnt', title: '关联直播数', sortable: true },
-        { key: 'totalSaleQty', title: '直播销量(估)', sortable: true },
-        { key: 'totalSaleAmt', title: '直播销售额(估)', sortable: true }
+        { key: 'brandName', title: '品牌' },
+        { key: 'anchorsCnt', title: '关联主播数', sortable: 'custom' },
+        { key: 'liveCnt', title: '关联直播数', sortable: 'custom' },
+        { key: 'totalSaleQty', title: '直播销量(估)', sortable: 'custom' },
+        { key: 'totalSaleAmt', title: '直播销售额(估)', sortable: 'custom' }
       ]
     },
     livelist: {
-      api: 'tables/hostrecord',
+      api: 'tables/hotlive',
       column: [
-        { key: 'liveinfo', title: '直播信息', width: 250 },
-        { key: 'host', title: '主播' },
-        { key: 'watchpeople', title: '观看人数' },
-        { key: 'watchnum', title: '观看次数', sortable: true },
-        { key: 'raisefans', title: '直播涨粉数', sortable: true },
-        { key: 'goodnum', title: '商品数', sortable: true },
-        { key: 'money', title: '销售额(估)', sortable: true },
-        { key: 'amount', title: '销量(估)', sortable: true },
-        { key: 'price', title: '客单价(估)', sortable: true }
+        {
+          key: 'liveinfo',
+          title: '直播信息',
+          width: 240,
+          custom: [
+            {
+              tag: 'img',
+              src: 'img',
+              props: {
+                size: 'large'
+              }
+            },
+            { tag: 'span', text: 'liveinfo' }
+          ]
+        },
+        { key: 'anchorName', title: '主播' },
+        { key: 'uv', title: '观看人数', sortable: 'custom' },
+        { key: 'pv', title: '观看次数', sortable: 'custom' },
+        { key: 'addFansNum', title: '直播涨粉数', sortable: 'custom' },
+        { key: 'goodsCnt', title: '商品数', sortable: 'custom' },
+        { key: 'salesAmt', title: '销售额(估)', sortable: 'custom' },
+        { key: 'saleQty', title: '销量(估)', sortable: 'custom' },
+        { key: 'perSalePrice', title: '客单价(估)', sortable: 'custom' }
       ]
     }
   },
@@ -691,10 +715,9 @@ export default {
     ],
     hotlistfilter: [
       {
-        api: 'form/range/default',
-        name: 'money',
         label: '销售额(估)',
-        rule: [],
+        name: 'salesAmt',
+        value: [0, 9999],
         component: 'range',
         attrs: {
           value: [0, 9999],
@@ -705,11 +728,10 @@ export default {
         pipe: calcRange
       },
       {
-        api: 'form/range/default',
-        name: 'amount',
         label: '销量(估)',
-        rule: [],
+        name: 'saleQty',
         component: 'range',
+        value: [0, 9999],
         attrs: {
           value: [0, 9999],
           min: -Infinity,
@@ -719,11 +741,10 @@ export default {
         pipe: calcRange
       },
       {
-        api: 'form/range/default',
-        name: 'price',
         label: '客单价',
-        rule: [],
+        name: 'perSalePrice',
         component: 'range',
+        value: [0, 9999],
         attrs: {
           value: [0, 9999],
           min: -Infinity,
@@ -733,11 +754,10 @@ export default {
         pipe: calcRange
       },
       {
-        api: 'form/range/default',
-        name: 'watch',
         label: '观看次数',
-        rule: [],
+        name: 'pv',
         component: 'range',
+        value: [0, 9999],
         attrs: {
           value: [0, 9999],
           min: -Infinity,
@@ -747,10 +767,9 @@ export default {
         pipe: calcRange
       },
       {
-        api: 'form/range/default',
-        name: 'raise',
+        name: 'addFansNum',
         label: '直播涨粉数',
-        rule: [],
+        value: [0, 9999],
         component: 'range',
         attrs: {
           value: [0, 9999],
@@ -761,10 +780,9 @@ export default {
         pipe: calcRange
       },
       {
-        api: 'form/range/default',
-        name: 'goodnum',
+        name: 'goodsCnt',
         label: '单场直播商品数',
-        rule: [],
+        value: [0, 9999],
         component: 'range',
         attrs: {
           value: [0, 9999],
@@ -775,10 +793,8 @@ export default {
         pipe: calcRange
       },
       {
-        api: 'form/options/default',
-        name: 'livetitle',
+        name: 'liveTitle',
         label: '直播标题',
-        rule: [],
         component: 'input',
         attrs: {}
       }
@@ -838,7 +854,18 @@ export default {
           path: '/home/hosts/detail/:host_id',
           name: 'hostDetail',
           component: () => import('@/views/Home/components/hostDetail.vue'),
-          meta: { title: '主播详情', second: true }
+          meta: { title: '主播详情', second: true },
+          beforeEnter (to, from, next) {
+            if (to.params.host_id) {
+              localStorage.host_id = to.params.host_id
+            }
+            this.commit('host/hostId', localStorage.host_id)
+            this.dispatch('host/setacthost').then(res => {
+              to.meta.title = res
+              document.title = to.meta.title
+            })
+            next()
+          }
         }
       ]
     },

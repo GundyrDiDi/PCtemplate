@@ -146,12 +146,12 @@ export default {
     }
     this.lineStyle = [
       {
-        item: '#3eb5dd',
+        item: '#31a9ea',
         line: ['#57b3e5', '#31a9ea'],
         area: [[0, 0.6], [0.6, 0.2], [0.8, 0.1]]
       },
       {
-        item: '#ff6b71',
+        item: '#ff874b',
         line: ['#ff874b', '#ff6b71'],
         area: [[0, 0.6], [0.6, 0.2], [0.8, 0.1]]
       }

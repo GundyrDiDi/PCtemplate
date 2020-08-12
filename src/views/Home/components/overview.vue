@@ -17,7 +17,18 @@ export default {
   name: '',
   data () {
     return {
-      time: [new Date(Date.now() - 90 * 24 * 60 * 60 * 1000), new Date()]
+      time: [new Date(Date.now() - 30 * 24 * 60 * 60 * 1000), new Date()]
+    }
+  },
+  watch: {
+    time (newval, oldval) {
+      const fn = this.myauth.overview[0].valid
+      if (fn && fn(newval[0])) {
+        this.time = oldval
+        this.$block().then(res => {
+          this.time = [...oldval]
+        })
+      }
     }
   }
 }

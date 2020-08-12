@@ -11,13 +11,6 @@
           size="small"
           placeholder="选择月"
         ></el-date-picker>
-        <!-- <div class="flex searchbox">
-              <el-input size="small" placeholder="商品ID或标题"
-              v-model="goodsWord" clearable></el-input>
-              <el-input class="middle" size="small" placeholder="商品品牌"
-              v-model="brandWord" clearable></el-input>
-              <el-button size="small" type="primary">搜索</el-button>
-        </div>-->
         <input-suggestion
           size="small"
           class="searchbox"
@@ -33,8 +26,27 @@
             </div>
           </template>
           <template #suffix>
-            <el-input class="middle" size="small" placeholder="商品品牌"
-                v-model="brandWord" clearable></el-input>
+            <el-select
+              v-model="brandWord"
+              filterable
+              clearable
+              size="small"
+              class="middle"
+              placeholder="商品品牌"
+              no-match-text="无匹配品牌"
+              popper-class="custom-options">
+              <el-option
+                v-for="v in brands"
+                :key="v.name"
+                :label="v.name"
+                :value="v.name">
+                <div class="flex-ter">
+                  <span>{{v.name}}</span>
+                </div>
+              </el-option>
+            </el-select>
+            <!-- <el-input class="middle" size="small" placeholder="商品品牌"
+                v-model="brandWord" clearable></el-input> -->
           </template>
         </input-suggestion>
         <el-button size="small" type="default" @click="reset">重置</el-button>
@@ -66,6 +78,7 @@ export default {
     return {
       goodsWord: '',
       brandWord: '',
+      brands: '',
       time: ''
     }
   },
@@ -73,6 +86,8 @@ export default {
     condition () {
       return {
         monthId: this.time,
+        brandName: this.brandWord,
+        [/^\d{3,}$/.test(this.goodsWord) ? 'taobaoGoodsId' : 'taobaoGoodsName']: this.goodsWord,
         [this.catalog.name]: this.catalog.value,
         ...this.goodrelative.reduce((acc, v) => {
           if (v.attrs.base) {
@@ -116,6 +131,9 @@ export default {
         })
       })
     }
+    this.forms_getbrand().then(res => {
+      this.brands = res
+    })
     this.loaded = this.goodrelative.loaded = true
   }
 }
@@ -130,7 +148,7 @@ export default {
     width: 7rem;
   }
   .searchbox {
-    width: 26rem;
+    width: 28rem;
     font-size: var(--xs2font);
   }
 }
@@ -170,10 +188,16 @@ export default {
 }
 </style>
 <style lang="less">
+.custom-options{
+  .el-select-dropdown__item{
+    font-size:var(--xs2font)
+  }
+}
 .searchbox {
   .middle {
-    width: 6rem;
+    width: 8rem;
     .el-input__inner {
+      font-size:var(--xxsfont);
       border-radius: 0;
       border-left-width: 0;
       &:focus {

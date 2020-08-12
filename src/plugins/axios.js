@@ -33,11 +33,14 @@ _axios.interceptors.request.use(
     // 生产环境删除
     await wait(500)
     const { method, url } = config
-    let data = {}
+    let data = api[method]._params
+    data = data ? data() : {}
     let _url = ''
     url.split('/').reduce((acc, v) => {
       if (typeof acc[v]._params === 'function') {
         data = { ...data, ...acc[v]._params() }
+      } else if (typeof acc[v]._params === 'object') {
+        data = acc[v]._params
       }
       if (acc[v].url) {
         _url = acc[v].url

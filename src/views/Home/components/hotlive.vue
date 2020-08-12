@@ -9,9 +9,7 @@
     </div>
     <rich-filter @update="filterLabel=$event" :show.sync="showFilter" :formrule="hotlistfilter"></rich-filter>
     <transition-group
-      tag="div"
-      enter-active-class="animated zoomIn faster"
-      leave-active-class="animated zoomOut faster"
+      tag="div" name="list"
       class="module-box filter-label flex"
       v-if="filterLabel.length"
     >
@@ -21,7 +19,7 @@
         <i class="el-icon-close" @click="removelabel(v,i)"></i>
       </div>
     </transition-group>
-    <table-paganation :condition="filterLabel" class="module-box livelist" v-bind="livelist"></table-paganation>
+    <table-paganation ref="table" :condition="condition" class="module-box livelist" v-bind="livelist"></table-paganation>
   </div>
 </template>
 
@@ -30,14 +28,25 @@ export default {
   name: 'hotlive',
   data () {
     return {
-      time: [new Date(), new Date()],
+      time: [new Date(Date.now() - 30 * 24 * 60 * 60 * 1000), new Date()],
       showFilter: false,
       filterLabel: []
     }
   },
   computed: {
     condition () {
-      return {}
+      return {
+        liveStartTime: this.time[0],
+        liveEndTime: this.time[1],
+        ...this.filterLabel.reduce((acc, v) => {
+          acc[v.name] = {
+            type: v.component,
+            value: v.value,
+            base: v.attrs.base
+          }
+          return acc
+        }, {})
+      }
     }
   },
   methods: {
@@ -60,10 +69,19 @@ export default {
       this.filterLabel.splice(i, 1)
     }
   },
-  watch: {
-    filterLabel (v) {
-      console.log(v)
+  async mounted () {
+    // this.$refs.table.request()
+    if (!this.richFilter.loaded) {
+      await this.forms_gethotfilter().then(data => {
+        this.hotlistfilter.forEach(v => {
+          const res = data[v.name]
+          if (v.type === 'attrs') {
+            v.attrs = v.pipe(res)
+          }
+        })
+      })
     }
+    this.loaded = this.richFilter.loaded = true
   }
 }
 </script>

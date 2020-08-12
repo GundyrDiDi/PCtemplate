@@ -24,7 +24,7 @@
           </div>
         </div>
         <div>
-          <el-button @click="follow">关注TA</el-button>
+          <el-button :type="actHost.follow?'primary':'default'" @click="follow(actHost)">{{actHost.follow?'取消关注':'关注TA'}}</el-button>
           <el-button @click="coperate">合作咨询</el-button>
         </div>
       </div>
@@ -65,7 +65,6 @@
 <script>
 export default {
   name: 'brief',
-  props: ['api'],
   data () {
     return {
       ability: [
@@ -81,13 +80,22 @@ export default {
       dropmenu: [
         7, 15, 30, 60, 90
       ],
-      trustmenu: 30,
-      actHost: {}
+      trustmenu: 30
     }
   },
   methods: {
     coperate () {},
-    follow () {},
+    follow (v) {
+      // this.user_followornot({ host: v.premiereInfoDto, vm: this }).then(
+      //   res => {
+      //     if (res.code === 200) {
+      //       this[res.not ? 'msgSuccess' : '$myalert'](res.obj + '！')
+      //       v.follow = !res.not
+      //     }
+      //   }
+      // )
+      this.hostslist.events.follow.call(this, { row: v })
+    },
     command (a) {
       this.trustmenu = a
     },
@@ -102,13 +110,6 @@ export default {
       } else {
         return { endVal: 0 }
       }
-    }
-  },
-  async mounted () {
-    this.actHost = await this.host_getdetail({ api: this.api })
-      .then(res => this.host_maphost(res))
-    if (!this.hostName) {
-      this.$store.commit('host/hostName', this.actHost.name)
     }
   }
 }

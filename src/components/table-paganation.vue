@@ -82,11 +82,17 @@ export default {
         v.render = (h, param) => {
           return h('div', { class: 'table-action' },
             v.action.map(v2 => {
+              if (v2.change) {
+                const i = param.row[v2.change] ? 1 : 0
+                v2.tooltip = v2.tooltips[i]
+                v2.class = v2.classes[i]
+              }
               return h('el-tooltip', {
                 props: {
                   placement: 'top',
                   content: v2.tooltip,
-                  openDelay: 400
+                  openDelay: 200,
+                  hideAfter: 1000
                 }
               }, [
                 h('i', {

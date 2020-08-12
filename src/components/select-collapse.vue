@@ -10,7 +10,7 @@
           :class="{active:val===v.label}"
         >{{v.label||'全部'}}</div>
       </div>
-      <el-checkbox-group class="flex-wrap" v-if="multiple" v-model="val">
+      <el-checkbox-group ref="checkgroup" class="flex-wrap" v-if="multiple" v-model="val">
         <template v-for="v in options">
             <div :key="v.label" v-if="v.label">
                 <el-checkbox :label="v.label"></el-checkbox>
@@ -61,6 +61,7 @@ export default {
   watch: {
     multiple (m) {
       this.val = m ? [] : ''
+      this.calcHeight()
     },
     val (val) {
       this.$listeners.input(val)
@@ -72,6 +73,14 @@ export default {
   methods: {
     select (v) {
       this.val = v.label
+    },
+    calcHeight () {
+      requestAnimationFrame(() => {
+        this.minheight = this.$el.children[0].getBoundingClientRect().height
+        const ref = this.multiple ? this.$refs.checkgroup.$el : this.$refs.option
+        this.maxheight = ref.getBoundingClientRect().height
+        this.overheight = this.maxheight - this.minheight > 0
+      })
     }
   },
   async mounted () {
@@ -80,11 +89,7 @@ export default {
       return res.map(v => ({ label: v }))
     })
     this.options.unshift({ label: '' })
-    requestAnimationFrame(() => {
-      this.minheight = this.$el.children[0].getBoundingClientRect().height
-      this.maxheight = this.$refs.option.getBoundingClientRect().height
-      this.overheight = this.maxheight - this.minheight > 0
-    })
+    this.calcHeight()
   }
 }
 </script>

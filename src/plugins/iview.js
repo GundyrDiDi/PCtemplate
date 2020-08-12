@@ -6,13 +6,18 @@ import 'view-design/dist/styles/iview.css'
 Vue.use(ViewUI)
 
 Vue.prototype.$Message.config({
-  top: 570,
-  duration: 3
+  top: 80,
+  duration: 2
 })
 Vue.prototype.msgLoading = function (msg, duration = 0) {
   this.$Message.loading({
     content: msg || '正在加载...',
     duration
+  })
+}
+Vue.prototype.msgSuccess = function (msg) {
+  this.$Message.success({
+    content: msg || '操作成功 ！'
   })
 }
 Vue.prototype.msgDestroy = function () {

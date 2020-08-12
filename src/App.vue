@@ -68,7 +68,7 @@ a {
   --dacol:#ff5a12;
   --decol:#727272;
   --bgcol:#e3f2ff;
-  --lbgcol:tint(#e3f2ff,50%);
+  --lbgcol:tint(#e3f2ff,76%);
   --dbcol:#fff;
 }
 .bold {
@@ -222,5 +222,22 @@ a {
 }
 .avator-shadow{
   filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.4));
+}
+
+// transition-group
+.list-enter-active,
+.list-leave-active {
+  transition: all .5s;
+}
+.list-enter,
+.list-leave-to {
+  opacity: 0;
+  transform: scale(0);
+}
+.list-move {
+  transition: all .5s;
+}
+.list-leave-active {
+  position: absolute;
 }
 </style>

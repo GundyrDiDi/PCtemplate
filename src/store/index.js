@@ -11,9 +11,26 @@ Vue.use(Vuex)
 const root = {
   // everyStore中命名modules
   name: '',
-  state: {},
-  getters: {},
-  mutations: {},
+  state: {
+    // 异步事件需要延迟执行的存放队列
+    queue: []
+  },
+  getters: {
+    // 触发
+    emitqueue ({ queue }) {
+      return () => {
+        while (queue.length) {
+          queue.shift()()
+        }
+      }
+    }
+  },
+  mutations: {
+    // 存放
+    pushqueue (state, fn) {
+      state.queue.push(fn)
+    }
+  },
   actions: {},
   modules: {
     user,

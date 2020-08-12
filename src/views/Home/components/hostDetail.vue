@@ -21,16 +21,7 @@ export default {
       crumb: []
     }
   },
-  watch: {
-    hostName () {
-      this.crumb[this.crumb.length - 1].meta.title = this.hostName
-    }
-  },
   created () {
-    if (this.$route.params.host_id) {
-      localStorage.host_id = this.$route.params.host_id
-    }
-    this.$store.commit('host/hostId', localStorage.host_id)
     const match = this.myroute.history.slice(-2)
     this.crumb = match.length === 1 ? match[0].matched.slice(-2) : match
   }
