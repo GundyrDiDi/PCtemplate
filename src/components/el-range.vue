@@ -1,19 +1,22 @@
 <template>
-  <div class="flex el-range">
-    <el-input-number :controls="false" v-model="input_0" :min="$attrs.min"></el-input-number>
-    <el-slider v-model="_value" v-bind="$attrs" range></el-slider>
-    <el-input-number :controls="false" v-model="input_1" :max="$attrs.max"></el-input-number>
+  <div class="flex el-range" @click="block">
+    <el-input-number :disabled="disable" :controls="false" v-model="input_0" :min="$attrs.min"></el-input-number>
+    <el-slider :disabled="disable" v-model="_value" v-bind="$attrs" range></el-slider>
+    <el-input-number :disabled="disable" :controls="false" v-model="input_1" :max="$attrs.max"></el-input-number>
   </div>
 </template>
 
 <script>
 export default {
   name: 'el-range',
-  props: ['value'],
+  props: ['value', 'valid'],
   data () {
     return {}
   },
   computed: {
+    disable () {
+      return !!this.valid
+    },
     _value: {
       get () {
         return this.value
@@ -38,6 +41,11 @@ export default {
       }
       return acc
     }, {})
+  },
+  methods: {
+    block () {
+      if (this.valid) this.valid()
+    }
   }
 }
 </script>

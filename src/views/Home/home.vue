@@ -47,9 +47,6 @@ export default {
   },
   components: {
     treeMenu
-  },
-  mounted () {
-
   }
 }
 </script>

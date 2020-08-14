@@ -206,9 +206,6 @@ export default {
     justify-content: space-between;
   }
 }
-.ivu-message{
-  z-index: 9 !important;
-}
 #guanzhu{
   .el-switch__label *{
     font-size:var(--xs2font)

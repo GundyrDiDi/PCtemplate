@@ -3,31 +3,31 @@
     <div class="module-box flex-center">
       <date-pick :time.sync="time"></date-pick>
     </div>
-    <watch-charts class="module-box" :chartdata="charts.watch" :condition="time"></watch-charts>
-    <ring-chart class="module-box" :chartdata="charts.ring[0]" :condition="time"></ring-chart>
-    <ring-chart class="module-box" :chartdata="charts.ring[1]" :condition="time"></ring-chart>
-    <map-chart class="module-box" :chartdata="charts.map[0]" :condition="time"></map-chart>
-    <word-chart class="module-box" :chartdata="charts.keyword[0]" :condition="time"></word-chart>
-    <hybird-chart class="module-box" :chartdata="charts.hybird[0]" :condition="time"></hybird-chart>
+    <watch-charts class="module-box" :chartdata="charts.watch" :condition="condition"></watch-charts>
+    <ring-chart class="module-box" :chartdata="charts.ring[0]" :condition="condition"></ring-chart>
+    <ring-chart class="module-box" :chartdata="charts.ring[1]" :condition="condition"></ring-chart>
+    <map-chart class="module-box" :chartdata="charts.map[0]" :condition="condition"></map-chart>
+    <word-chart class="module-box" :chartdata="charts.keyword[0]" :condition="condition"></word-chart>
+    <hybird-chart class="module-box" :chartdata="charts.hybird[0]" :condition="condition"></hybird-chart>
   </div>
 </template>
 
 <script>
 export default {
-  name: '',
+  name: 'overview',
   data () {
     return {
-      time: [new Date(Date.now() - 30 * 24 * 60 * 60 * 1000), new Date()]
+      time: [new Date(Date.now() - 30 * 24 * 60 * 60 * 1000), new Date()],
+      condition: {}
     }
   },
   watch: {
     time (newval, oldval) {
-      const fn = this.myauth.overview[0].valid
-      if (fn && fn(newval[0])) {
-        this.time = oldval
-        this.$block().then(res => {
-          this.time = [...oldval]
-        })
+      const fn = this.myauth.hostDetail.time
+      if (fn && fn.call(this, newval, oldval, 'time')) return
+      this.condition = {
+        startTime: this.time[0],
+        endTime: this.time[1]
       }
     }
   }
@@ -41,6 +41,7 @@ export default {
   grid-row-gap: 1rem;
   grid-column-gap: 1rem;
   height:80vw;
+  padding-bottom:3rem;
 }
 .module-box:nth-child(1) {
   grid-area: 1/1/2/4;

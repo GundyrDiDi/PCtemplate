@@ -52,11 +52,11 @@
         <el-button size="small" type="default" @click="reset">重置</el-button>
       </div>
       <div class="filter">
-        <select-collapse v-model="catalog.value" v-bind="catalog"></select-collapse>
+        <select-collapse :valid="valid" v-model="catalog.value" v-bind="catalog"></select-collapse>
         <div class="flex">
           <div v-for="v in goodrelative" :key="v.name" class="range flex">
             <div class="flex-ter">{{v.label}}</div>
-            <el-range v-bind="v.attrs" v-model="v.value"></el-range>
+            <el-range :valid="valid" v-bind="v.attrs" v-model="v.value"></el-range>
           </div>
         </div>
       </div>
@@ -66,6 +66,7 @@
       class="module-box goodslist"
       :debounce="300"
       :condition="condition"
+      :sortvalid="myauth.goods.sort"
       v-bind="goodslist"
     ></table-paganation>
   </div>
@@ -79,7 +80,8 @@ export default {
       goodsWord: '',
       brandWord: '',
       brands: '',
-      time: ''
+      time: '',
+      valid: false
     }
   },
   computed: {
@@ -135,6 +137,7 @@ export default {
       this.brands = res
     })
     this.loaded = this.goodrelative.loaded = true
+    this.valid = this.myauth.goods.filter
   }
 }
 </script>

@@ -22,7 +22,7 @@
 import { debounce } from '@/plugins/util'
 export default {
   name: 'table-paganation',
-  props: ['column', 'api', 'events', 'condition', 'debounce'],
+  props: ['column', 'api', 'events', 'condition', 'debounce', 'sortvalid'],
   data () {
     return {
       data: [],
@@ -60,6 +60,44 @@ export default {
       this.request()
     }
   },
+  methods: {
+    dispatch (event, ...rest) {
+      this.events[event].apply(this, rest)
+    },
+    resetParam () {
+      this.param = {
+        sort: null,
+        size: 10,
+        sizeOpts: [10, 20, 30, 40],
+        page: 1
+      }
+    },
+    sortchange ({ column, key, order }) {
+      // auth
+      if (this.sortvalid) {
+        this.sortvalid().then(res => {
+          document
+            .querySelector(`.ivu-icon.ivu-icon-md-arrow-drop${order === 'normal' ? 'up' : order === 'asc' ? 'up.on' : 'down.on'}`)
+            .classList.remove('on')
+        })
+        return
+      }
+      this.param.sort = order === 'normal' ? '' : key + ',' + order
+      this.request()
+    },
+    async request () {
+      this.loading = true
+      const { api, param, condition } = this
+      const { data, total } = await this.tables_getdata({
+        api,
+        condition,
+        ...param
+      })
+      this.loading = false
+      this.data = data
+      this.total = total
+    }
+  },
   created () {
     if (this.debounce) {
       this.request = debounce.call(this, this.request, this.debounce)
@@ -69,12 +107,19 @@ export default {
       if (v.custom) {
         v.render = (h, param) => {
           return v.custom.map(v2 => {
-            const { tag, text, props, ...attrs } = v2
+            const { tag, text, props, events, ...attrs } = v2
             for (const k in attrs) {
               attrs[k] = param.row[attrs[k]]
             }
+            const on = {}
+            for (const k in events) {
+              const event = events[k]
+              on[k] = () => {
+                this.dispatch(event, param)
+              }
+            }
             return h(tag, {
-              class: 'table-' + tag, attrs, props
+              class: 'table-' + tag, on, attrs, props
             }, text ? param.row[text] : undefined)
           })
         }
@@ -99,7 +144,7 @@ export default {
                   class: v2.class,
                   on: {
                     [v2.on]: () => {
-                      this.dispatch(param, v2.event)
+                      this.dispatch(v2.event, param)
                     }
                   }
                 })
@@ -125,7 +170,7 @@ export default {
                   },
                   on: {
                     [el.on]: () => {
-                      this.dispatch(v2[el.param], event)
+                      this.dispatch(event, v2[el.param])
                     }
                   }
                 })
@@ -135,35 +180,6 @@ export default {
         }
       }
     })
-  },
-  methods: {
-    dispatch (param, event) {
-      this.events[event].call(this, param)
-    },
-    resetParam () {
-      this.param = {
-        sort: null,
-        size: 10,
-        sizeOpts: [10, 20, 30, 40],
-        page: 1
-      }
-    },
-    sortchange ({ key, order }) {
-      this.param.sort = order === 'normal' ? '' : key + ',' + order
-      this.request()
-    },
-    async request () {
-      this.loading = true
-      const { api, param, condition } = this
-      const { data, total } = await this.tables_getdata({
-        api,
-        condition,
-        ...param
-      })
-      this.loading = false
-      this.data = data
-      this.total = total
-    }
   }
 }
 </script>

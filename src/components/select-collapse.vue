@@ -38,7 +38,7 @@
 <script>
 export default {
   name: 'select-collapse',
-  props: ['api', 'label', 'attrs', 'value'],
+  props: ['api', 'label', 'attrs', 'value', 'valid'],
   data () {
     return {
       multiple: false,
@@ -72,6 +72,7 @@ export default {
   },
   methods: {
     select (v) {
+      if (this.valid && this.valid()) return
       this.val = v.label
     },
     calcHeight () {

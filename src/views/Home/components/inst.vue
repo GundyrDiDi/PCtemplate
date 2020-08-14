@@ -24,7 +24,8 @@
           </div>
         </input-suggestion>
     </div>
-    <table-paganation ref="table" class="module-box inslist" :condition="condition" v-bind="inslist"></table-paganation>
+    <table-paganation
+    ref="table" class="module-box inslist" :condition="condition" v-bind="inslist"></table-paganation>
   </div>
 </template>
 
@@ -53,6 +54,9 @@ export default {
       return this.tables_getdata({ api, page: 1, size: 6, condition })
     },
     search (trustWord) {
+      // auth
+      const fn = this.myauth.inst.search
+      if (fn && fn.call(this)) return
       this.$refs.table.resetParam()
       this.trustWord = trustWord
     }

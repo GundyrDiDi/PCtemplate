@@ -26,13 +26,13 @@
               </template>
             </input-suggestion>
           <div class="flex-ter rich-filter">
-            <el-button type="default" size="small" @click="showFilter=true">高级筛选器</el-button>
+            <el-button type="default" size="small" @click="showfilter">高级筛选器</el-button>
           </div>
         </div>
         <rich-filter
         v-if="loaded"
         @update="filterLabel=$event"
-        :show.sync="showFilter" :formrule="richFilter"></rich-filter>
+        :show.sync="filterModal" :formrule="richFilter"></rich-filter>
         <transition
         enter-active-class="animated fadeIn faster"
         leave-active-class="animated fadeOut faster"
@@ -47,6 +47,7 @@
           </transition-group>
         </transition>
         <table-paganation ref="table"
+        :sortvalid="myauth.hosts.sort"
         :condition="condition" class="module-box hostslist" v-bind="hostslist"></table-paganation>
       </div>
     </transition>
@@ -60,13 +61,12 @@
 </template>
 
 <script>
-// 文三路553号浙江中小企业大厦1926室 0571-89714790 1506210402
 export default {
   name: 'hosts',
   data () {
     return {
       trustWord: '',
-      showFilter: false,
+      filterModal: false,
       filterLabel: [],
       loaded: false
     }
@@ -87,6 +87,12 @@ export default {
     }
   },
   methods: {
+    showfilter () {
+      // auth
+      const fn = this.myauth.hosts.filter
+      if (fn && fn.call(this)) return
+      this.filterModal = true
+    },
     // suggestions
     request (param) {
       const { api } = this.hostslist

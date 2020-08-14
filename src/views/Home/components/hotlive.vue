@@ -4,10 +4,10 @@
       <div class="s-title">人气直播</div>
       <date-pick class="flex-center date" :time.sync="time"></date-pick>
       <div class="flex-ter rich-filter">
-        <el-button type="primary" size="small" @click="showFilter=true">高级筛选器</el-button>
+        <el-button type="primary" size="small" @click="filterModal = true">高级筛选器</el-button>
       </div>
     </div>
-    <rich-filter @update="filterLabel=$event" :show.sync="showFilter" :formrule="hotlistfilter"></rich-filter>
+    <rich-filter @update="filterLabel=$event" :show.sync="filterModal" :formrule="hotlistfilter"></rich-filter>
     <transition-group
       tag="div" name="list"
       class="module-box filter-label flex"
@@ -19,7 +19,7 @@
         <i class="el-icon-close" @click="removelabel(v,i)"></i>
       </div>
     </transition-group>
-    <table-paganation ref="table" :condition="condition" class="module-box livelist" v-bind="livelist"></table-paganation>
+    <table-paganation :sortvalid="myauth.hotlive.sort" ref="table" :condition="condition" class="module-box livelist" v-bind="livelist"></table-paganation>
   </div>
 </template>
 
@@ -29,15 +29,24 @@ export default {
   data () {
     return {
       time: [new Date(Date.now() - 30 * 24 * 60 * 60 * 1000), new Date()],
-      showFilter: false,
+      proxytime: [],
+      filterModal: false,
       filterLabel: []
+    }
+  },
+  watch: {
+    // auth
+    time (newval, oldval) {
+      const fn = this.myauth.hotlive.time
+      if (fn && fn.call(this, newval, oldval, 'time')) return
+      this.proxytime = newval
     }
   },
   computed: {
     condition () {
       return {
-        liveStartTime: this.time[0],
-        liveEndTime: this.time[1],
+        liveStartTime: this.proxytime[0],
+        liveEndTime: this.proxytime[1],
         ...this.filterLabel.reduce((acc, v) => {
           acc[v.name] = {
             type: v.component,

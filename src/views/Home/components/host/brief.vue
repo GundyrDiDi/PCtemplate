@@ -97,6 +97,8 @@ export default {
       this.hostslist.events.follow.call(this, { row: v })
     },
     command (a) {
+      const fn = this.myauth.hostDetail.change
+      if (fn && fn.call(this)) return
       this.trustmenu = a
     },
     getbind (name) {

@@ -41,7 +41,9 @@ router.beforeEach((to, from, next) => {
   NProgress.start()
   if (init) {
     Promise.all([
-      store.dispatch('user/getauths'),
+      store.dispatch('user/getauths').then(() => {
+        ;(() => import('@/plugins/auth'))()
+      }),
       store.dispatch('variable/loadimg')
     ]).then(res => {
       init = false
@@ -52,12 +54,10 @@ router.beforeEach((to, from, next) => {
   }
 })
 router.afterEach((to, from) => {
+  NProgress.done()
   requestAnimationFrame(() => {
     document.title = (to.meta.title ? to.meta.title + '-' : '') + config.name
   })
-})
-router.afterEach(() => {
-  NProgress.done()
 })
 
 export default router

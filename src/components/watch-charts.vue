@@ -14,9 +14,10 @@
 </template>
 
 <script>
+import { debounce } from '@/plugins/util'
 export default {
   name: 'watch-charts',
-  props: ['chartdata', 'condition'],
+  props: ['chartdata', 'condition', 'tabvalid'],
   data () {
     return {
       l: false,
@@ -68,10 +69,10 @@ export default {
       }
     },
     async getdata () {
+      console.log(2)
       this.l = true
-      const [startTime, endTime] = this.condition
       const tab = this.chartdata.find(v => v.name === this.actTab)
-      const data = await this.chart_getmuldata({ ...tab, startTime, endTime })
+      const data = await this.chart_getmuldata({ ...tab, ...this.condition })
       this.l = false
       this.ct.clear()
       this.option.legend.data = data.map(v => v.name)
@@ -87,7 +88,10 @@ export default {
     }
   },
   watch: {
-    actTab () {
+    actTab (newval, oldval) {
+      // auth
+      const fn = this.tabvalid
+      if (fn && fn.call(this, newval, oldval, 'actTab')) return
       this.getdata()
     },
     condition () {
@@ -95,6 +99,7 @@ export default {
     }
   },
   mounted () {
+    this.getdata = debounce.call(this, this.getdata, 300)
     this.actTab = this.chartdata[0].name
     this.ct = this.$echarts(this.$refs.c)
     this.option = {

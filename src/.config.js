@@ -289,9 +289,9 @@ export default {
   tables: {
     hostslist: {
       events: {
-        // 关联到 brief.vue 的follow事件
+        // brief.vue 的 follow 方法也引用此函数
         follow ({ row }) {
-          this.user_followornot({ host: row.premiereInfoDto, vm: this }).then(
+          this.user_followornot({ host: row.premiereInfoDto || row, vm: this }).then(
             res => {
               if (res.code === 200) {
                 this[res.not ? 'msgSuccess' : '$myalert'](res.obj + '！')
@@ -432,20 +432,62 @@ export default {
           ],
           width: 300
         },
-        { key: 'brandName', title: '品牌' },
-        { key: 'liveCnt', title: '直播次数', sortable: 'custom' },
-        { key: 'saleQty', title: '直播销量(估)', sortable: 'custom' },
-        { key: 'saleAmt', title: '直播销售额(估)', sortable: 'custom' },
-        { key: 'rel_anchorsCnt', title: '关联主播数', sortable: 'custom' },
-        { key: 'rel_liveCnt', title: '关联直播数', sortable: 'custom' },
-        { key: 'totalSaleQty', title: '累计直播销量(估)', sortable: 'custom' },
-        { key: 'totalSaleAmt', title: '累计直播销售额(估)', sortable: 'custom' }
+        { key: 'brandName', title: '品牌', minWidth: 100 },
+        {
+          key: 'liveCnt',
+          title: '直播次数',
+          sortable: 'custom',
+          minWidth: 100
+        },
+        {
+          key: 'saleQty',
+          title: '直播销量(估)',
+          sortable: 'custom',
+          minWidth: 110
+        },
+        {
+          key: 'saleAmt',
+          title: '直播销售额(估)',
+          sortable: 'custom',
+          minWidth: 120
+        },
+        {
+          key: 'rel_anchorsCnt',
+          title: '关联主播数',
+          sortable: 'custom',
+          minWidth: 100
+        },
+        {
+          key: 'rel_liveCnt',
+          title: '关联直播数',
+          sortable: 'custom',
+          minWidth: 100
+        },
+        {
+          key: 'totalSaleQty',
+          title: '累计直播销量(估)',
+          sortable: 'custom',
+          minWidth: 130
+        },
+        {
+          key: 'totalSaleAmt',
+          title: '累计直播销售额(估)',
+          sortable: 'custom',
+          width: 150
+        }
       ]
     },
     inslist: {
       events: {
         detail (id) {
+          const fn = this.myauth.inst.columnEvent
+          if (fn && fn.call(this)) return
           this.$router.push({ name: 'hostDetail', params: { host_id: id } })
+        },
+        modal ({ row, column }) {
+          const fn = this.myauth.inst.columnEvent2
+          if (fn && fn.call(this)) return
+          return 1 //
         }
       },
       api: 'tables/inslist',
@@ -467,8 +509,34 @@ export default {
         },
         { key: 'mechanismScore', title: '机构得分', sortable: 'custom' },
         { key: 'mechanismFansNum', title: '覆盖粉丝数量', sortable: 'custom' },
-        { key: 'mechanismGoodsCnt', title: '合作商品数', sortable: 'custom' },
-        { key: 'mechanismShopsCnt', title: '合作店铺数', sortable: 'custom' },
+        {
+          key: 'mechanismGoodsCnt',
+          title: '合作商品数',
+          sortable: 'custom',
+          custom: [
+            {
+              tag: 'a',
+              text: 'mechanismGoodsCnt',
+              events: {
+                click: 'modal'
+              }
+            }
+          ]
+        },
+        {
+          key: 'mechanismShopsCnt',
+          title: '合作店铺数',
+          sortable: 'custom',
+          custom: [
+            {
+              tag: 'a',
+              text: 'mechanismShopsCnt',
+              events: {
+                click: 'modal'
+              }
+            }
+          ]
+        },
         {
           key: 'anchorInfoDtos',
           title: '旗下大咖',
@@ -805,7 +873,8 @@ export default {
       name: 'rootCategoryName',
       value: '',
       attrs: {
-        mode: [0, 1]
+        mode: [0]
+        // mode: [0, 1] //单选多选
       }
     },
     goodrelative: [

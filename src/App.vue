@@ -138,6 +138,7 @@ a {
 .f-r{
   float:right;
 }
+//
 @bgcolor: rgba(114, 203, 255, 0.3);
 @color: rgba(114, 203, 255, 0.3);
 @color2: #42a1f2;
@@ -223,7 +224,13 @@ a {
 .avator-shadow{
   filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.4));
 }
-
+.block-btn{
+  padding:12px 25px;
+  margin-left:25px !important;
+}
+.ivu-message{
+  z-index: 9 !important;
+}
 // transition-group
 .list-enter-active,
 .list-leave-active {

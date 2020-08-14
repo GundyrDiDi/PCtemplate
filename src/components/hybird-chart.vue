@@ -45,8 +45,7 @@ export default {
     },
     async getdata () {
       this.l = true
-      const [startTime, endTime] = this.condition
-      const data = await this.chart_getkeydata({ ...this.chartdata, startTime, endTime })
+      const data = await this.chart_getkeydata({ ...this.chartdata, ...this.condition })
       console.log(data)
       this.l = false
       this.ct.clear()
@@ -71,7 +70,9 @@ export default {
       this.option.legend.data = legend
       this.option.xAxis[0].data = axis
       this.option.series = series
-      this.option.yAxis = legend.slice(0, 2).map(v => this.option._yAxis(v))
+      const name = [...legend]
+      name[1] = name.slice(1).map(v => v).join('/')
+      this.option.yAxis = name.slice(0, 2).map(v => this.option._yAxis(v))
       console.log(this.option.yAxis)
       this.ct.setOption(this.option)
     }

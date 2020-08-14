@@ -7,66 +7,13 @@ export default {
       expire: '永久',
       auth: '免费版',
       club: '免费会员',
-      level: 0,
+      level: 2,
       payrecord: 0
     },
     followlist: [],
     isnotice: true,
     auths: null,
-    componentmap: {
-      首页: 'overview',
-      主播: 'hosts',
-      主播详情: 'hostDetail',
-      机构月榜: 'inst',
-      直播商品: 'goods',
-      人气直播: 'hotlive',
-      我的关注: 'follow'
-    },
-    ablemap ({ test, text }) {
-      const reg = [
-        {
-          reg: /((自由)?选择时间(段)?)|(时间维度)/,
-          pipe (text) {
-            const match = text.match(/\d+/g)
-            if (match) {
-              const limit = (Number(match[0]) + 1) * 24 * 3600 * 1000
-              return time => {
-                if (typeof time === 'string') {
-                  time = new Date(time)
-                }
-                return Date.now() - Date.parse(time) > limit
-              }
-            }
-          }
-        }
-      ]
-      let valid
-      reg.some(v => {
-        if (v.reg.test(test)) {
-          valid = v.pipe(text)
-          return true
-        }
-      })
-      return valid
-    }
-  },
-  getters: {
-    myauth ({ auths, User, ablemap }) {
-      return auths
-        ? auths.reduce((acc, v) => {
-          acc[v.name] = v.children.map(v2 => {
-            return {
-              label: v2.label,
-              valid: ablemap({
-                test: v2.label,
-                text: v2.level[User.level].text
-              })
-            }
-          })
-          return acc
-        }, {})
-        : {}
-    }
+    myauth: {}
   },
   mutations: {},
   actions: {
@@ -112,7 +59,7 @@ export default {
         })
       }
     },
-    // home加载时获取保存
+    // 进入路由前获取保存
     getauths (store, param) {
       return Axios.get('user/auths').then(res => {
         const catalog = []
@@ -120,7 +67,6 @@ export default {
           const obj =
             catalog.find(v2 => v2.label === v.power) ||
             (catalog[catalog.length] = {
-              name: store.state.componentmap[v.power],
               label: v.power,
               children: []
             })
@@ -130,7 +76,8 @@ export default {
             (children[children.length] = {
               name: '',
               label: v.field,
-              level: []
+              level: [],
+              des: v.describe
             })
           const level = child.level
           level[v.members_level - 1] = {
@@ -141,10 +88,6 @@ export default {
           v.collapse = false
         })
         store.commit('auths', catalog)
-        // bad
-        requestAnimationFrame(() => {
-          store.rootGetters.emitqueue()
-        })
       })
     },
     _getUser (store, param) {}

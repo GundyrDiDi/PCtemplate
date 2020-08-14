@@ -25,7 +25,10 @@
                 </span>
               </div>
               <div ref="detail" :style="{height:v.collapse?'0px':heights[i]+'px'}">
-                <div class="line" v-for="v in v.children" :key="v.label">{{v.label}}</div>
+                <div class="line" v-for="v in v.children" :key="v.label">
+                  {{v.label}}
+                  <div class="des">{{v.des}}</div>
+                </div>
               </div>
             </div>
           </template>
@@ -92,19 +95,11 @@ export default {
     }
   },
   mounted () {
-    const fn = () => {
-      this.$refs.detail.forEach((v, i) => {
-        const height = v.getBoundingClientRect().height
-        this.heights[i] = height
-        this.$forceUpdate()
-      })
-      console.log(this.myauth)
-    }
-    if (this.auths) {
-      fn()
-    } else {
-      this.$store.commit('pushqueue', fn)
-    }
+    this.$refs.detail.forEach((v, i) => {
+      const height = v.getBoundingClientRect().height
+      this.heights[i] = height
+      this.$forceUpdate()
+    })
     const offsetTop = this.$refs.priceTitle[0].getBoundingClientRect().top - this.$el.parentNode.getBoundingClientRect().top
     this.$el.parentNode.addEventListener('scroll', (e) => {
       this.y = Math.max(0, e.target.scrollTop - offsetTop)
@@ -140,6 +135,10 @@ export default {
   margin-bottom:2rem;
   > .description {
     width: 25%;
+    .des{
+      font-size:var(--xxsfont);
+      color:#aaa;
+    }
   }
   .line{
     padding:1rem 0;

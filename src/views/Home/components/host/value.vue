@@ -1,7 +1,9 @@
 <template>
   <div class="value">
     <date-pick class="flex-center" :time.sync="time"></date-pick>
-    <watch-charts :chartdata="charts.hostvalue" :condition="time"></watch-charts>
+    <watch-charts
+      :tabvalid="myauth.hostDetail.tabs"
+      :chartdata="charts.hostvalue" :condition="condition"></watch-charts>
   </div>
 </template>
 
@@ -10,7 +12,18 @@ export default {
   name: 'value',
   data () {
     return {
-      time: [new Date(Date.now() - 30 * 24 * 60 * 60 * 1000), new Date()]
+      time: [new Date(Date.now() - 7 * 24 * 60 * 60 * 1000), new Date()],
+      condition: {}
+    }
+  },
+  watch: {
+    time (newval, oldval) {
+      const fn = this.myauth.hostDetail.time
+      if (fn && fn.call(this, newval, oldval, 'time')) return
+      this.condition = {
+        startTime: newval[0],
+        endTime: newval[1]
+      }
     }
   }
 }

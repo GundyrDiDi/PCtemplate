@@ -10,17 +10,16 @@ export default {
   name: 'record',
   data () {
     return {
-      time: [new Date(Date.now() - 30 * 24 * 60 * 60 * 1000), new Date()]
+      time: [new Date(Date.now() - 7 * 24 * 60 * 60 * 1000), new Date()],
+      condition: {}
     }
   },
   watch: {
-    time () {
+    time (newval, oldval) {
+      const fn = this.myauth.hostDetail.time2
+      if (fn && fn.call(this, newval, oldval, 'time')) return
       this.$refs.table.resetParam()
-    }
-  },
-  computed: {
-    condition () {
-      return {
+      this.condition = {
         liveStartTime: this.time[0],
         liveEndTime: this.time[1]
       }

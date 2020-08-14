@@ -5,7 +5,7 @@
         <el-breadcrumb-item v-for="v in crumb" :key="v.name" :to="v.path">{{v.meta.title}}</el-breadcrumb-item>
       </el-breadcrumb>
     </template>
-    <template class="content" v-for="v in hostDisplay" v-slot:[v.name]>
+    <template class="content" v-for="v in proxy" v-slot:[v.name]>
       <component class="module-box" :key="v.name" :is="v.component" v-bind="v"></component>
     </template>
   </anchor-menu>
@@ -18,12 +18,18 @@ export default {
     return {
       index: 0,
       top: 0,
-      crumb: []
+      crumb: [],
+      proxy: []
     }
   },
   created () {
     const match = this.myroute.history.slice(-2)
     this.crumb = match.length === 1 ? match[0].matched.slice(-2) : match
+
+    this.proxy = this.hostDisplay.slice(0, 2)
+    setTimeout(e => {
+      this.proxy = this.hostDisplay
+    }, 1000)
   }
 }
 </script>
