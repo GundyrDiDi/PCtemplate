@@ -20,6 +20,7 @@
       </div>
     </transition-group>
     <table-paganation :sortvalid="myauth.hotlive.sort" ref="table" :condition="condition" class="module-box livelist" v-bind="livelist"></table-paganation>
+    <modal-table></modal-table>
   </div>
 </template>
 

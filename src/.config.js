@@ -78,8 +78,14 @@ export default {
       // children: 'enternavs'
     },
     {
+      path: '/login',
+      name: 'Login',
+      component: () => import('@/views/Enter/components/login.vue'),
+      meta: { title: '登录' }
+    },
+    {
       path: '/',
-      redirect: to => ({ name: 'follow' })
+      redirect: to => ({ name: 'Enter' })
     }
   ],
   charts: {
@@ -291,14 +297,15 @@ export default {
       events: {
         // brief.vue 的 follow 方法也引用此函数
         follow ({ row }) {
-          this.user_followornot({ host: row.premiereInfoDto || row, vm: this }).then(
-            res => {
-              if (res.code === 200) {
-                this[res.not ? 'msgSuccess' : '$myalert'](res.obj + '！')
-                row.follow = !res.not
-              }
+          this.user_followornot({
+            host: row.premiereInfoDto || row,
+            vm: this
+          }).then(res => {
+            if (res.code === 200) {
+              this[res.not ? 'msgSuccess' : '$myalert'](res.obj + '！')
+              row.follow = !res.not
             }
-          )
+          })
         },
         detail ({ row }) {
           this.$router.push({ name: 'hostDetail', params: { host_id: row.id } })
@@ -484,10 +491,10 @@ export default {
           if (fn && fn.call(this)) return
           this.$router.push({ name: 'hostDetail', params: { host_id: id } })
         },
-        modal ({ row, column }) {
+        modal (param) {
           const fn = this.myauth.inst.columnEvent2
           if (fn && fn.call(this)) return
-          return 1 //
+          this.tables_setcelldata({ ...param, name: 'inst' })
         }
       },
       api: 'tables/inslist',
@@ -555,7 +562,14 @@ export default {
       ]
     },
     goodslist: {
-      api: 'tables/goodlist',
+      events: {
+        modal (param) {
+          const fn = this.myauth.goods.columnEvent2
+          if (fn && fn.call(this)) return
+          this.tables_setcelldata({ ...param, name: 'goods' })
+        }
+      },
+      api: 'tables/goodslist',
       column: [
         {
           key: 'taobaoGoodsName',
@@ -571,13 +585,46 @@ export default {
         },
         { key: 'rootCategoryName', title: '一级类目' },
         { key: 'brandName', title: '品牌' },
-        { key: 'anchorsCnt', title: '关联主播数', sortable: 'custom' },
-        { key: 'liveCnt', title: '关联直播数', sortable: 'custom' },
+        {
+          key: 'anchorsCnt',
+          title: '关联主播数',
+          sortable: 'custom',
+          custom: [
+            {
+              tag: 'a',
+              text: 'anchorsCnt',
+              events: {
+                click: 'modal'
+              }
+            }
+          ]
+        },
+        {
+          key: 'liveCnt',
+          title: '关联直播数',
+          sortable: 'custom',
+          custom: [
+            {
+              tag: 'a',
+              text: 'liveCnt',
+              events: {
+                click: 'modal'
+              }
+            }
+          ]
+        },
         { key: 'totalSaleQty', title: '直播销量(估)', sortable: 'custom' },
         { key: 'totalSaleAmt', title: '直播销售额(估)', sortable: 'custom' }
       ]
     },
     livelist: {
+      events: {
+        modal (param) {
+          const fn = this.myauth.hotlive.columnEvent2
+          if (fn && fn.call(this)) return
+          this.tables_setcelldata({ ...param, name: 'hotlive' })
+        }
+      },
       api: 'tables/hotlive',
       column: [
         {
@@ -599,7 +646,20 @@ export default {
         { key: 'uv', title: '观看人数', sortable: 'custom' },
         { key: 'pv', title: '观看次数', sortable: 'custom' },
         { key: 'addFansNum', title: '直播涨粉数', sortable: 'custom' },
-        { key: 'goodsCnt', title: '商品数', sortable: 'custom' },
+        {
+          key: 'goodsCnt',
+          title: '商品数',
+          sortable: 'custom',
+          custom: [
+            {
+              tag: 'a',
+              text: 'goodsCnt',
+              events: {
+                click: 'modal'
+              }
+            }
+          ]
+        },
         { key: 'salesAmt', title: '销售额(估)', sortable: 'custom' },
         { key: 'saleQty', title: '销量(估)', sortable: 'custom' },
         { key: 'perSalePrice', title: '客单价(估)', sortable: 'custom' }
@@ -1047,7 +1107,7 @@ export default {
       msg:
         '每日罗列带货优秀的直播间及相关数据，帮助商家感知主播的实力，探寻与主播的合作机会',
       tab: {
-        component: 'main-cards'
+        component: 'carousel-card'
       },
       button: { name: '查看更多', link: '' }
     }

@@ -178,6 +178,7 @@ const myauth = auths.reduce((acc, view) => {
   }, {})
   return acc
 }, {})
+
 console.log(myauth)
 store.commit('user/myauth', myauth)
 
@@ -196,22 +197,32 @@ Vue.prototype.$block = function () {
   //   .catch(() => {})
   return this.$Message.warning({
     render: h => {
-      return h('div', [
-        '该功能为',
-        h('a', '标准版'),
-        '以上会员使用，',
-        h(
-          'a',
-          {
-            on: {
-              click () {
-                console.log(this)
+      return h(
+        'div',
+        {
+          class: 'auth-msg'
+        },
+        [
+          '该功能为 ',
+          h('a', '标准版'),
+          ' 以上会员使用，',
+          h(
+            'a',
+            {
+              style: {
+                color: 'rgb(255 141 0)'
+              },
+              on: {
+                click: () => {
+                  this.msgDestroy()
+                  this.$router.push({ name: 'vip' })
+                }
               }
-            }
-          },
-          '点击了解套餐详情'
-        )
-      ])
+            },
+            '点击了解套餐详情'
+          )
+        ]
+      )
     },
     duration: 3
   })

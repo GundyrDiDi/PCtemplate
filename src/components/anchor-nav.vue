@@ -11,6 +11,7 @@
 </template>
 
 <script>
+// 弃用
 export default {
   name: 'anchorNav',
   props: ['tabs', 'index'],

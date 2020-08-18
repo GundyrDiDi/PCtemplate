@@ -38,6 +38,7 @@
 </template>
 
 <script>
+import { formatDate, addNumberUnit } from '@/plugins/util'
 export default {
   name: 'entermain',
   data () {
@@ -51,7 +52,19 @@ export default {
     }
   },
   mounted () {
-
+    const keys = ['pv', 'liveCnt', 'goodsCnt', 'saleQty']
+    Axios.get('charts/watch', {
+      dateId:
+    formatDate(new Date('2020-07-19'), 'yyyyMMdd')
+    }).then(res => {
+      console.log(res[0])
+      keys.forEach((v, i) => {
+        const [num, unit] = addNumberUnit(res[0][v]).split(/\b(?=\D$)/)
+        this.livedata[i].value = Number(num)
+        this.livedata[i].unit = unit
+        console.log(this.livedata[i])
+      })
+    })
   }
 }
 </script>

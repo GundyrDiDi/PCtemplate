@@ -231,6 +231,10 @@ a {
 .ivu-message{
   z-index: 9 !important;
 }
+.auth-msg{
+  padding: 3px 5px;
+  font-size: var(--xs2font);
+}
 // transition-group
 .list-enter-active,
 .list-leave-active {

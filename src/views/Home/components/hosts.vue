@@ -46,6 +46,7 @@
             </div>
           </transition-group>
         </transition>
+        <!-- auth -->
         <table-paganation ref="table"
         :sortvalid="myauth.hosts.sort"
         :condition="condition" class="module-box hostslist" v-bind="hostslist"></table-paganation>

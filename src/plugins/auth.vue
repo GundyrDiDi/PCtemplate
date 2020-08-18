@@ -41,7 +41,7 @@ export default {
     color: #E6A23C;
   }
   .warning{
-    color: #E6A23C;
+    color: rgb(255 141 0);
     cursor: pointer;
   }
   .userlevel{

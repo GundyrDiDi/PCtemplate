@@ -43,6 +43,7 @@ export default {
     size: {
       get () { return this.param.size },
       set (val) {
+        this.param.page = 1
         this.param.size = val
         this.request()
       }
@@ -102,26 +103,33 @@ export default {
     if (this.debounce) {
       this.request = debounce.call(this, this.request, this.debounce)
     }
+    function custom (h, param, v) {
+      return v.map(v2 => {
+        const { tag, text, props, events, children = [], raw, ...attrs } = v2
+        for (const k in attrs) {
+          attrs[k] = param.row[attrs[k]]
+        }
+        const on = {}
+        for (const k in events) {
+          const event = events[k]
+          on[k] = () => {
+            this.dispatch(event, param)
+          }
+        }
+        return h(tag, {
+          class: 'table-' + tag, on, attrs, props
+        }, [
+          text ? param.row[text] : undefined,
+          raw || undefined,
+          ...custom.call(this, h, param, children)
+        ])
+      })
+    }
     this.column.forEach(v => {
       v.align = v.align || 'center'
       if (v.custom) {
         v.render = (h, param) => {
-          return v.custom.map(v2 => {
-            const { tag, text, props, events, ...attrs } = v2
-            for (const k in attrs) {
-              attrs[k] = param.row[attrs[k]]
-            }
-            const on = {}
-            for (const k in events) {
-              const event = events[k]
-              on[k] = () => {
-                this.dispatch(event, param)
-              }
-            }
-            return h(tag, {
-              class: 'table-' + tag, on, attrs, props
-            }, text ? param.row[text] : undefined)
-          })
+          return custom.call(this, h, param, v.custom)
         }
       } else if (v.action) {
         v.render = (h, param) => {
@@ -235,6 +243,18 @@ export default {
     width:40px;
     border-radius:50%;
     margin:10px;
+  }
+  .table-div{
+    height: 60px;
+    width: calc(100% - 60px);
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    label{
+      color:#999;
+      transform:translateY(-4px);
+      font-size:var(--xxsfont);
+    }
   }
   .table-span{
     float:left;

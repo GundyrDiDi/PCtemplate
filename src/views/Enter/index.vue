@@ -18,7 +18,7 @@
         </el-menu>
       </el-col>
       <el-col :span="3" class="flex-ter">
-        <!-- <el-button type="primary" size="small">登录/注册</el-button> -->
+        <el-button type="primary" size="small" @click="$router.push({name:'Login'})">登录/注册</el-button>
       </el-col>
     </el-row>
     <!-- content -->
@@ -29,6 +29,7 @@
 </template>
 
 <script>
+import carouselCard from '@/components/carousel-card.vue'
 export default {
   name: 'Enter',
   data () {
@@ -36,6 +37,9 @@ export default {
       activemenu: 'entermain',
       un: false
     }
+  },
+  components: {
+    carouselCard
   },
   // :is 赋值函数 ()=>import 可以动态注册组件
   // components: config.enternavs.reduce((comp, v) => ({ ...comp, ...{ [v.name]: v.component } }), {}),

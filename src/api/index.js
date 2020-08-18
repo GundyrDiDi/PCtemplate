@@ -95,13 +95,28 @@ export default {
         url: 'anchor/queryAll'
       },
       inslist: {
-        url: 'org/findByMonthByPage'
+        url: 'org/findByMonthByPage',
+        rltgood: {
+          url: 'org/findByMonthRelAnchor'
+        },
+        rltshop: {
+          url: 'org/findByMonthRelLive'
+        }
       },
-      goodlist: {
-        url: 'goods/findByMonthByPage'
+      goodslist: {
+        url: 'goods/findByMonthByPage',
+        rlthost: {
+          url: 'goods/findByMonthRelAnchor'
+        },
+        rltlive: {
+          url: 'goods/findByMonthRelLive'
+        }
       },
       hotlive: {
-        url: 'liveRoom/findPopularLiveInfoByPage'
+        url: 'liveRoom/findPopularLiveInfoByPage',
+        rltgoods: {
+          url: 'liveRoom/findPopularLiveRelGoodsByPage'
+        }
       }
     },
     host: {

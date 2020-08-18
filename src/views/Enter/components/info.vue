@@ -20,7 +20,7 @@
 <script>
 import multiBox from '@/components/multi-box.vue'
 import mainList from '@/components/main-list.vue'
-import mainCards from '@/components/main-cards.vue'
+import carouselCard from '@/components/carousel-card.vue'
 export default {
   name: 'info',
   data () {
@@ -50,25 +50,7 @@ export default {
   components: {
     multiBox,
     mainList,
-    mainCards
-  },
-  mounted () {
-    // setTimeout(e => {
-    //   this.$refs.info.style.height = getComputedStyle(this.$refs.info).height
-    //   this.showpart.forEach(v => (v.show = false))
-    // }, 100)
-    // const ob = new IntersectionObserver((entries) => {
-    //   if (entries[0].isIntersecting) {
-    //     const index = this.$refs.media.findIndex(v => v === entries[0].target)
-    //     this.showpart[index].show = true
-    //     ob.unobserve(entries[0].target)
-    //   }
-    // }, {
-    //   threshold: 1
-    // })
-    // this.$refs.media.forEach(v => {
-    //   ob.observe(v)
-    // })
+    carouselCard
   }
 }
 </script>

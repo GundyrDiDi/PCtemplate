@@ -15,6 +15,7 @@ import anchorMenu from '@/components/anchor-menu'
 import raceChart from '@/components/race-chart'
 import selectCollapse from '@/components/select-collapse'
 import inputSuggestion from '@/components/input-suggestion'
+import modalTable from '@/components/modal-table'
 
 Vue.mixin({
   components: {
@@ -31,6 +32,7 @@ Vue.mixin({
     anchorMenu,
     raceChart,
     selectCollapse,
-    inputSuggestion
+    inputSuggestion,
+    modalTable
   }
 })

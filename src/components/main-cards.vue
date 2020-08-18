@@ -12,7 +12,7 @@
 
 <script>
 export default {
-  name: 'main-list',
+  name: 'main-cards',
   data () {
     return {
       classlist: ['', 'next', 'prev']

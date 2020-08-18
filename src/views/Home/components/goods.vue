@@ -61,6 +61,7 @@
         </div>
       </div>
     </div>
+    <!-- auth -->
     <table-paganation
       ref="table"
       class="module-box goodslist"
@@ -69,6 +70,7 @@
       :sortvalid="myauth.goods.sort"
       v-bind="goodslist"
     ></table-paganation>
+    <modal-table></modal-table>
   </div>
 </template>
 
@@ -137,6 +139,7 @@ export default {
       this.brands = res
     })
     this.loaded = this.goodrelative.loaded = true
+    // auth
     this.valid = this.myauth.goods.filter
   }
 }
