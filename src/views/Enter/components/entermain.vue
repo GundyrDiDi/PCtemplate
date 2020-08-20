@@ -54,7 +54,7 @@ export default {
   mounted () {
     const keys = ['pv', 'liveCnt', 'goodsCnt', 'saleQty']
     Axios.get('charts/watch', {
-      dateId: formatDate(new Date('2020-07-19'), 'yyyyMMdd')
+      dateId: formatDate(new Date('2020-07-18'), 'yyyyMMdd')
     }).then(res => {
       console.log(res[0])
       keys.forEach((v, i) => {

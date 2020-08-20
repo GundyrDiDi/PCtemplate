@@ -27,9 +27,12 @@ module.exports = {
     proxy: {
       '/api': {
         target: 'http://10.228.88.46:8000/api',
-        secure: false,
-        ws: false,
-        changeOrigin: true
+        // secure: false,
+        // ws: false,
+        changeOrigin: true,
+        pathRewrite: {
+          '^/api': '/'
+        }
       }
     }
   }
