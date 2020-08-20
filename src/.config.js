@@ -55,7 +55,7 @@ export default {
     hotlive1: require('@/assets/img/热门直播1.png'),
     hotlive2: require('@/assets/img/热门直播2.png'),
     hotlive3: require('@/assets/img/热门直播3.png'),
-    whale: require('@/assets/img/whale2.png'),
+    whale: require('@/assets/img/whale3.png'),
     collapse: require('@/assets/img/home/collapse.png'),
     dimandyellow: require('@/assets/img/vip/dimandyellow.png'),
     dimandblue: require('@/assets/img/vip/dimandblue.png'),

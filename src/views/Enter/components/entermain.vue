@@ -86,6 +86,9 @@ export default {
     }
   }
   .whale{
+    border-radius: 1.6rem;
+    // box-shadow: 0 2px 2px rgba(0,0,0,.3);
+    filter:drop-shadow(0 2px 2px rgba(0,0,0,.3));
     width:50%;
     margin-left:10%;
     animation: float 2s ease-in-out infinite alternate;
