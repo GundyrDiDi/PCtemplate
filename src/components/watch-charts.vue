@@ -33,9 +33,9 @@ export default {
         yAxisIndex: i,
         // showSymbol: false,
         itemStyle: {
-          color: item,
-          borderColor: '#f1f1f1',
-          borderWidth: 1
+          color: item
+          // borderColor: '#f1f1f1',
+          // borderWidth: 1
         },
         lineStyle: {
           normal: {
