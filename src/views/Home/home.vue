@@ -28,7 +28,9 @@
       <div class="panel">
         <transition mode="out-in" appear
         name="fade-transform">
+        <!-- <keep-alive> -->
           <router-view></router-view>
+        <!-- </keep-alive> -->
         </transition>
       </div>
     </div>

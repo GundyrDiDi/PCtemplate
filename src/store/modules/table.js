@@ -211,6 +211,9 @@ export default {
           return acc
         }, {})
       }).then(res => {
+        if (res.code > 400) {
+          return res
+        }
         res.content.forEach(v => {
           Object.entries(v).forEach(([k, v2]) => {
             if (!/id/i.test(k) && /^[0-9.]+$/.test(v2)) {

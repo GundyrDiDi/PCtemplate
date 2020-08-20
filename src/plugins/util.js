@@ -93,6 +93,19 @@ export function addNumberUnit (
       .replace(/\.0{1,2}$/, '')
   }
 }
+export function isdeepsame (obj1, obj2) {
+  let same = false
+  if (typeof obj1 === typeof obj2) {
+    if (typeof obj1 === 'object' && obj1 !== null && obj2 !== null) {
+      same = Object.entries(obj1).every(([k, v]) => {
+        return isdeepsame(v, obj2[k])
+      })
+    } else {
+      same = obj1 === obj2
+    }
+  }
+  return same
+}
 export function mergeObject (obj1, obj2) {
   return Object.entries(obj1).reduce((obj2, [key, value]) => {
     if (key in obj2) {

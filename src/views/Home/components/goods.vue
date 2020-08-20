@@ -30,6 +30,8 @@
               v-model="brandWord"
               filterable
               clearable
+              remote
+              :remote-method="remoteMethod"
               size="small"
               class="middle"
               placeholder="商品品牌"
@@ -45,8 +47,6 @@
                 </div>
               </el-option>
             </el-select>
-            <!-- <el-input class="middle" size="small" placeholder="商品品牌"
-                v-model="brandWord" clearable></el-input> -->
           </template>
         </input-suggestion>
         <el-button size="small" type="default" @click="reset">重置</el-button>
@@ -68,6 +68,7 @@
       :debounce="300"
       :condition="condition"
       :sortvalid="myauth.goods.sort"
+      :listvalid="myauth.goods.list"
       v-bind="goodslist"
     ></table-paganation>
     <modal-table></modal-table>
@@ -81,7 +82,7 @@ export default {
     return {
       goodsWord: '',
       brandWord: '',
-      brands: '',
+      brands: [],
       time: '',
       valid: false
     }
@@ -116,6 +117,13 @@ export default {
       this.$refs.table.resetParam()
       this.goodsWord = trustWord
     },
+    async remoteMethod (word) {
+      if (word) {
+        this.brands = await this.forms_getbrand(word)
+      } else {
+        this.brands = []
+      }
+    },
     reset () {
       this.goodsWord = ''
       this.brandWord = ''
@@ -135,12 +143,9 @@ export default {
         })
       })
     }
-    this.forms_getbrand().then(res => {
-      this.brands = res
-    })
     this.loaded = this.goodrelative.loaded = true
     // auth
-    this.valid = this.myauth.goods.filter
+    this.valid = this.myauth.goods.filter2
   }
 }
 </script>
@@ -176,21 +181,6 @@ export default {
 }
 .module-box {
   margin-bottom: 1rem;
-}
-.suggestions{
-  font-size:var(--xxsfont);
-  line-height:1rem;
-  justify-content: space-around;
-  padding:0.2rem 0;
-  img{
-    width:2rem;
-    margin:2px 5px;
-    border-radius:50%;
-  }
-  .suggestions-title{
-    width:calc(100% - 2rem);
-    white-space: normal;
-  }
 }
 </style>
 <style lang="less">

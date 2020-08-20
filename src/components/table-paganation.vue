@@ -22,18 +22,13 @@
 import { debounce } from '@/plugins/util'
 export default {
   name: 'table-paganation',
-  props: ['column', 'api', 'events', 'condition', 'debounce', 'sortvalid'],
+  props: ['column', 'api', 'events', 'condition', 'debounce', 'sortvalid', 'listvalid', 'defaultSort'],
   data () {
     return {
       data: [],
       total: 0,
       loading: false,
-      param: {
-        sort: null,
-        size: 10,
-        sizeOpts: [10, 20, 30, 40],
-        page: 1
-      }
+      param: {}
     }
   },
   computed: {
@@ -51,7 +46,19 @@ export default {
     page: {
       get () { return this.param.page },
       set (val) {
+        const page = this.param.page
         this.param.page = val
+        // auth
+        const num = (val - 1) * this.param.size
+        let p
+        if (this.listvalid && (p = this.listvalid(num))) {
+          p.then(res => {
+            requestAnimationFrame(() => {
+              this.param.page = page
+            })
+          })
+          return
+        }
         this.request()
       }
     }
@@ -67,10 +74,10 @@ export default {
     },
     resetParam () {
       this.param = {
-        sort: null,
         size: 10,
         sizeOpts: [10, 20, 30, 40],
-        page: 1
+        page: 1,
+        sort: this.defaultSort
       }
     },
     sortchange ({ column, key, order }) {
@@ -83,19 +90,29 @@ export default {
         })
         return
       }
-      this.param.sort = order === 'normal' ? '' : key + ',' + order
+      this.param.sort = order === 'normal' ? this.defaultSort : key + ',' + order
       this.request()
     },
     async request () {
       this.loading = true
       const { api, param, condition } = this
-      const { data, total } = await this.tables_getdata({
+      const { data, total, code } = await this.tables_getdata({
         api,
         condition,
         ...param
       })
       this.loading = false
-      this.data = data
+      // auth
+      if (code) {
+        return this.$block('您的查询次数已用尽，')
+      }
+      // auth
+      const { size, page } = this.param
+      if (data.length > size) {
+        this.data = data.slice((page - 1) * size, page * size)
+      } else {
+        this.data = data
+      }
       this.total = total
     }
   },
@@ -105,7 +122,7 @@ export default {
     }
     function custom (h, param, v) {
       return v.map(v2 => {
-        const { tag, text, props, events, children = [], raw, ...attrs } = v2
+        const { tag, text, props, events, children = [], raw, style = {}, ...attrs } = v2
         for (const k in attrs) {
           attrs[k] = param.row[attrs[k]]
         }
@@ -117,7 +134,7 @@ export default {
           }
         }
         return h(tag, {
-          class: 'table-' + tag, on, attrs, props
+          class: 'table-' + tag, on, attrs, props, style
         }, [
           text ? param.row[text] : undefined,
           raw || undefined,
@@ -188,6 +205,7 @@ export default {
         }
       }
     })
+    this.resetParam()
   }
 }
 </script>

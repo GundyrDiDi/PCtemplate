@@ -37,12 +37,19 @@ const pipe = [
     return tab => {
       return tabs.includes(tab)
     }
+  },
+  text => {
+    if (text === true) return
+    const match = text.match(/\d+/g)
+    if (match) {
+      return number => number >= Number(match)
+    }
   }
 ]
 const valid = [
   function (fn) {
-    return function () {
-      if (fn()) {
+    return function (...rest) {
+      if (fn(...rest)) {
         return this.$block()
       }
     }
@@ -152,6 +159,12 @@ function validmap (acc, { test, text }) {
           }
         }
       }
+    },
+    {
+      type: 'list',
+      reg: /列表/,
+      pipe: pipe[3],
+      valid: valid[0]
     }
   ]
   reg.some(v => {
@@ -165,25 +178,26 @@ function validmap (acc, { test, text }) {
   })
   return acc
 }
-const {
-  auths,
-  User: { level }
-} = store.state.user
-const myauth = auths.reduce((acc, view) => {
-  acc[viewmap[view.label]] = view.children.reduce((acc, v) => {
-    return validmap(acc, {
-      test: v.label,
-      text: v.level[level].text
-    })
+export default function myauth () {
+  const {
+    auths,
+    User: { level }
+  } = store.state.user
+  const myauth = auths.reduce((acc, view) => {
+    acc[viewmap[view.label]] = view.children.reduce((acc, v) => {
+      return validmap(acc, {
+        test: v.label,
+        text: v.level[level].text
+      })
+    }, {})
+    return acc
   }, {})
-  return acc
-}, {})
-
-console.log(myauth)
-store.commit('user/myauth', myauth)
+  console.log(myauth)
+  return myauth
+}
 
 //
-Vue.prototype.$block = function () {
+Vue.prototype.$block = function (msg) {
   // return this.$confirm('该功能为标准版以上会员使用，点击了解套餐详情', '提示', {
   //   confirmButtonText: '升级会员',
   //   confirmButtonClass: 'block-btn',
@@ -195,35 +209,38 @@ Vue.prototype.$block = function () {
   //     this.$router.push({ name: 'vip' })
   //   })
   //   .catch(() => {})
-  return this.$Message.warning({
-    render: h => {
-      return h(
-        'div',
-        {
-          class: 'auth-msg'
-        },
-        [
-          '该功能为 ',
-          h('a', '标准版'),
-          ' 以上会员使用，',
-          h(
-            'a',
-            {
-              style: {
-                color: 'rgb(255 141 0)'
-              },
-              on: {
-                click: () => {
-                  this.msgDestroy()
-                  this.$router.push({ name: 'vip' })
+  return new Promise(resolve => {
+    this.$Message.warning({
+      render: h => {
+        return h(
+          'div',
+          {
+            class: 'auth-msg'
+          },
+          [
+            ...(msg
+              ? [msg]
+              : ['该功能为 ', h('a', '标准版'), ' 以上会员使用，']),
+            h(
+              'a',
+              {
+                style: {
+                  color: 'rgb(255 141 0)'
+                },
+                on: {
+                  click: () => {
+                    this.msgDestroy()
+                    this.$router.push({ name: 'vip' })
+                  }
                 }
-              }
-            },
-            '点击了解套餐详情'
-          )
-        ]
-      )
-    },
-    duration: 3
+              },
+              '点击了解套餐详情'
+            )
+          ]
+        )
+      },
+      duration: 3
+    })
+    resolve()
   })
 }

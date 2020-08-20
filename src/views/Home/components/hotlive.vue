@@ -7,7 +7,8 @@
         <el-button type="primary" size="small" @click="filterModal = true">高级筛选器</el-button>
       </div>
     </div>
-    <rich-filter @update="filterLabel=$event" :show.sync="filterModal" :formrule="hotlistfilter"></rich-filter>
+    <rich-filter @update="getlabel($event)" :show.sync="filterModal"
+    :formrule="hotlistfilter"></rich-filter>
     <transition-group
       tag="div" name="list"
       class="module-box filter-label flex"
@@ -74,6 +75,14 @@ export default {
         return v.value
       }
     },
+    getlabel (val) {
+      if (val.length) {
+        // auth
+        if (this.valid && this.valid()) return
+        this.$store.commit('user/queryType', 'hotlive,filter')
+      }
+      this.filterLabel = val
+    },
     removelabel (v, i) {
       v.value = ''
       this.filterLabel.splice(i, 1)
@@ -81,7 +90,7 @@ export default {
   },
   async mounted () {
     // this.$refs.table.request()
-    if (!this.richFilter.loaded) {
+    if (!this.hotlistfilter.loaded) {
       await this.forms_gethotfilter().then(data => {
         this.hotlistfilter.forEach(v => {
           const res = data[v.name]
@@ -91,7 +100,9 @@ export default {
         })
       })
     }
-    this.loaded = this.richFilter.loaded = true
+    this.loaded = this.hotlistfilter.loaded = true
+    // auth
+    this.valid = this.myauth.hotlive.filter2
   }
 }
 </script>

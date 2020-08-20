@@ -26,12 +26,14 @@
               </template>
             </input-suggestion>
           <div class="flex-ter rich-filter">
-            <el-button type="default" size="small" @click="showfilter">高级筛选器</el-button>
+            <el-button type="default" size="small" @click="filterModal=true"
+            >高级筛选器</el-button>
           </div>
         </div>
+        <!-- auth -->
         <rich-filter
         v-if="loaded"
-        @update="filterLabel=$event"
+        @update="getlabel"
         :show.sync="filterModal" :formrule="richFilter"></rich-filter>
         <transition
         enter-active-class="animated fadeIn faster"
@@ -49,6 +51,7 @@
         <!-- auth -->
         <table-paganation ref="table"
         :sortvalid="myauth.hosts.sort"
+        :listvalid="myauth.hosts.list"
         :condition="condition" class="module-box hostslist" v-bind="hostslist"></table-paganation>
       </div>
     </transition>
@@ -88,12 +91,6 @@ export default {
     }
   },
   methods: {
-    showfilter () {
-      // auth
-      const fn = this.myauth.hosts.filter
-      if (fn && fn.call(this)) return
-      this.filterModal = true
-    },
     // suggestions
     request (param) {
       const { api } = this.hostslist
@@ -101,8 +98,14 @@ export default {
       return this.tables_getdata({ api, page: 1, size: 6, condition })
     },
     search (trustWord) {
-      this.$refs.table.resetParam()
-      this.trustWord = trustWord
+      // this.$refs.table.resetParam()
+      if (trustWord !== this.trustWord) {
+        this.trustWord = trustWord
+        // auth
+        if (this.trustWord) {
+          this.$store.commit('user/queryType', 'hosts,search')
+        }
+      }
     },
     format (v) {
       if (v.component === 'range') {
@@ -114,6 +117,14 @@ export default {
           .map(v => `<span>${v.attrs.label}</span>`)
           .join('')
       }
+    },
+    getlabel (val) {
+      if (val.length) {
+        // auth
+        if (this.valid && this.valid()) return
+        this.$store.commit('user/queryType', 'hosts,filter')
+      }
+      this.filterLabel = val
     },
     removelabel (v, i) {
       v.value = ''
@@ -143,6 +154,8 @@ export default {
       })
     }
     this.loaded = this.richFilter.loaded = true
+    // auth
+    this.valid = this.myauth.hosts.filter
   }
 }
 </script>
@@ -167,21 +180,11 @@ export default {
 .hostslist {
   min-height: 60vh;
 }
-.suggestions{
-  font-size:var(--xxsfont);
-  line-height:1rem;
-  justify-content: space-around;
-  padding:0.2rem 0;
-  img{
-    width:2rem;
-    border-radius:50%;
-  }
-}
 </style>
 <style lang="less">
 #host {
   .searchbox {
-    width: 40%;
+    width: 45%;
     .el-input__inner {
       border-radius: 4px 0 0 4px;
     }

@@ -236,6 +236,9 @@ a {
   font-size: var(--xs2font);
 }
 // transition-group
+.list-leave-active {
+  position: absolute;
+}
 .list-enter-active,
 .list-leave-active {
   transition: all .5s;
@@ -247,8 +250,5 @@ a {
 }
 .list-move {
   transition: all .5s;
-}
-.list-leave-active {
-  position: absolute;
 }
 </style>

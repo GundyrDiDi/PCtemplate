@@ -61,8 +61,11 @@ export default {
         return o
       })
     },
-    _getbrand (store) {
-      return Axios.get('forms/brands').then(res => {
+    _getbrand (store, brandName) {
+      return Axios.get('forms/brands', {
+        brandName,
+        num: 20
+      }).then(res => {
         return res.filter(v => !/other/.test(v)).map(v => ({ name: v }))
       })
     },

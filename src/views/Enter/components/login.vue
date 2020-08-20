@@ -4,8 +4,13 @@
       <img :src="imgs.whale" />
       <div class="s-title">鲸宸数据</div>
     </div>
-    <div class="content flex-cen">
+    <div class="content flex-ter flex-col">
       <div class="bolder">微信扫码登录</div>
+      <div>
+      <el-button @click="login(0)">免费版</el-button>
+      <el-button @click="login(1)" type="primary">标准版</el-button>
+      <el-button @click="login(2)" type="warning">高级版</el-button>
+      </div>
     </div>
   </div>
 </template>
@@ -16,7 +21,16 @@ export default {
   data () {
     return {}
   },
-  mounted () {}
+  methods: {
+    login (val) {
+      this.User.level = val
+      console.log(this.User)
+      this.$router.push({ name: 'overview' })
+    }
+  },
+  mounted () {
+    this.$store.commit('init', true)
+  }
 }
 </script>
 

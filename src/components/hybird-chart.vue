@@ -47,6 +47,7 @@ export default {
       this.l = true
       const data = await this.chart_getkeydata({ ...this.chartdata, ...this.condition })
       console.log(data)
+      if (!data.length) return
       this.l = false
       this.ct.clear()
       const legend = []
@@ -73,7 +74,6 @@ export default {
       const name = [...legend]
       name[1] = name.slice(1).map(v => v).join('/')
       this.option.yAxis = name.slice(0, 2).map(v => this.option._yAxis(v))
-      console.log(this.option.yAxis)
       this.ct.setOption(this.option)
     }
   },

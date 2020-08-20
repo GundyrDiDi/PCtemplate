@@ -55,7 +55,7 @@ export default {
     hotlive1: require('@/assets/img/热门直播1.png'),
     hotlive2: require('@/assets/img/热门直播2.png'),
     hotlive3: require('@/assets/img/热门直播3.png'),
-    whale: require('@/assets/img/whale.png'),
+    whale: require('@/assets/img/whale2.png'),
     collapse: require('@/assets/img/home/collapse.png'),
     dimandyellow: require('@/assets/img/vip/dimandyellow.png'),
     dimandblue: require('@/assets/img/vip/dimandblue.png'),
@@ -294,9 +294,11 @@ export default {
   },
   tables: {
     hostslist: {
+      defaultSort: 'fansNum,desc',
       events: {
         // brief.vue 的 follow 方法也引用此函数
         follow ({ row }) {
+          const follow = row.follow
           this.user_followornot({
             host: row.premiereInfoDto || row,
             vm: this
@@ -304,6 +306,9 @@ export default {
             if (res.code === 200) {
               this[res.not ? 'msgSuccess' : '$myalert'](res.obj + '！')
               row.follow = !res.not
+            } else {
+              this.$myalert(res.obj + '！')
+              row.follow = follow
             }
           })
         },
@@ -322,9 +327,21 @@ export default {
               src: 'anchorImg',
               props: {
                 size: 'large'
+              },
+              style: {
+                cursor: 'pointer'
+              },
+              events: {
+                click: 'detail'
               }
             },
-            { tag: 'span', text: 'anchorName' }
+            {
+              tag: 'span',
+              text: 'anchorName',
+              events: {
+                click: 'detail'
+              }
+            }
           ],
           width: 180
         },
@@ -485,6 +502,7 @@ export default {
       ]
     },
     inslist: {
+      defaultSort: 'mechanismScore,desc',
       events: {
         detail (id) {
           const fn = this.myauth.inst.columnEvent
@@ -562,6 +580,7 @@ export default {
       ]
     },
     goodslist: {
+      defaultSort: 'totalSaleAmt,desc',
       events: {
         modal (param) {
           const fn = this.myauth.goods.columnEvent2
@@ -618,6 +637,7 @@ export default {
       ]
     },
     livelist: {
+      defaultSort: 'pv,desc',
       events: {
         modal (param) {
           const fn = this.myauth.hotlive.columnEvent2

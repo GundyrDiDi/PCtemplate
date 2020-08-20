@@ -4,6 +4,7 @@ import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import config from '@/.config.js'
 import store from '@/store'
+import myauth from '@/plugins/auth'
 
 NProgress.inc(0.2)
 NProgress.configure({ easing: 'ease', speed: 500, showSpinner: false })
@@ -34,19 +35,18 @@ const router = new VueRouter({
     }
   }
 })
-let init = true
 // 路由守卫
 router.beforeEach((to, from, next) => {
   store.commit('myroute/push', to)
   NProgress.start()
-  if (init) {
+  if (store.state.init && to.path.includes('home')) {
     Promise.all([
       store.dispatch('user/getauths').then(() => {
-        ;(() => import('@/plugins/auth'))()
+        store.commit('user/myauth', myauth())
       }),
       store.dispatch('variable/loadimg')
     ]).then(res => {
-      init = false
+      store.commit('init', false)
       next()
     })
   } else {

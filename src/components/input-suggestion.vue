@@ -2,11 +2,16 @@
 <div class="flex">
   <el-autocomplete
     v-bind="$attrs"
+    clearable
+    :debounce="300"
     :fetch-suggestions="queryAsync"
+    :trigger-on-focus="false"
     v-model.trim="keyword"
+    @clear="handleclear"
     @keyup.enter.native="search()"
     @select="search"
     style="flex:1"
+    ref="b"
   >
     <template slot-scope="{ item }">
         <slot :item="item"></slot>
@@ -15,6 +20,7 @@
   <slot name="suffix">
   </slot>
   <el-button :size="$attrs.size" type="primary" @click="search()">{{btntext||'搜索'}}</el-button>
+  <el-input ref="a" class="a"></el-input>
 </div>
 </template>
 
@@ -28,14 +34,18 @@ export default {
     }
   },
   methods: {
+    handleclear () {
+      this.$refs.a.focus()
+      this.$refs.b.focus()
+    },
     queryAsync (str, resolve) {
-      if (str) {
-        this.request({ [this.itemName]: str }).then((res) => {
-          resolve(res.data)
-        })
-      } else {
-        resolve([])
-      }
+      this.request({ [this.itemName]: str }).then((res) => {
+        resolve(res.data)
+      })
+      // if (str) {
+      // } else {
+      //   resolve([])
+      // }
     },
     search (item) {
       this.keyword = item ? item[this.itemName] : this.keyword
@@ -45,5 +55,30 @@ export default {
 }
 </script>
 
-<style scoped lang="less">
+<style lang="less" scoped>
+.a{
+  position:absolute;height:0;width:0;z-index:-1
+}
+</style>
+<style lang="less">
+.suggestions{
+  font-size:var(--xxsfont);
+  line-height:1rem;
+  // justify-content: space-around;
+  padding:0.2rem 0;
+  >div{
+    width:120px;
+  }
+  img{
+    height:2rem;
+    width:2rem;
+    margin:2px 5px;
+    border-radius:50%;
+    margin-right:.5rem;
+  }
+  .suggestions-title{
+    width:calc(100% - 2rem);
+    white-space: normal;
+  }
+}
 </style>

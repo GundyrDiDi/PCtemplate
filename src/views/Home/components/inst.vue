@@ -24,7 +24,9 @@
           </div>
         </input-suggestion>
     </div>
+    <!-- auth -->
     <table-paganation
+    :listvalid="myauth.inst.list"
     ref="table" class="module-box inslist" :condition="condition" v-bind="inslist"></table-paganation>
     <modal-table></modal-table>
   </div>
@@ -83,17 +85,6 @@ export default {
 }
 .module-box{
   margin-bottom:1rem;
-}
-.suggestions{
-  font-size:var(--xxsfont);
-  line-height:1rem;
-  justify-content: space-around;
-  padding:0.2rem 0;
-  img{
-    width:2rem;
-    margin:2px 5px;
-    border-radius:50%;
-  }
 }
 </style>
 <style lang="less">

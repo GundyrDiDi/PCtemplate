@@ -13,7 +13,9 @@ const root = {
   name: '',
   state: {
     // 异步事件需要延迟执行的存放队列
-    queue: []
+    queue: [],
+    // 登录初始化加载
+    init: true
   },
   getters: {
     // 触发

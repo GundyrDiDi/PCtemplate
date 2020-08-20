@@ -69,12 +69,16 @@ export default {
       }
     },
     async getdata () {
-      console.log(2)
       this.l = true
       const tab = this.chartdata.find(v => v.name === this.actTab)
       const data = await this.chart_getmuldata({ ...tab, ...this.condition })
       this.l = false
       this.ct.clear()
+      data.forEach((v, i, arr) => {
+        v.data = v.data.sort((a, b) => {
+          return new Date(a.name).getTime() - new Date(b.name).getTime()
+        })
+      })
       this.option.legend.data = data.map(v => v.name)
       this.option.series = data.map((v, i) => {
         v.data.forEach(v1 => (v1.value = [v1.name, v1.value]))
@@ -129,7 +133,8 @@ export default {
       //   end: 100
       // }],
       xAxis: {
-        type: 'time',
+        // type: 'time',
+        type: 'category',
         splitLine: {
           show: false
         },

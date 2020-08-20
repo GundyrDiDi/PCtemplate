@@ -40,12 +40,14 @@
 </template>
 
 <script>
+import { isdeepsame } from '@/plugins/util'
 export default {
   name: 'rich-filter',
   props: ['show', 'formrule'],
   data () {
     return {
       form: {},
+      preForm: {},
       rules: this.formrule.reduce((acc, v) => {
         acc[v.name] = v.rule
         return acc
@@ -64,11 +66,21 @@ export default {
   },
   watch: {
     _show () {
+      this.preForm = { ...this.form }
+      Object.keys(this.preForm).forEach(k => {
+        const v = this.preForm[k]
+        if (typeof v === 'object') {
+          this.preForm[k] = { ...v }
+        }
+      })
       this.reset()
     }
   },
   methods: {
     check () {
+      if (isdeepsame(this.form, this.preForm)) {
+        return this.$emit('update:show', false)
+      }
       this.formrule.forEach(v => {
         if (v.component === 'range') {
           const [min, max] = this.form[v.name]

@@ -15,7 +15,6 @@ export default {
       liveofflow: {
         url: 'liveRoom/getLiveFlow'
       },
-      hostvalue: {},
       fanspicture: {
         url: 'anchor/findFansPortrait',
         _params () {
@@ -155,7 +154,7 @@ export default {
     user: {
       _params () {
         return {
-          openid: '123'
+          openid: store.state.user.openid
         }
       },
       followme: {

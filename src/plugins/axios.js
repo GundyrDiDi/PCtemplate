@@ -3,7 +3,8 @@
 import Vue from 'vue'
 import axios from 'axios'
 import api from '@/api'
-import { wait } from '@/plugins/util'
+import store from '@/store'
+// import { wait } from '@/plugins/util'
 // Full config:  https://github.com/axios/axios#request-config
 // axios.defaults.baseURL = process.env.baseURL || process.env.apiUrl || '';
 // axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
@@ -30,8 +31,6 @@ _axios.get = function (url, params) {
 }
 _axios.interceptors.request.use(
   async function (config) {
-    // 生产环境删除
-    await wait(500)
     const { method, url } = config
     let data = api[method]._params
     data = data ? data() : {}
@@ -52,6 +51,10 @@ _axios.interceptors.request.use(
       ...(method === 'post' ? config.data : config.params)
     }
     config.url = _url
+    // auth
+    config.headers.openId = store.state.user.openid
+    config.headers.queryType = store.state.user.queryType
+    config.headers.vipLevel = store.state.user.User.level + 1
     console.log(config)
     // Do something before request is sent
     return config
@@ -65,6 +68,7 @@ _axios.interceptors.request.use(
 // Add a response interceptor
 _axios.interceptors.response.use(
   function (response) {
+    store.commit('user/queryType', '')
     // Do something with response data
     return response.data
   },

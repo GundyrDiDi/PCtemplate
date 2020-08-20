@@ -12,7 +12,7 @@ import '@/assets/css/animate.css'
 import '@/assets/font/iconfont.css'
 import './plugins/iview.js'
 import './plugins/echarts.js'
-import './plugins/mixin.js'
+import '@/components/global.js'
 
 Vue.config.productionTip = false
 new Vue({
