@@ -60,7 +60,8 @@ export default {
     dimandyellow: require('@/assets/img/vip/dimandyellow.png'),
     dimandblue: require('@/assets/img/vip/dimandblue.png'),
     dimandgray: require('@/assets/img/vip/dimandgray.png'),
-    check: require('@/assets/img/vip/check.png')
+    check: require('@/assets/img/vip/check.png'),
+    gongzhonghao: require('@/assets/img/gongzhonghao.jpg')
   },
   routes: [
     {

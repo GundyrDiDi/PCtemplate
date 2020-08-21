@@ -59,7 +59,7 @@ export default {
       console.log(res[0])
       keys.forEach((v, i) => {
         const [num, unit] = addNumberUnit(res[0][v]).split(/\b(?=\D$)/)
-        this.livedata[i].value = Number(num)
+        this.livedata[i].value = isNaN(Number(num)) ? 0 : Number(num)
         this.livedata[i].unit = unit
       })
     })

@@ -69,6 +69,7 @@
       :condition="condition"
       :sortvalid="myauth.goods.sort"
       :listvalid="myauth.goods.list"
+      :lockvalid="myauth.goods.lock"
       v-bind="goodslist"
     ></table-paganation>
     <modal-table></modal-table>

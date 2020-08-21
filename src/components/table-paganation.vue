@@ -22,7 +22,7 @@
 import { debounce } from '@/plugins/util'
 export default {
   name: 'table-paganation',
-  props: ['column', 'api', 'events', 'condition', 'debounce', 'sortvalid', 'listvalid', 'defaultSort'],
+  props: ['column', 'api', 'events', 'condition', 'debounce', 'sortvalid', 'listvalid', 'lockvalid', 'defaultSort'],
   data () {
     return {
       data: [],
@@ -144,7 +144,18 @@ export default {
     }
     this.column.forEach(v => {
       v.align = v.align || 'center'
-      if (v.custom) {
+      // auth
+      let fn = ''
+      if (this.lockvalid && (fn = this.lockvalid(v.key))) {
+        v.render = (h, { row, index }) => {
+          const val = row[v.key]
+          if (val === '0' || (!val)) {
+            return h('span', {}, '—')
+          }
+          const a = fn(index)
+          return a ? h(a) : h('span', {}, val)
+        }
+      } else if (v.custom) {
         v.render = (h, param) => {
           return custom.call(this, h, param, v.custom)
         }

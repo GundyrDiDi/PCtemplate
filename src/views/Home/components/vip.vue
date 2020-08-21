@@ -14,7 +14,7 @@
           </span>
         </div>
       </div>
-      <div class="paylist flex">
+      <div class="paylist flex" ref="paylist">
         <div class="description">
           <div class="s-title" :style="top">功能权限</div>
           <template v-for="(v,i) in auths">
@@ -35,7 +35,7 @@
         </div>
         <div class="price flex">
           <div v-for="(v,l) in levels" :key="v.label" class="level">
-            <div class="s-title" ref="priceTitle" :style="top">
+            <div class="s-title" :style="top">
               <div>
                 <img class="dimand" :src="imgs[v.icon]" alt="">
                 {{v.label}}
@@ -100,7 +100,7 @@ export default {
       this.heights[i] = height
       this.$forceUpdate()
     })
-    const offsetTop = this.$refs.priceTitle[0].getBoundingClientRect().top - this.$el.parentNode.getBoundingClientRect().top
+    const offsetTop = this.$refs.paylist.offsetTop + this.$el.offsetTop
     this.$el.parentNode.addEventListener('scroll', (e) => {
       this.y = Math.max(0, e.target.scrollTop - offsetTop)
     })

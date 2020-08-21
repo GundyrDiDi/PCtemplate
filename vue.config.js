@@ -26,6 +26,7 @@ module.exports = {
     hotOnly: false, // 热更新（webpack已实现了，这里false即可）
     proxy: {
       '/api': {
+        // target: 'http://10.228.88.220:17782/api',
         target: 'http://10.228.88.46:8000/api',
         // secure: false,
         // ws: false,

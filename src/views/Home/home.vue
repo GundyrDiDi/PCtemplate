@@ -9,7 +9,7 @@
           </div>
         </div>
         <div class="notify flex-center">
-          <el-button type="primary">{{notify.msg}}</el-button>
+          <el-button type="primary" @click="showQRcode=true">{{notify.msg}}</el-button>
         </div>
         <div class="user flex-center">
           <img class="brcircle" :src="imgs.head" alt />
@@ -34,6 +34,15 @@
         </transition>
       </div>
     </div>
+    <el-dialog :visible.sync="showQRcode"
+    width="400px"
+    :show-close="false"
+    center
+    custom-class="qrcode"
+    title="扫描二维码关注"
+    >
+      <img :src="imgs.gongzhonghao" class="qr">
+    </el-dialog>
   </div>
 </template>
 
@@ -44,7 +53,8 @@ export default {
   name: 'Home',
   data () {
     return {
-      collapse: false
+      collapse: false,
+      showQRcode: false
     }
   },
   components: {
@@ -159,18 +169,23 @@ header {
     scroll-behavior: smooth;
   }
 }
+.qr{
+  height:300px;
+  width:300px;
+}
 </style>
 <style>
+.qrcode .el-dialog__body{
+  padding:0px 50px 20px 50px;
+}
   .fade-transform-leave-active,
   .fade-transform-enter-active {
     transition: all 0.5s;
   }
-
   .fade-transform-enter {
     opacity: 0;
     transform: translateX(-30px);
   }
-
   .fade-transform-leave-to {
     opacity: 0;
     transform: translateX(30px);

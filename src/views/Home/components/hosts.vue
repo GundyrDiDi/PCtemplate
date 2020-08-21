@@ -52,6 +52,7 @@
         <table-paganation ref="table"
         :sortvalid="myauth.hosts.sort"
         :listvalid="myauth.hosts.list"
+        :lockvalid="myauth.hosts.lock"
         :condition="condition" class="module-box hostslist" v-bind="hostslist"></table-paganation>
       </div>
     </transition>

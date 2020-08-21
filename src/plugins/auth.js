@@ -43,6 +43,8 @@ const pipe = [
     const match = text.match(/\d+/g)
     if (match) {
       return number => number >= Number(match)
+    } else {
+      return () => text === '无'
     }
   }
 ]
@@ -77,18 +79,6 @@ const valid = [
 ]
 function validmap (acc, { test, text }) {
   const reg = [
-    {
-      type: 'time',
-      reg: /(自由选择时间段)|(主播趋势)/,
-      pipe: pipe[1],
-      valid: valid[2]
-    },
-    {
-      type: 'time2',
-      reg: /直播记录/,
-      pipe: pipe[1],
-      valid: valid[2]
-    },
     {
       type: 'filter',
       reg: /高级筛选/,
@@ -132,10 +122,16 @@ function validmap (acc, { test, text }) {
       valid: valid[0]
     },
     {
-      type: 'lock',
-      reg: /AAAAAA/,
-      pipe: pipe[0],
-      valid: valid[0]
+      type: 'time',
+      reg: /(自由选择时间段)|(主播趋势)/,
+      pipe: pipe[1],
+      valid: valid[2]
+    },
+    {
+      type: 'time2',
+      reg: /直播记录/,
+      pipe: pipe[1],
+      valid: valid[2]
     },
     {
       type: 'tabs',
@@ -165,6 +161,22 @@ function validmap (acc, { test, text }) {
       reg: /列表/,
       pipe: pipe[3],
       valid: valid[0]
+    },
+    {
+      type: 'lock',
+      reg: /销售数据/,
+      pipe: pipe[3],
+      valid: function (fn) {
+        return key => {
+          if (/(Amt)|(Qty)|(per)/i.test(key)) {
+            return index => {
+              if (fn(index)) {
+                return 'my-lock'
+              }
+            }
+          }
+        }
+      }
     }
   ]
   reg.some(v => {
@@ -197,6 +209,7 @@ export default function myauth () {
 }
 
 //
+Vue.component('my-lock', () => import('./auth-lock.vue'))
 Vue.prototype.$block = function (msg) {
   // return this.$confirm('该功能为标准版以上会员使用，点击了解套餐详情', '提示', {
   //   confirmButtonText: '升级会员',
