@@ -91,7 +91,7 @@ export default {
     height:100%;
   }
   .logo {
-    height:calc(var(--base) * 1.5);
+    height:calc(var(--base) * 2);
     margin-left:8rem;
   }
   .jingchen {

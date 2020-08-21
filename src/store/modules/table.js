@@ -1,5 +1,6 @@
 import config, { MAP } from '@/.config.js'
 import { formatNumber, addNumberUnit } from '@/plugins/util.js'
+// 单元格关联表
 const Map = {
   inst: {
     condition: ['mechanismId', 'monthId'],
@@ -157,6 +158,57 @@ const Map = {
       column: [],
       api: 'tables/hotlive/rltgoods'
     }
+  },
+  vip: {
+    condition: [],
+    column: [],
+    record: {
+      events: {
+        tax (param) {
+          console.log(param)
+        }
+      },
+      name: '购买记录',
+      column: [
+        {
+          key: 'orderId',
+          title: '订单编号'
+        },
+        {
+          key: 'goodsName',
+          title: '商品',
+          width: 200
+        },
+        {
+          key: 'money',
+          title: '支付金额'
+        },
+        {
+          key: 'validityTime',
+          title: '有效期',
+          width: 250
+        },
+        {
+          key: 'dddddd',
+          title: '订单说明',
+          width: 250
+        },
+        {
+          key: 'id',
+          title: '操作',
+          custom: [
+            {
+              tag: 'a',
+              raw: '申请开票',
+              events: {
+                click: 'tax'
+              }
+            }
+          ]
+        }
+      ],
+      api: 'user/payrecord'
+    }
   }
 }
 export default {
@@ -169,7 +221,6 @@ export default {
   mutations: {},
   actions: {
     _setcelldata (store, { row, column, name }) {
-      console.log(row)
       const key = column.key
       const data = Map[name]
       const cellcolumn = [...data.column]

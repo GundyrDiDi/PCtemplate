@@ -13,6 +13,7 @@
         start-placeholder="开始日期"
         end-placeholder="结束日期"
         :picker-options="pickerOptions"
+        :disabled="auth"
       ></el-date-picker>
       <el-button-group class="btns">
         <el-button
@@ -80,6 +81,10 @@ export default {
     }
   },
   computed: {
+    // auth
+    auth () {
+      return this.user.User.level < 1
+    },
     pickerOptions () {
       const shortcuts = this.buttons.map(v => {
         return {
@@ -95,6 +100,9 @@ export default {
     }
   },
   methods: {
+    // block () {
+    //   this.auth && this.$block()
+    // },
     quickset (v) {
       const end = new Date()
       const start = new Date()

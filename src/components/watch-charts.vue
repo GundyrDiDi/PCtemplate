@@ -72,6 +72,7 @@ export default {
       this.l = true
       const tab = this.chartdata.find(v => v.name === this.actTab)
       const data = await this.chart_getmuldata({ ...tab, ...this.condition })
+      console.log(data)
       this.l = false
       this.ct.clear()
       data.forEach((v, i, arr) => {
@@ -87,6 +88,7 @@ export default {
           ...this.lineStyle[i]
         }
       })
+      console.log(this.option.series)
       this.option.yAxis = data.map(v => this.option._yAxis(v.name))
       this.ct.setOption(this.option)
     }
@@ -133,8 +135,8 @@ export default {
       //   end: 100
       // }],
       xAxis: {
-        // type: 'time',
-        type: 'category',
+        type: 'time',
+        // type: 'category',
         splitLine: {
           show: false
         },

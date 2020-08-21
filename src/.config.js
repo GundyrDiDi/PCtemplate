@@ -29,7 +29,7 @@ export default {
   description: '淘宝主播商家、主播、MCN优选的淘宝直播AI数据平台',
   company: {
     email: 'bd@jingchendata.com',
-    tel: 'XXXXXXXXXXXXX',
+    tel: '13372543376 (董先生)',
     addr: '浙江省杭州市滨江区秋溢路606号2号楼402室',
     name: '杭州瀚斯科技有限公司',
     icp: '浙ICP备19017467号',
@@ -40,7 +40,7 @@ export default {
     msg: '点击关注服务号，可接收更多资讯哦！'
   },
   imgs: {
-    logo: require('@/assets/img/logo.png'),
+    logo: require('@/assets/img/logo2.png'),
     jingchen: require('@/assets/img/jingchen.png'),
     email: require('@/assets/img/email.png'),
     tel: require('@/assets/img/tel.png'),
@@ -61,7 +61,9 @@ export default {
     dimandblue: require('@/assets/img/vip/dimandblue.png'),
     dimandgray: require('@/assets/img/vip/dimandgray.png'),
     check: require('@/assets/img/vip/check.png'),
-    gongzhonghao: require('@/assets/img/gongzhonghao.jpg')
+    gongzhonghao: require('@/assets/img/gongzhonghao.jpg'),
+    coop: require('@/assets/img/service.jpg'),
+    weixin: require('@/assets/img/weixin.png')
   },
   routes: [
     {
@@ -304,11 +306,16 @@ export default {
             host: row.premiereInfoDto || row,
             vm: this
           }).then(res => {
+            // 关注或取消关注 成功
             if (res.code === 200) {
               this[res.not ? 'msgSuccess' : '$myalert'](res.obj + '！')
               row.follow = !res.not
             } else {
-              this.$myalert(res.obj + '！')
+              // 关注或取消关注 失败
+              if (res.obj) {
+                this.$myalert(res.obj + '！')
+              }
+              // 取消操作
               row.follow = follow
             }
           })

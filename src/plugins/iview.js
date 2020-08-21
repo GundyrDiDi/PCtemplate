@@ -6,7 +6,7 @@ import 'view-design/dist/styles/iview.css'
 Vue.use(ViewUI)
 
 Vue.prototype.$Message.config({
-  top: 80,
+  top: 10,
   duration: 2
 })
 Vue.prototype.msgLoading = function (msg, duration = 0) {

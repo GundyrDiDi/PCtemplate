@@ -1,6 +1,7 @@
 <template>
   <div class="grid">
-    <div class="module-box flex-center">
+    <div class="module-box flex-ter">
+      <div class="t-title" style="margin-right:10rem">淘宝直播大盘</div>
       <date-pick :time.sync="time"></date-pick>
     </div>
     <watch-charts class="module-box" :chartdata="charts.watch" :condition="condition"></watch-charts>

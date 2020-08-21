@@ -35,12 +35,17 @@
       </div>
     </div>
     <el-dialog :visible.sync="showQRcode"
-    width="400px"
+    width="360px"
     :show-close="false"
     center
     custom-class="qrcode"
-    title="扫描二维码关注"
     >
+      <template v-slot:title>
+        <div>
+          <div>微信扫一扫</div>
+          <div>关注鲸宸数据官方公众号</div>
+        </div>
+      </template>
       <img :src="imgs.gongzhonghao" class="qr">
     </el-dialog>
   </div>
@@ -176,7 +181,7 @@ header {
 </style>
 <style>
 .qrcode .el-dialog__body{
-  padding:0px 50px 20px 50px;
+  padding:0px 30px 20px 30px;
 }
   .fade-transform-leave-active,
   .fade-transform-enter-active {

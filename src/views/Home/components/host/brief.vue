@@ -25,7 +25,7 @@
         </div>
         <div>
           <el-button :type="actHost.follow?'primary':'default'" @click="follow(actHost)">{{actHost.follow?'取消关注':'关注TA'}}</el-button>
-          <el-button @click="coperate">合作咨询</el-button>
+          <el-button @click="showQRcode=true">合作咨询</el-button>
         </div>
       </div>
       <div class="follow flex-col-cen">
@@ -59,6 +59,15 @@
         </div>
       </div>
     </div>
+    <el-dialog :visible.sync="showQRcode"
+      width="360px"
+      :show-close="false"
+      :append-to-body="true"
+      center
+      custom-class="qrcode"
+    >
+      <img :src="imgs.coop" class="qr">
+    </el-dialog>
   </div>
 </template>
 
@@ -80,11 +89,11 @@ export default {
       dropmenu: [
         7, 15, 30, 60, 90
       ],
-      trustmenu: 30
+      trustmenu: 30,
+      showQRcode: false
     }
   },
   methods: {
-    coperate () {},
     follow (v) {
       // this.user_followornot({ host: v.premiereInfoDto, vm: this }).then(
       //   res => {
@@ -164,5 +173,9 @@ export default {
 }
 .info>div{
   margin-right:5%;
+}
+.qr{
+  width:300px;
+  border-radius:6px;
 }
 </style>

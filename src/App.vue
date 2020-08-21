@@ -71,6 +71,9 @@ a {
   --lbgcol:tint(#e3f2ff,76%);
   --dbcol:#fff;
 }
+.thin{
+  font-weight: 200;
+}
 .bold {
   font-weight: 400;
 }
@@ -228,8 +231,8 @@ a {
   padding:12px 25px;
   margin-left:25px !important;
 }
-.ivu-message{
-  z-index: 9 !important;
+.ivu-table-small{
+  font-size:16px !important;
 }
 .auth-msg{
   padding: 3px 5px;

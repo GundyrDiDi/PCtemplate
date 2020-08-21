@@ -150,7 +150,7 @@ export default {
         v.render = (h, { row, index }) => {
           const val = row[v.key]
           if (val === '0' || (!val)) {
-            return h('span', {}, '—')
+            return ['—']
           }
           const a = fn(index)
           return a ? h(a) : h('span', {}, val)
@@ -252,7 +252,6 @@ export default {
   }
   .table-async{
     display: flex;
-    justify-content: center;
     >img{
       float:left;
       height:40px;

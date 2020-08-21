@@ -8,7 +8,7 @@
         </div>
         <div>如需更加丰富的功能，请购买更高版本</div>
         <div>
-          <span class="payhistory">
+          <span class="payhistory" @click="showrecord">
             我的购买记录
             (<span>{{User.payrecord}}</span>)
           </span>
@@ -41,7 +41,7 @@
                 {{v.label}}
               </div>
               <div class="pricenum">{{v.price}}</div>
-              <el-button v-if="v.btn" type="warning" class="buy" size="small">
+              <el-button @click="buy(v)" v-if="v.btn" type="warning" class="buy" size="small">
                 立即购买
               </el-button>
             </div>
@@ -57,21 +57,31 @@
         </div>
       </div>
     </div>
+    <Modal v-model="showpay" width="600px" footer-hide :transfer="false">
+      <Pay :version="version" :levels="levels.slice(1)"></Pay>
+    </Modal>
+    <modal-table></modal-table>
   </div>
 </template>
 
 <script>
+import Pay from './vip/pay'
 export default {
   name: '',
+  components: {
+    Pay
+  },
   data () {
     return {
       levels: [
-        { label: '免费版', price: '免费使用', icon: 'dimandgray' },
-        { label: '标准版', price: '999/月', btn: true, icon: 'dimandblue' },
-        { label: '高级版', price: '1499/月', btn: true, icon: 'dimandyellow' }
+        { label: '免费版', level: 1, price: '免费使用', icon: 'dimandgray' },
+        { label: '标准版', level: 2, price: '999/月', btn: true, icon: 'dimandblue' },
+        { label: '高级版', level: 3, price: '1499/月', btn: true, icon: 'dimandyellow' }
       ],
       heights: [],
-      y: ''
+      y: '',
+      showpay: false,
+      version: {}
     }
   },
   computed: {
@@ -83,6 +93,17 @@ export default {
     }
   },
   methods: {
+    buy (v) {
+      this.version = { ...v }
+      this.showpay = true
+    },
+    showrecord () {
+      this.tables_setcelldata({
+        row: {},
+        column: { key: 'record' },
+        name: 'vip'
+      })
+    },
     collapsedetail (v) {
       v.collapse = !v.collapse
     },
