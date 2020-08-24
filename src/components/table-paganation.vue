@@ -122,7 +122,7 @@ export default {
     }
     function custom (h, param, v) {
       return v.map(v2 => {
-        const { tag, text, props, events, children = [], raw, style = {}, ...attrs } = v2
+        const { tag, text, props, events, children = [], raw, dyna, style = {}, ...attrs } = v2
         for (const k in attrs) {
           attrs[k] = param.row[attrs[k]]
         }
@@ -138,6 +138,7 @@ export default {
         }, [
           text ? param.row[text] : undefined,
           raw || undefined,
+          dyna ? dyna.fn(param.row[dyna.param]) : undefined,
           ...custom.call(this, h, param, children)
         ])
       })

@@ -386,19 +386,41 @@ export default {
           key: 'action',
           title: '操作',
           width: 100,
-          action: [
+          // action: [
+          //   {
+          //     change: 'follow',
+          //     event: 'follow',
+          //     classes: ['fa fa-star-o', 'fa fa-star'],
+          //     on: 'click',
+          //     tooltips: ['关注', '取消关注']
+          //   },
+          //   {
+          //     event: 'detail',
+          //     class: 'fa fa-ellipsis-h',
+          //     on: 'click',
+          //     tooltip: '查看详情'
+          //   }
+          // ]
+          custom: [
             {
-              change: 'follow',
-              event: 'follow',
-              classes: ['fa fa-star-o', 'fa fa-star'],
-              on: 'click',
-              tooltips: ['关注', '取消关注']
+              tag: 'a',
+              style: { display: 'block' },
+              dyna: {
+                param: 'follow',
+                fn (follow) {
+                  return follow ? '不再关注' : '关注'
+                }
+              },
+              events: {
+                click: 'follow'
+              }
             },
             {
-              event: 'detail',
-              class: 'fa fa-ellipsis-h',
-              on: 'click',
-              tooltip: '查看详情'
+              tag: 'a',
+              raw: '查看详情',
+              events: {
+                click: 'detail'
+              }
             }
           ]
         }

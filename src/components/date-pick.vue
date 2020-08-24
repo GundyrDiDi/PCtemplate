@@ -13,7 +13,8 @@
         start-placeholder="开始日期"
         end-placeholder="结束日期"
         :picker-options="pickerOptions"
-        :disabled="auth"
+        :readonly="auth"
+        @focus="valid"
       ></el-date-picker>
       <el-button-group class="btns">
         <el-button
@@ -29,7 +30,7 @@
 </template>
 
 <script>
-import { formatDate } from '@/plugins/util.js'
+import { formatDate, throttle } from '@/plugins/util.js'
 export default {
   name: 'date-pick',
   props: ['time'],
@@ -100,9 +101,9 @@ export default {
     }
   },
   methods: {
-    // block () {
-    //   this.auth && this.$block()
-    // },
+    valid () {
+      this.auth && this.block()
+    },
     quickset (v) {
       const end = new Date()
       const start = new Date()
@@ -121,6 +122,7 @@ export default {
   },
   mounted () {
     this.form.time = this.time
+    this.block = throttle.call(this, this.$block)
   }
 }
 </script>

@@ -1,14 +1,16 @@
 <template>
   <div id="inst">
     <div class="module-box flex-ter">
-      <div class="s-title">机构月榜</div>
+      <div class="t-title">机构月榜</div>
       <el-date-picker
         class="date"
         v-model="time"
         type="month"
         size="small"
         value-format="yyyy-MM"
-        placeholder="选择月">
+        placeholder="选择月"
+        :picker-options="pickerOptions"
+      >
       </el-date-picker>
         <input-suggestion class="searchbox"
           size="small"
@@ -39,7 +41,12 @@ export default {
   data () {
     return {
       trustWord: '',
-      time: formatDate(new Date(), 'yyyy-MM')
+      time: formatDate(new Date(), 'yyyy-MM'),
+      pickerOptions: {
+        disabledDate (date) {
+          return date.getTime() > Date.now()
+        }
+      }
     }
   },
   computed: {

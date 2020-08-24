@@ -26,7 +26,7 @@ export function loadimg (src, localSrc) {
   })
 }
 
-export function throttle (fn, time) {
+export function throttle (fn, time = 300) {
   let exec = true
   return function (...rest) {
     if (exec) {
@@ -39,7 +39,7 @@ export function throttle (fn, time) {
   }
 }
 
-export function debounce (fn, time) {
+export function debounce (fn, time = 300) {
   let timer
   return function (...rest) {
     if (timer) {

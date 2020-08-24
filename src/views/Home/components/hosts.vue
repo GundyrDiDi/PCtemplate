@@ -6,41 +6,49 @@
     >
       <div v-show="$route.name==='hosts'">
         <div class="module-box flex">
-            <input-suggestion class="searchbox"
-              placeholder="搜索主播名称"
-              itemName="anchorName"
-              btntext="搜索主播"
-              :request="request"
-              @search="search"
-            >
-              <template slot-scope="{ item }">
-                <div class="suggestions flex-ter">
-                  <img :src="'http:'+item.anchorImg" alt="">
-                  <div>
-                    <div>{{item.anchorName}}</div>
-                    <div>{{item.mechanismName}}</div>
-                  </div>
-                  <div>粉丝: {{item.fansNum}}</div>
-                  <el-tag>{{item.skilledField}}</el-tag>
+          <div class="t-title">人气主播</div>
+          <input-suggestion
+            size="small"
+            class="searchbox"
+            placeholder="搜索主播名称"
+            itemName="anchorName"
+            btntext="搜索主播"
+            :request="request"
+            @search="search"
+          >
+            <template slot-scope="{ item }">
+              <div class="suggestions flex-ter">
+                <img :src="'http:'+item.anchorImg" alt />
+                <div>
+                  <div>{{item.anchorName}}</div>
+                  <div>{{item.mechanismName}}</div>
                 </div>
-              </template>
-            </input-suggestion>
+                <div>粉丝: {{item.fansNum}}</div>
+                <el-tag>{{item.skilledField}}</el-tag>
+              </div>
+            </template>
+          </input-suggestion>
           <div class="flex-ter rich-filter">
-            <el-button type="default" size="small" @click="filterModal=true"
-            >高级筛选器</el-button>
+            <el-button type="default" size="small" @click="filterModal=true">高级筛选器</el-button>
           </div>
         </div>
         <!-- auth -->
         <rich-filter
-        v-if="loaded"
-        @update="getlabel"
-        :show.sync="filterModal" :formrule="richFilter"></rich-filter>
+          v-if="loaded"
+          @update="getlabel"
+          :show.sync="filterModal"
+          :formrule="richFilter"
+        ></rich-filter>
         <transition
-        enter-active-class="animated fadeIn faster"
-        leave-active-class="animated fadeOut faster"
+          enter-active-class="animated fadeIn faster"
+          leave-active-class="animated fadeOut faster"
         >
-          <transition-group tag="div" name="list"
-          class="module-box filter-label flex-wrap" v-if="filterLabel.length">
+          <transition-group
+            tag="div"
+            name="list"
+            class="module-box filter-label flex-wrap"
+            v-if="filterLabel.length"
+          >
             <div v-for="(v,i) in filterLabel" :key="v.name" class="label">
               {{v.label}}：
               <div v-html="format(v)"></div>
@@ -49,11 +57,15 @@
           </transition-group>
         </transition>
         <!-- auth -->
-        <table-paganation ref="table"
-        :sortvalid="myauth.hosts.sort"
-        :listvalid="myauth.hosts.list"
-        :lockvalid="myauth.hosts.lock"
-        :condition="condition" class="module-box hostslist" v-bind="hostslist"></table-paganation>
+        <table-paganation
+          ref="table"
+          :sortvalid="myauth.hosts.sort"
+          :listvalid="myauth.hosts.list"
+          :lockvalid="myauth.hosts.lock"
+          :condition="condition"
+          class="module-box hostslist"
+          v-bind="hostslist"
+        ></table-paganation>
       </div>
     </transition>
     <transition
@@ -110,12 +122,12 @@ export default {
     },
     format (v) {
       if (v.component === 'range') {
-        return v.value.map(v2 => v2 + v.attrs.unit).join(' - ')
+        return v.value.map((v2) => v2 + v.attrs.unit).join(' - ')
       } else if (v.component === 'select') {
         const value = Array.isArray(v.value) ? v.value : [v.value]
         return v.slot
-          .filter(v2 => value.some(v3 => v3 === v2.attrs.value))
-          .map(v => `<span>${v.attrs.label}</span>`)
+          .filter((v2) => value.some((v3) => v3 === v2.attrs.value))
+          .map((v) => `<span>${v.attrs.label}</span>`)
           .join('')
       }
     },
@@ -135,12 +147,12 @@ export default {
   async mounted () {
     this.$refs.table.request()
     if (!this.richFilter.loaded) {
-      await this.forms_getrange().then(data => {
-        this.richFilter.forEach(v => {
+      await this.forms_getrange().then((data) => {
+        this.richFilter.forEach((v) => {
           const res = data[v.name]
           if (v.type === 'slot') {
             const attrs = v.slot.attrs
-            v.slot = res.map(item => ({
+            v.slot = res.map((item) => ({
               component: v.slot.component,
               attrs: Object.entries(attrs).reduce((acc, [k, v]) => {
                 const prop = v in item ? v : k
@@ -164,16 +176,17 @@ export default {
 <style scoped lang="less">
 #host {
   position: relative;
-  height:100%;
-  width:100%;
+  height: 100%;
+  width: 100%;
   > div {
     position: absolute;
     width: 100%;
   }
 }
 .rich-filter {
-  flex: 1;
-  padding-left: 2rem;
+  .el-button{
+    padding: .46rem .8rem;
+  }
 }
 .module-box {
   margin-bottom: 1rem;
@@ -184,8 +197,13 @@ export default {
 </style>
 <style lang="less">
 #host {
+  .t-title{
+    margin-right: 1rem;
+  }
   .searchbox {
     width: 45%;
+    margin-right: 40%;
+    flex:1;
     .el-input__inner {
       border-radius: 4px 0 0 4px;
     }

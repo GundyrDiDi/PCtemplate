@@ -10,6 +10,7 @@
           value-format="yyyy-MM"
           size="small"
           placeholder="选择月"
+          :picker-options="pickerOptions"
         ></el-date-picker>
         <input-suggestion
           size="small"
@@ -77,6 +78,7 @@
 </template>
 
 <script>
+import { formatDate } from '@/plugins/util'
 export default {
   name: 'goods',
   data () {
@@ -84,7 +86,12 @@ export default {
       goodsWord: '',
       brandWord: '',
       brands: [],
-      time: '',
+      time: formatDate(new Date(), 'yyyy-MM'),
+      pickerOptions: {
+        disabledDate (date) {
+          return date.getTime() > Date.now()
+        }
+      },
       valid: false
     }
   },
