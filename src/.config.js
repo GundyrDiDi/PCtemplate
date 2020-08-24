@@ -408,7 +408,7 @@ export default {
               dyna: {
                 param: 'follow',
                 fn (follow) {
-                  return follow ? '不再关注' : '关注'
+                  return follow ? '不再关注' : '关注TA'
                 }
               },
               events: {
@@ -543,6 +543,10 @@ export default {
           const fn = this.myauth.inst.columnEvent2
           if (fn && fn.call(this)) return
           this.tables_setcelldata({ ...param, name: 'inst' })
+        },
+        modal2 (data, row) {
+          data.inst = row.mechanismName
+          this.$store.commit('tables/instHosts', data)
         }
       },
       api: 'tables/inslist',
@@ -550,6 +554,8 @@ export default {
         {
           key: 'mechanismName',
           title: '机构信息',
+          align: 'left',
+          className: 'margin-left',
           width: 240,
           custom: [
             {
@@ -595,10 +601,11 @@ export default {
         {
           key: 'anchorInfoDtos',
           title: '旗下大咖',
-          width: 250,
+          width: 320,
           async: {
             event: 'detail',
             tooltip: 'anchorName',
+            slice: 4,
             el: {
               tag: 'img',
               src: 'anchorImg',
@@ -616,6 +623,9 @@ export default {
           const fn = this.myauth.goods.columnEvent2
           if (fn && fn.call(this)) return
           this.tables_setcelldata({ ...param, name: 'goods' })
+        },
+        link ({ row }) {
+          window.open('https://item.taobao.com/item.htm?ft=t&id=' + row.taobaoGoodsId)
         }
       },
       api: 'tables/goodslist',
@@ -626,11 +636,21 @@ export default {
           custom: [
             {
               tag: 'img',
-              src: 'goodsImg'
+              src: 'goodsImg',
+              events: {
+                click: 'link'
+              }
             },
-            { tag: 'span', text: 'taobaoGoodsName' }
+            {
+              tag: 'a',
+              class: 'lines',
+              text: 'taobaoGoodsName',
+              events: {
+                click: 'link'
+              }
+            }
           ],
-          width: 300
+          width: 320
         },
         { key: 'rootCategoryName', title: '一级类目' },
         { key: 'brandName', title: '品牌' },
@@ -680,7 +700,7 @@ export default {
         {
           key: 'liveinfo',
           title: '直播信息',
-          width: 240,
+          width: 260,
           custom: [
             {
               tag: 'img',

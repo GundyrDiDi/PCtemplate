@@ -14,9 +14,7 @@
 export default {
   name: 'modal-table',
   data () {
-    return {
-      tabledata: null
-    }
+    return {}
   },
   computed: {
     _show: {

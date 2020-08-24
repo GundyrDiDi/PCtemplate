@@ -1,8 +1,14 @@
 import config, { MAP } from '@/.config.js'
 import { formatNumber, addNumberUnit } from '@/plugins/util.js'
 // 单元格关联表
+function link ({ row }) {
+  window.open('https://item.taobao.com/item.htm?ft=t&id=' + row.taobaoGoodsId)
+}
 const Map = {
   inst: {
+    events: {
+      link
+    },
     condition: ['mechanismId', 'monthId'],
     column: [
       null,
@@ -31,11 +37,21 @@ const Map = {
           custom: [
             {
               tag: 'img',
-              src: 'goods_img'
+              src: 'goods_img',
+              events: {
+                click: 'link'
+              }
             },
-            { tag: 'span', text: 'taobao_goods_name' }
+            {
+              tag: 'a',
+              class: 'lines',
+              text: 'taobao_goods_name',
+              events: {
+                click: 'link'
+              }
+            }
           ],
-          width: 300
+          width: 320
         }
       ],
       api: 'tables/inslist/rltgood'
@@ -123,6 +139,9 @@ const Map = {
     }
   },
   hotlive: {
+    events: {
+      link
+    },
     condition: ['liveId'],
     column: [
       {
@@ -131,11 +150,21 @@ const Map = {
         custom: [
           {
             tag: 'img',
-            src: 'goodsImg'
+            src: 'goodsImg',
+            events: {
+              click: 'link'
+            }
           },
-          { tag: 'span', text: 'taobaoGoodsName' }
+          {
+            tag: 'a',
+            class: 'lines',
+            text: 'taobaoGoodsName',
+            events: {
+              click: 'link'
+            }
+          }
         ],
-        width: 300
+        width: 320
       },
       {
         key: 'saleAmt',
@@ -215,7 +244,8 @@ export default {
   namespaced: true,
   state: {
     ...config.tables,
-    celldata: null
+    celldata: null,
+    instHosts: null
   },
   getters: {},
   mutations: {},
@@ -223,6 +253,7 @@ export default {
     _setcelldata (store, { row, column, name }) {
       const key = column.key
       const data = Map[name]
+      const events = data.events || {}
       const cellcolumn = [...data.column]
       const condition = data.condition
       let i = 0
@@ -232,6 +263,7 @@ export default {
       })
       store.commit('celldata', {
         ...data[key],
+        events,
         column: cellcolumn.filter(v => !!v),
         condition: condition.reduce((acc, v) => {
           acc[v] = row[v]
@@ -289,6 +321,7 @@ export default {
             }
           })
         })
+        console.log(res)
         return {
           data: res.content,
           total: res.totalElements

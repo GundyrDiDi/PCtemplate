@@ -31,6 +31,7 @@
     :listvalid="myauth.inst.list"
     ref="table" class="module-box inslist" :condition="condition" v-bind="inslist"></table-paganation>
     <modal-table></modal-table>
+    <modal-list></modal-list>
   </div>
 </template>
 

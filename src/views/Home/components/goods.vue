@@ -2,7 +2,7 @@
   <div id="inst">
     <div class="module-box">
       <div class="flex-ter nav">
-        <div class="s-title">直播商品月榜</div>
+        <div class="t-title">直播商品月榜</div>
         <el-date-picker
           class="date"
           v-model="time"
@@ -161,7 +161,7 @@ export default {
 <style scoped lang="less">
 .nav {
   > div {
-    margin: 0 1rem;
+    margin-right:1rem;
   }
   .date {
     width: 7rem;

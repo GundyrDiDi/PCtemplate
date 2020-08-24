@@ -180,8 +180,11 @@ header {
 }
 </style>
 <style>
+.qrcode .el-dialog__header{
+  padding-bottom:0px;
+}
 .qrcode .el-dialog__body{
-  padding:0px 30px 20px 30px;
+  padding:0px 30px 10px 30px;
 }
   .fade-transform-leave-active,
   .fade-transform-enter-active {

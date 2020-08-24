@@ -70,6 +70,7 @@ export default {
     // 绑定在hostDeital组件的路由事件
     setacthost (store, { param } = {}) {
       return Axios.get('host/brief', param).then(res => {
+        console.log(res)
         return store.dispatch('_maphost', res.content[0]).then(res => {
           store.commit('actHost', res)
           return res.name
