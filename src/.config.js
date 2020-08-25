@@ -348,20 +348,20 @@ export default {
               text: 'anchorName'
             }
           ],
-          width: 200
+          minWidth: 200
         },
-        { key: 'fansNum', title: '粉丝数', sortable: 'custom', width: 120 },
-        { key: 'liveCnt', title: '开播场次', sortable: 'custom', width: 120 },
-        { key: 'favorNum', title: '最爱TA', sortable: 'custom', width: 120 },
+        { key: 'fansNum', title: '粉丝数', sortable: 'custom', minWidth: 120 },
+        { key: 'liveCnt', title: '开播场次', sortable: 'custom', minWidth: 120 },
+        { key: 'favorNum', title: '最爱TA', sortable: 'custom', minWidth: 120 },
         {
           key: 'totalPraiseNum',
           title: '点赞数',
           sortable: 'custom',
-          width: 120
+          minWidth: 120
         },
-        { key: 'anchorArea', title: '所属区域', width: 100 },
-        { key: 'anchorType', title: '主播类型', width: 120 },
-        { key: 'skilledField', title: '擅长领域', width: 100 },
+        { key: 'anchorArea', title: '所属区域', minWidth: 100 },
+        { key: 'anchorType', title: '主播类型', minWidth: 120 },
+        { key: 'skilledField', title: '擅长领域', minWidth: 100 },
         {
           key: 'saleAmtPerLive_30d',
           title: '近30天销售额(估)',
@@ -401,7 +401,7 @@ export default {
         {
           key: 'action',
           title: '操作',
-          width: 100,
+          minWidth: 120,
           // action: [
           //   {
           //     change: 'follow',

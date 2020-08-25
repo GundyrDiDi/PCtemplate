@@ -7,7 +7,7 @@
       :data="data"
       @on-sort-change="sortchange"
     ></Table>
-    <Page
+    <!-- <Page
       v-show="data.length<=total"
       :total="total"
       show-sizer
@@ -18,8 +18,8 @@
       :page-size-opts="sizeOpts"
       @on-page-size-change="size=$event"
       class-name="my-page"
-    />
-    <!-- <el-pagination
+    /> -->
+    <el-pagination
       background
       :total="total"
       layout="total, sizes, prev, pager, next, jumper"
@@ -29,7 +29,7 @@
       @size-change="size=$event"
       class="my-page"
     >
-    </el-pagination> -->
+    </el-pagination>
   </div>
 </template>
 

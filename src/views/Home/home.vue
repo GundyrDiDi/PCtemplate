@@ -9,7 +9,7 @@
           </div>
         </div>
         <div class="notify flex-center">
-          <el-button type="primary" @click="showQRcode=true">{{notify.msg}}</el-button>
+          <el-button size="small" type="primary" @click="showQRcode=true">{{notify.msg}}</el-button>
         </div>
         <div class="user flex-center">
           <img class="brcircle" :src="imgs.head" alt />
@@ -80,7 +80,7 @@ header {
   box-shadow: var(--lineshadow2);
   position:relative;
   z-index: 10;
-  padding: 0 2rem;
+  padding: 0 1rem;
   cursor: default;
   .s-title{
     letter-spacing: 2px;
@@ -117,7 +117,6 @@ header {
     background:var(--prcol);
     border-radius:1rem;
     padding:.2rem .5rem;
-    font-size:var(--xsfont);
   }
   .user{
     flex:1;
@@ -140,7 +139,7 @@ header {
       transform:scale(0.9)
     }
     .exit{
-      font-size:var(--xsfont);
+      font-size:var(--xxsfont);
       text-align:center;
       cursor: pointer;
       color:#aaa;

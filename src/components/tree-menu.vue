@@ -70,7 +70,6 @@ export default {
     }
     .menu-title{
       font-size:var(--xsfont);
-      font-weight: 600;
     }
 }
 </style>

@@ -62,8 +62,8 @@ export default {
 <style lang="less">
 .el-range {
   input {
-    height: 1.8rem;
-    line-height: 1.8rem;
+    height: 1.4rem;
+    line-height: 1.4rem;
     padding-left: 2px !important;
     padding-right: 2px !important;
   }

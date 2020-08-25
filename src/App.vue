@@ -156,7 +156,7 @@ a {
 }
 .el-button--small {
   font-size: var(--xs2font);
-  padding: 0.4rem 0.8rem;
+  padding: 8px 0.8rem;
 }
 .el-button--mini {
   font-size: var(--xxsfont);

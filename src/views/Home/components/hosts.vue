@@ -23,8 +23,6 @@
                   <div>{{item.anchorName}}</div>
                   <div>{{item.mechanismName}}</div>
                 </div>
-                <div>粉丝: {{item.fansNum}}</div>
-                <el-tag>{{item.skilledField}}</el-tag>
               </div>
             </template>
           </input-suggestion>
@@ -239,7 +237,7 @@ export default {
   }
   .searchbox {
     width: 45%;
-    margin-right: 35%;
+    margin-right: 45%;
     flex:1;
     .el-input__inner {
       border-radius: 4px 0 0 4px;
