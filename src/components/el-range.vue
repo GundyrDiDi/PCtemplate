@@ -56,16 +56,31 @@ export default {
 }
 .el-slider {
   flex: 1;
-  margin:0 .5rem;
+  margin: 0 0.5rem;
 }
 </style>
 <style lang="less">
-    .el-range{
-        input{
-            height:1.8rem;
-            line-height:1.8rem;
-            padding-left: 2px !important;
-            padding-right: 2px !important;
-        }
-    }
+.el-range {
+  input {
+    height: 1.8rem;
+    line-height: 1.8rem;
+    padding-left: 2px !important;
+    padding-right: 2px !important;
+  }
+}
+.el-slider__runway.disabled {
+  .el-slider__bar {
+    background-color: #409eff !important;
+  }
+  .el-slider__button {
+    border-color: #409eff !important;
+    // cursor: default !important;
+  }
+}
+.el-input.is-disabled .el-input__inner {
+  background-color: transparent;
+  border-color: #ddd;
+  color: #666;
+  cursor: default;
+}
 </style>

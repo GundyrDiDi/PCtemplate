@@ -345,42 +345,58 @@ export default {
             },
             {
               tag: 'span',
-              text: 'anchorName',
-              events: {
-                click: 'detail'
-              }
+              text: 'anchorName'
             }
           ],
-          width: 180
+          width: 200
         },
-        { key: 'fansNum', title: '粉丝数', sortable: 'custom', minWidth: 80 },
-        { key: 'favorNum', title: '最爱TA', sortable: 'custom', minWidth: 80 },
+        { key: 'fansNum', title: '粉丝数', sortable: 'custom', width: 120 },
+        { key: 'liveCnt', title: '开播场次', sortable: 'custom', width: 120 },
+        { key: 'favorNum', title: '最爱TA', sortable: 'custom', width: 120 },
         {
           key: 'totalPraiseNum',
           title: '点赞数',
           sortable: 'custom',
-          minWidth: 80
+          width: 120
         },
-        { key: 'anchorArea', title: '所属区域', minWidth: 80 },
-        { key: 'anchorType', title: '主播类型', minWidth: 80 },
-        { key: 'skilledField', title: '擅长领域', minWidth: 80 },
+        { key: 'anchorArea', title: '所属区域', width: 100 },
+        { key: 'anchorType', title: '主播类型', width: 120 },
+        { key: 'skilledField', title: '擅长领域', width: 100 },
         {
           key: 'saleAmtPerLive_30d',
           title: '近30天销售额(估)',
           sortable: 'custom',
-          width: 150
+          width: 170
         },
         {
           key: 'saleQtyPerLive_30d',
           title: '近30天销量(估)',
           sortable: 'custom',
-          width: 150
+          width: 160
+        },
+        {
+          key: 'perSalePricePerLive_30d',
+          title: '近30天客单价(估)',
+          sortable: 'custom',
+          width: 170
         },
         {
           key: 'pvPerLive_30d',
-          title: '近30天客单价(估)',
+          title: '近30天场均观看次数',
           sortable: 'custom',
-          width: 150
+          width: 170
+        },
+        {
+          key: 'commentNumPerLive_30d',
+          title: '近30天场均评论数',
+          sortable: 'custom',
+          width: 170
+        },
+        {
+          key: 'praiseNumPerLive_30d',
+          title: '近30天场均点赞数',
+          sortable: 'custom',
+          width: 170
         },
         {
           key: 'action',
@@ -534,10 +550,14 @@ export default {
     inslist: {
       defaultSort: 'mechanismScore,desc',
       events: {
-        detail (id) {
-          const fn = this.myauth.inst.columnEvent
-          if (fn && fn.call(this)) return
-          this.$router.push({ name: 'hostDetail', params: { host_id: id } })
+        detail ({ anchorId, anchorFlag }) {
+          if (anchorFlag) {
+            this.$myalert('该大咖未直播过!')
+          } else {
+            const fn = this.myauth.inst.columnEvent
+            if (fn && fn.call(this)) return
+            this.$router.push({ name: 'hostDetail', params: { host_id: anchorId } })
+          }
         },
         modal (param) {
           const fn = this.myauth.inst.columnEvent2
@@ -843,7 +863,7 @@ export default {
         pipe: calcRange
       },
       {
-        name: 'type',
+        name: 'anchorType',
         label: '播主类型',
         rule: [],
         component: 'select',
@@ -860,7 +880,7 @@ export default {
         }
       },
       {
-        name: 'area',
+        name: 'anchorArea',
         label: '所属地区',
         rule: [],
         component: 'select',
@@ -877,7 +897,7 @@ export default {
         }
       },
       {
-        name: 'level',
+        name: 'anchorRank',
         label: '播主等级',
         rule: [],
         component: 'select',

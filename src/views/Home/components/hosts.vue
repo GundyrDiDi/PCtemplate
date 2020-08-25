@@ -5,7 +5,7 @@
       leave-active-class="animated fast fadeOutLeft"
     >
       <div v-show="$route.name==='hosts'">
-        <div class="module-box flex">
+        <div class="module-box flex-ter module-bar">
           <div class="t-title">人气主播</div>
           <input-suggestion
             size="small"
@@ -28,9 +28,21 @@
               </div>
             </template>
           </input-suggestion>
-          <div class="flex-ter rich-filter">
-            <el-button type="default" size="small" @click="filterModal=true">高级筛选器</el-button>
-          </div>
+          <el-popover
+            placement="bottom"
+            width="180"
+            trigger="click">
+            <template>
+              <div>
+                <!-- <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">全选</el-checkbox> -->
+                <el-checkbox-group class="columngroup" v-model="checkedColumn" @change="columnchange">
+                  <el-checkbox v-for="v in column" :label="v" :key="v.key" :checked="v.checked">{{v.title}}</el-checkbox>
+                </el-checkbox-group>
+              </div>
+            </template>
+            <el-button slot="reference" size="small">列表设置</el-button>
+          </el-popover>
+          <el-button style="margin-left:2rem" type="primary" size="small" @click="filterModal=true">高级筛选器</el-button>
         </div>
         <!-- auth -->
         <rich-filter
@@ -85,7 +97,9 @@ export default {
       trustWord: '',
       filterModal: false,
       filterLabel: [],
-      loaded: false
+      loaded: false,
+      column: [],
+      checkedColumn: []
     }
   },
   computed: {
@@ -142,12 +156,21 @@ export default {
     removelabel (v, i) {
       v.value = ''
       this.filterLabel.splice(i, 1)
+    },
+    columnchange (v) {
+      console.log(v)
     }
   },
   async mounted () {
+    this.column = [...this.hostslist.column.slice(1, -1)].map(v => {
+      v.checked = true
+      return v
+    })
+    console.log(this.column)
     this.$refs.table.request()
     if (!this.richFilter.loaded) {
       await this.forms_getrange().then((data) => {
+        console.log(data)
         this.richFilter.forEach((v) => {
           const res = data[v.name]
           if (v.type === 'slot') {
@@ -183,16 +206,20 @@ export default {
     width: 100%;
   }
 }
-.rich-filter {
-  .el-button{
-    padding: .46rem .8rem;
-  }
-}
 .module-box {
   margin-bottom: 1rem;
 }
 .hostslist {
   min-height: 60vh;
+}
+.module-bar button{
+  height:32px;
+}
+.columngroup{
+  >*{
+    display:block;
+    margin:.3rem 0;
+  }
 }
 </style>
 <style lang="less">
@@ -202,7 +229,7 @@ export default {
   }
   .searchbox {
     width: 45%;
-    margin-right: 40%;
+    margin-right: 35%;
     flex:1;
     .el-input__inner {
       border-radius: 4px 0 0 4px;

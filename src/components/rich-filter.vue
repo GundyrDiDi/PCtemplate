@@ -124,7 +124,6 @@ section{
     flex-wrap: wrap;
     >.el-form-item{
       width:50%;
-      padding:.5rem 0;
       // border-bottom:1px dotted #ddd;
     }
     .el-select{

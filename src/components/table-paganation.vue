@@ -8,7 +8,7 @@
       @on-sort-change="sortchange"
     ></Table>
     <Page
-      v-if="data.length<=total"
+      v-show="data.length<=total"
       :total="total"
       show-sizer
       show-elevator
@@ -19,6 +19,17 @@
       @on-page-size-change="size=$event"
       class-name="my-page"
     />
+    <!-- <el-pagination
+      background
+      :total="total"
+      layout="total, sizes, prev, pager, next, jumper"
+      :current-page.sync="page"
+      :page-size.sync="size"
+      :page-sizes="sizeOpts"
+      @size-change="size=$event"
+      class="my-page"
+    >
+    </el-pagination> -->
   </div>
 </template>
 
@@ -269,7 +280,7 @@ export default {
                     },
                     on: {
                       [el.on]: () => {
-                        this.dispatch(event, v2[el.param])
+                        this.dispatch(event, v2)
                       }
                     }
                   })

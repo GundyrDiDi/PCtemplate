@@ -5,7 +5,7 @@
     </header>
     <div class="flex-wrap" style="max-height:460px;overflow:auto">
         <div v-for="v in instHosts" :key="v.anchorId" class="myhost">
-        <div @click="detail(v.anchorId)">
+        <div @click="detail(v)">
           <img v-lazy:src="v.anchorImg"/>
           <div class="name bolder">{{v.anchorName}}</div>
         </div>
@@ -34,14 +34,8 @@ export default {
   },
   methods: {
     detail (v) {
-      if (v.anchorFlag) {
-        this._show = false
-        requestAnimationFrame(() => {
-          this.inslist.events.detail.call(this, v.anchorId)
-        })
-      } else {
-        this.$myalert('该大咖暂未直播过!')
-      }
+      this._show = false
+      this.inslist.events.detail.call(this, v)
     }
   }
 }

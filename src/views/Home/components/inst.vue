@@ -1,6 +1,6 @@
 <template>
   <div id="inst">
-    <div class="module-box flex-ter">
+    <div class="module-box flex-ter module-bar">
       <div class="t-title">机构月榜</div>
       <el-date-picker
         class="date"
@@ -9,6 +9,7 @@
         size="small"
         value-format="yyyy-MM"
         placeholder="选择月"
+        :clearable="false"
         :picker-options="pickerOptions"
       >
       </el-date-picker>

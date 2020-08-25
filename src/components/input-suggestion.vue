@@ -42,10 +42,6 @@ export default {
       this.request({ [this.itemName]: str }).then((res) => {
         resolve(res.data)
       })
-      // if (str) {
-      // } else {
-      //   resolve([])
-      // }
     },
     search (item) {
       this.keyword = item ? item[this.itemName] : this.keyword

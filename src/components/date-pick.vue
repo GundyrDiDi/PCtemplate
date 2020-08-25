@@ -1,5 +1,5 @@
 <template>
-  <el-form ref="form" :model="form" :rules="rules">
+  <el-form ref="form" :model="form" :rules="rules" class="ddd">
     <el-form-item prop="time">
       <el-date-picker
         class="date-pick"
@@ -129,18 +129,24 @@ export default {
 
 <style scoped lang="less">
 .date-pick {
-  position: relative;
-  top: 0.12rem;
-  margin-right: 2rem;
-  height: 1.5rem;
+  margin-right:2rem;
   font-size: var(--xxsfont);
 }
-</style>
-<style>
-.el-form-item {
-  margin: 0;
+.btns>button{
+  height:32px;
 }
-.el-range-editor--small .el-range-separator {
-  line-height: 1rem;
+</style>
+<style lang="less">
+.ddd{
+  .el-form-item {
+    margin: 0;
+  }
+  .el-range-editor--small .el-range-separator {
+    line-height: 1rem;
+  }
+  .el-form-item__content{
+    display: flex;
+    align-items: center;
+  }
 }
 </style>
