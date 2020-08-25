@@ -351,7 +351,12 @@ export default {
           minWidth: 200
         },
         { key: 'fansNum', title: '粉丝数', sortable: 'custom', minWidth: 120 },
-        { key: 'liveCnt', title: '开播场次', sortable: 'custom', minWidth: 120 },
+        {
+          key: 'liveCnt',
+          title: '开播场次',
+          sortable: 'custom',
+          minWidth: 120
+        },
         { key: 'favorNum', title: '最爱TA', sortable: 'custom', minWidth: 120 },
         {
           key: 'totalPraiseNum',
@@ -445,7 +450,9 @@ export default {
     hostrecord: {
       events: {
         playlive ({ row }) {
-          window.open(row.link)
+          window.open(
+            'https://taobaolive.taobao.com/room/index.htm?feedId=' + row.topic
+          )
         }
       },
       api: 'host/record',
@@ -476,18 +483,34 @@ export default {
         {
           key: 'action',
           title: '操作',
-          action: [
+          // action: [
+          //   {
+          //     event: 'playlive',
+          //     class: 'fa fa-play',
+          //     on: 'click',
+          //     tooltip: '观看直播'
+          //   }
+          // ],
+          custom: [
             {
-              event: 'playlive',
-              class: 'fa fa-play',
-              on: 'click',
-              tooltip: '观看直播'
+              tag: 'a',
+              raw: '观看直播',
+              events: {
+                click: 'playlive'
+              }
             }
           ]
         }
       ]
     },
     hostgood: {
+      events: {
+        link ({ row }) {
+          window.open(
+            'https://item.taobao.com/item.htm?ft=t&id=' + row.taobaoGoodsId
+          )
+        }
+      },
       api: 'host/good',
       column: [
         {
@@ -496,9 +519,19 @@ export default {
           custom: [
             {
               tag: 'img',
-              src: 'goodsImg'
+              src: 'goodsImg',
+              events: {
+                click: 'link'
+              }
             },
-            { tag: 'span', text: 'taobaoGoodsName' }
+            {
+              tag: 'a',
+              class: 'lines',
+              text: 'taobaoGoodsName',
+              events: {
+                click: 'link'
+              }
+            }
           ],
           width: 300
         },
@@ -513,37 +546,37 @@ export default {
           key: 'saleQty',
           title: '直播销量(估)',
           sortable: 'custom',
-          minWidth: 110
+          minWidth: 140
         },
         {
           key: 'saleAmt',
           title: '直播销售额(估)',
           sortable: 'custom',
-          minWidth: 120
+          minWidth: 140
         },
         {
           key: 'rel_anchorsCnt',
           title: '关联主播数',
           sortable: 'custom',
-          minWidth: 100
+          minWidth: 140
         },
         {
           key: 'rel_liveCnt',
           title: '关联直播数',
           sortable: 'custom',
-          minWidth: 100
+          minWidth: 160
         },
         {
           key: 'totalSaleQty',
           title: '累计直播销量(估)',
           sortable: 'custom',
-          minWidth: 130
+          minWidth: 170
         },
         {
           key: 'totalSaleAmt',
           title: '累计直播销售额(估)',
           sortable: 'custom',
-          width: 150
+          minWidth: 170
         }
       ]
     },
@@ -556,7 +589,10 @@ export default {
           } else {
             const fn = this.myauth.inst.columnEvent
             if (fn && fn.call(this)) return
-            this.$router.push({ name: 'hostDetail', params: { host_id: anchorId } })
+            this.$router.push({
+              name: 'hostDetail',
+              params: { host_id: anchorId }
+            })
           }
         },
         modal (param) {
@@ -645,7 +681,9 @@ export default {
           this.tables_setcelldata({ ...param, name: 'goods' })
         },
         link ({ row }) {
-          window.open('https://item.taobao.com/item.htm?ft=t&id=' + row.taobaoGoodsId)
+          window.open(
+            'https://item.taobao.com/item.htm?ft=t&id=' + row.taobaoGoodsId
+          )
         }
       },
       api: 'tables/goodslist',
@@ -868,7 +906,8 @@ export default {
         rule: [],
         component: 'select',
         attrs: {
-          multiple: false
+          multiple: false,
+          clearable: true
         },
         type: 'slot',
         slot: {
@@ -883,16 +922,29 @@ export default {
         name: 'anchorArea',
         label: '所属地区',
         rule: [],
-        component: 'select',
+        component: 'cascader',
         attrs: {
-          multiple: false
+          props: { checkStrictly: true, emitPath: false },
+          clearable: true
         },
-        type: 'slot',
-        slot: {
-          component: 'option',
-          attrs: {
-            label: '',
-            value: ''
+        type: 'attrs',
+        pipe: function (res) {
+          const options = {}
+          res.forEach(({ label, value }) => {
+            const o = (options[label] = options[label] || {
+              label,
+              value: label,
+              children: []
+            })
+            o.children.push({
+              label: value,
+              value
+            })
+          })
+          return {
+            options: Object.values(options),
+            props: { checkStrictly: true, emitPath: false },
+            clearable: true
           }
         }
       },
@@ -902,7 +954,8 @@ export default {
         rule: [],
         component: 'select',
         attrs: {
-          multiple: false
+          multiple: false,
+          clearable: true
         },
         type: 'slot',
         slot: {
@@ -919,7 +972,8 @@ export default {
         rule: [],
         component: 'select',
         attrs: {
-          multiple: false
+          multiple: false,
+          clearable: true
         },
         type: 'slot',
         slot: {
@@ -1067,7 +1121,7 @@ export default {
       path: '/home/hosts',
       name: 'hosts',
       component: () => import('@/views/Home/components/hosts.vue'),
-      meta: { title: '主播', icon: 'icon-ren' },
+      meta: { title: '主播', icon: 'icon-ren1' },
       children: [
         {
           path: '/home/hosts/detail/:host_id',
@@ -1116,7 +1170,7 @@ export default {
       path: '/home/follow',
       name: 'follow',
       component: () => import('@/views/Home/components/follow.vue'),
-      meta: { title: '我的关注', icon: 'icon-guanzhu' }
+      meta: { title: '我的关注', icon: 'icon-guanzhu1' }
     },
     {
       path: '/home/vip',

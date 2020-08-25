@@ -37,26 +37,31 @@ export default {
     },
     hostDisplay: [
       {
+        index: 0,
         name: 'brief',
         label: '主播简介',
         component: () => import('@/views/Home/components/host/brief.vue')
       },
       {
+        index: 1,
         name: 'value',
         label: '主播数据',
         component: () => import('@/views/Home/components/host/value.vue')
       },
       {
+        index: 2,
         name: 'record',
         label: '直播记录',
         component: () => import('@/views/Home/components/host/record.vue')
       },
       {
+        index: 3,
         name: 'fans',
         label: '粉丝画像',
         component: () => import('@/views/Home/components/host/fans.vue')
       },
       {
+        index: 4,
         name: 'good',
         label: '商品分析',
         component: () => import('@/views/Home/components/host/good.vue')

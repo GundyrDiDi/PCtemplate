@@ -7,7 +7,7 @@ export default {
       expire: '永久',
       auth: '免费版',
       club: '免费会员',
-      level: 0,
+      level: 2,
       payrecord: 0
     },
     followlist: [],
@@ -60,7 +60,7 @@ export default {
         })
       }
     },
-    // 进入路由前获取保存
+    // 进入路由前获取权限保存
     getauths (store, param) {
       return Axios.get('user/auths').then(res => {
         const catalog = []

@@ -1,7 +1,10 @@
 <template>
   <div class="record">
-    <date-pick class="flex-center" :time.sync="time"></date-pick>
-    <table-paganation ref="table" :condition="condition" v-bind="hostrecord"></table-paganation>
+    <div class="flex-center">
+      <div class="t-title">直播记录</div>
+      <date-pick class="flex-center" :time.sync="time"></date-pick>
+    </div>
+    <table-paganation class="table" ref="table" :condition="condition" v-bind="hostrecord"></table-paganation>
   </div>
 </template>
 
@@ -29,7 +32,14 @@ export default {
 </script>
 
 <style scoped lang="less">
-  .flex-center{
-    margin-bottom:1rem;
+.flex-center{
+  position:relative;
+  >.t-title{
+    position:absolute;
+    left:1rem;
+  }
+}
+  .table{
+    margin:1rem 0;
   }
 </style>

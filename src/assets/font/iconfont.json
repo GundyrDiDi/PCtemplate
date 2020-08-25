@@ -6,6 +6,20 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "10425875",
+      "name": "人",
+      "font_class": "ren1",
+      "unicode": "e671",
+      "unicode_decimal": 58993
+    },
+    {
+      "icon_id": "11193332",
+      "name": "关注",
+      "font_class": "guanzhu1",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    },
+    {
       "icon_id": "7250210",
       "name": "钻石",
       "font_class": "zuanshi",

@@ -126,7 +126,7 @@ section{
       width:50%;
       // border-bottom:1px dotted #ddd;
     }
-    .el-select{
+    .el-select,.el-cascader{
       width: 100%;
     }
   }

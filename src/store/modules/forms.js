@@ -27,6 +27,7 @@ export default {
           return o
         }),
         Axios.get('forms/options').then(res => {
+          console.log(res)
           for (const k in res) {
             res[k] = Object.entries(res[k]).map(([k, v]) => {
               return { label: v, value: k }

@@ -30,10 +30,10 @@
       </div>
       <div class="follow flex-col-cen">
         <div>粉丝数
-          <div class="num s-title">{{actHost.fansnum}}</div>
+          <div class="num t-title">{{actHost.fansnum}}</div>
         </div>
         <div>最爱TA
-          <div class="num s-title">{{actHost.favonum}}</div>
+          <div class="num t-title">{{actHost.favonum}}</div>
         </div>
       </div>
     </div>
@@ -51,11 +51,13 @@
       <div class="flex">
         <div class="item" v-for="v in ability" :key="v.label">
           <div>{{v.label}}</div>
-          <count-to class="s-title"
+          <div class="t-title" style="margin-right:0">
+          <count-to
           :startVal="0"
           :duration="800"
           v-bind="getbind(v.name)"
           ></count-to>
+          </div>
         </div>
       </div>
     </div>
@@ -147,17 +149,15 @@ export default {
     }
   }
   .follow{
+    margin-top:2rem;
     width:7rem;
     text-align: left;
-    >div{
-      margin:.4rem 0;
-    }
   }
   .ability{
     >div:first-child{
       font-size:var(--xs2font);
       color:#666;
-      padding-bottom:1rem;
+      height:2rem;
       .el-button{
         padding: 0.2rem 0.5rem;
         font-weight:600;
@@ -177,5 +177,8 @@ export default {
 .qr{
   width:300px;
   border-radius:6px;
+}
+.t-title{
+  margin:0.2rem 0;
 }
 </style>

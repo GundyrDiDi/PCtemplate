@@ -34,6 +34,9 @@ export default {
     async getdata () {
       this.l = true
       const data = await this.chart_getkeydata(this.chartdata)
+      if ((!data) || (!data.length)) {
+        this.$emit('wrong')
+      }
       this.l = false
       this.ct.clear()
       this.option.yAxis = {

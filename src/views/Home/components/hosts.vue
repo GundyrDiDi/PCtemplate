@@ -141,6 +141,8 @@ export default {
           .filter((v2) => value.some((v3) => v3 === v2.attrs.value))
           .map((v) => `<span>${v.attrs.label}</span>`)
           .join('')
+      } else {
+        return v.value
       }
     },
     getlabel (val) {
@@ -149,6 +151,14 @@ export default {
         if (this.valid && this.valid()) return
         this.$store.commit('user/queryType', 'hosts,filter')
       }
+      val.forEach(v => {
+        const c = this.hostslist.column.find(v2 => v2.key === v.name)
+        if (c && !this.checkedColumn.includes(c)) {
+          this.$set(c, 'checked', true)
+          this.checkedColumn.push(c)
+          this.columnchange(this.checkedColumn)
+        }
+      })
       this.filterLabel = val
     },
     removelabel (v, i) {

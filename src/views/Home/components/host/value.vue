@@ -1,6 +1,9 @@
 <template>
   <div class="value">
-    <date-pick class="flex-center" :time.sync="time"></date-pick>
+    <div class="flex-center">
+      <div class="t-title">主播数据</div>
+      <date-pick class="flex-center" :time.sync="time"></date-pick>
+    </div>
     <watch-charts
       :tabvalid="myauth.hostDetail.tabs"
       :chartdata="charts.hostvalue" :condition="condition"></watch-charts>
@@ -34,6 +37,13 @@ export default {
   .watch-charts{
     height:20rem;
     margin:1rem 4rem;
+  }
+}
+.flex-center{
+  position:relative;
+  >.t-title{
+    position:absolute;
+    left:1rem;
   }
 }
 </style>

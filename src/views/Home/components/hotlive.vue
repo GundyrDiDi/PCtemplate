@@ -20,17 +20,28 @@
         <i class="el-icon-close" @click="removelabel(v,i)"></i>
       </div>
     </transition-group>
-    <table-paganation :sortvalid="myauth.hotlive.sort" ref="table" :condition="condition" class="module-box livelist" v-bind="livelist"></table-paganation>
+    <table-paganation
+    :sortvalid="myauth.hotlive.sort"
+    :listvalid="myauth.hotlive.list"
+    :lockvalid="myauth.hotlive.lock"
+    ref="table"
+    :condition="condition"
+    class="module-box livelist"
+    v-bind="livelist"></table-paganation>
     <modal-table></modal-table>
   </div>
 </template>
 
 <script>
+import { formatDate } from '@/plugins/util'
 export default {
   name: 'hotlive',
   data () {
     return {
-      time: [new Date(Date.now() - 30 * 24 * 60 * 60 * 1000), new Date()],
+      time: [
+        formatDate(new Date(Date.now() - 30 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd'),
+        formatDate(new Date(), 'yyyy-MM-dd')
+      ],
       proxytime: [],
       filterModal: false,
       filterLabel: []
@@ -88,8 +99,11 @@ export default {
       this.filterLabel.splice(i, 1)
     }
   },
+  created () {
+    // 不重复请求
+    this.proxytime = this.time
+  },
   async mounted () {
-    // this.$refs.table.request()
     if (!this.hotlistfilter.loaded) {
       await this.forms_gethotfilter().then(data => {
         this.hotlistfilter.forEach(v => {

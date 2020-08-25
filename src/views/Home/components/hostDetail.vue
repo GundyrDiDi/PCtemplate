@@ -1,5 +1,5 @@
 <template>
-  <anchor-menu id="hostDetail" :tabs="hostDisplay" :nav-class="'module-box'" :threshold="200">
+  <anchor-menu id="hostDetail" :tabs="rightmodal" :nav-class="'module-box'" :threshold="200">
     <template v-slot:nav>
       <el-breadcrumb class="crumb">
         <el-breadcrumb-item v-for="v in crumb" :key="v.name" :to="v.path">{{v.meta.title}}</el-breadcrumb-item>
@@ -22,13 +22,18 @@ export default {
       proxy: []
     }
   },
+  computed: {
+    rightmodal () {
+      console.log(this.hostDisplay)
+      return this.hostDisplay.filter(v => !v.error)
+    }
+  },
   created () {
     const match = this.myroute.history.slice(-2)
     this.crumb = match.length === 1 ? match[0].matched.slice(-2) : match
-
-    this.proxy = this.hostDisplay.slice(0, 2)
+    this.proxy = this.rightmodal.slice(0, 2)
     setTimeout(e => {
-      this.proxy = this.hostDisplay
+      this.proxy = this.rightmodal
     }, 1000)
   }
 }

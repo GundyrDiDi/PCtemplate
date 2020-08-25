@@ -73,9 +73,6 @@ export default {
       this.$refs.table.resetParam()
       this.trustWord = trustWord
     }
-  },
-  mounted () {
-    this.$refs.table.request()
   }
 }
 </script>

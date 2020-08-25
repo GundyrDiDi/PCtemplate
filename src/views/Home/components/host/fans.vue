@@ -1,14 +1,19 @@
 <template>
   <div class="fans">
+    <div class="t-title">
+      粉丝画像
+    </div>
     <transition enter-active-class="animated faster zoomIn"
     leave-active-class="animated faster zoomOut"
     mode="out-in"
     >
       <div v-if="!hide" key="t">
         <div class="flex">
-          <ring-chart v-for="v in charts.fanspicture.slice(0,4)" :key="v.name" :chartdata="v"></ring-chart>
+          <template v-for="v in charts.fanspicture.slice(0,4)">
+            <ring-chart :chartdata="v" :key="v.name"></ring-chart>
+          </template>
         </div>
-        <race-chart class="race-chart" :chartdata="charts.fanspicture[4]"></race-chart>
+        <race-chart class="race-chart" :chartdata="charts.fanspicture[4]" @wrong="del"></race-chart>
       </div>
       <div v-else key="t2">
         <component :is="component" :label="label" :name="name" @example="setexample"></component>
@@ -20,7 +25,7 @@
 <script>
 export default {
   name: 'fans',
-  props: ['name', 'label'],
+  props: ['name', 'label', 'index'],
   data () {
     return {
       hide: false,
@@ -29,7 +34,13 @@ export default {
   },
   methods: {
     setexample () {
-      this.hide = false
+      // this.hide = false
+    },
+    del () {
+      this.$set(this.hostDisplay, this.index, {
+        ...this.hostDisplay[this.index],
+        error: true
+      })
     }
   },
   mounted () {
@@ -59,5 +70,10 @@ export default {
     margin-top:2rem;
     height:20rem;
     padding:0 5rem;
+  }
+  .t-title{
+    margin-left:1rem;
+    margin-bottom:.5rem;
+    text-align: left;
   }
 </style>

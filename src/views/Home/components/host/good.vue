@@ -1,5 +1,8 @@
 <template>
 <div class="good">
+  <div class="t-title">
+    商品分析
+  </div>
   <transition enter-active-class="animated faster zoomIn"
     leave-active-class="animated faster zoomOut"
     mode="out-in"
@@ -44,5 +47,10 @@ export default {
 <style scoped lang="less">
   .good{
     min-height:20rem;
+  }
+  .t-title{
+    margin-left:1rem;
+    margin-bottom:.5rem;
+    text-align: left;
   }
 </style>
