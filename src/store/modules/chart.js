@@ -477,43 +477,53 @@ export default {
       }
       startTime = startTime.replace(/[-/]/g, '')
       endTime = endTime.replace(/[-/]/g, '')
-      return Axios.get(api, { startTime, endTime }).then(res => {
-        return title
-          .split('/')
-          .filter(v => !!v)
-          .map((v, i) => {
-            return {
-              name: v,
-              data: res.map(v2 => {
-                return { name: v2.dateStr, value: v2[props[i]] }
-              })
-            }
-          })
-      })
+      return Axios.get(api, { startTime, endTime }).then(
+        res => {
+          return title
+            .split('/')
+            .filter(v => !!v)
+            .map((v, i) => {
+              return {
+                name: v,
+                data: res.map(v2 => {
+                  return { name: v2.dateStr, value: v2[props[i]] }
+                })
+              }
+            })
+        },
+        () => {
+          return null
+        }
+      )
     },
     _getkeydata (store, { api, props, startTime = '', endTime = '', num = 20 }) {
       startTime = startTime.replace(/[-/]/g, '')
       endTime = endTime.replace(/[-/]/g, '')
-      return Axios.get(api, { startTime, endTime, num }).then(res => {
-        return res.map(v => {
-          return Object.entries(props).reduce((acc, [k, v2]) => {
-            if (typeof v2 === 'object') {
-              acc[k] = v[v2.label]
-              if (v2.map) {
-                acc[k] = v2.map[acc[k]]
+      return Axios.get(api, { startTime, endTime, num }).then(
+        res => {
+          return res.map(v => {
+            return Object.entries(props).reduce((acc, [k, v2]) => {
+              if (typeof v2 === 'object') {
+                acc[k] = v[v2.label]
+                if (v2.map) {
+                  acc[k] = v2.map[acc[k]]
+                }
+              } else if (typeof v2 === 'function') {
+                acc[k] = {
+                  value: v[k],
+                  ...v2()
+                }
+              } else {
+                acc[k] = v2
               }
-            } else if (typeof v2 === 'function') {
-              acc[k] = {
-                value: v[k],
-                ...v2()
-              }
-            } else {
-              acc[k] = v2
-            }
-            return acc
-          }, {})
-        })
-      })
+              return acc
+            }, {})
+          })
+        },
+        () => {
+          return null
+        }
+      )
     }
   }
 }

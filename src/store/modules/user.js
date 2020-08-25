@@ -7,7 +7,7 @@ export default {
       expire: '永久',
       auth: '免费版',
       club: '免费会员',
-      level: 2,
+      level: 0,
       payrecord: 0
     },
     followlist: [],

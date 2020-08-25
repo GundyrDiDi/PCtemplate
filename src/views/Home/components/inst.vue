@@ -10,6 +10,7 @@
         value-format="yyyy-MM"
         placeholder="选择月"
         :clearable="false"
+        :editable="false"
         :picker-options="pickerOptions"
       >
       </el-date-picker>

@@ -36,7 +36,7 @@
               <div>
                 <!-- <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">全选</el-checkbox> -->
                 <el-checkbox-group class="columngroup" v-model="checkedColumn" @change="columnchange">
-                  <el-checkbox v-for="v in column" :label="v" :key="v.key" :checked="v.checked">{{v.title}}</el-checkbox>
+                  <el-checkbox @change="checkboxchange(v,$event)" v-for="v in hostslist.column" :disabled="v.disabled" :label="v" :key="v.key" :checked="v.checked">{{v.title}}</el-checkbox>
                 </el-checkbox-group>
               </div>
             </template>
@@ -77,6 +77,7 @@
           :condition="condition"
           class="module-box hostslist"
           v-bind="hostslist"
+          :column="checkedColumn"
         ></table-paganation>
       </div>
     </transition>
@@ -98,7 +99,6 @@ export default {
       filterModal: false,
       filterLabel: [],
       loaded: false,
-      column: [],
       checkedColumn: []
     }
   },
@@ -158,19 +158,29 @@ export default {
       this.filterLabel.splice(i, 1)
     },
     columnchange (v) {
-      console.log(v)
+      v.sort((a, b) => a.sortIndex - b.sortIndex)
+    },
+    checkboxchange (c, v) {
+      c.checked = v
+    }
+  },
+  created () {
+    if (!this.richFilter.loaded) {
+      this.hostslist.column.map((v, i, arr) => {
+        if (i === 0 || i === arr.length - 1) {
+          v.disabled = true
+        }
+        v.sortIndex = i
+        v.checked = true
+        return v
+      })
     }
   },
   async mounted () {
-    this.column = [...this.hostslist.column.slice(1, -1)].map(v => {
-      v.checked = true
-      return v
-    })
-    console.log(this.column)
+    this.$forceUpdate()
     this.$refs.table.request()
     if (!this.richFilter.loaded) {
       await this.forms_getrange().then((data) => {
-        console.log(data)
         this.richFilter.forEach((v) => {
           const res = data[v.name]
           if (v.type === 'slot') {

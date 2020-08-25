@@ -168,7 +168,7 @@ function validmap (acc, { test, text }) {
       pipe: pipe[3],
       valid: function (fn) {
         return key => {
-          if (/(Amt)|(Qty)|(per)/i.test(key)) {
+          if (/(Amt)|(Qty)|(perSalePrice)/i.test(key)) {
             return index => {
               if (fn(index)) {
                 return 'my-lock'

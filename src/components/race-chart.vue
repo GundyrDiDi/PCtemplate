@@ -3,6 +3,7 @@
     <div class="p-title flex-ter">
         {{chartdata.title}}
     </div>
+    <div v-if="nulldata">暂无数据</div>
   <div class="chart animated" ref="c" v-loading="l" :class="l?'':'fadeIn'">
   </div>
 </div>
@@ -15,7 +16,8 @@ export default {
   data () {
     return {
       l: false,
-      ct: null
+      ct: null,
+      nulldata: false
     }
   },
   watch: {

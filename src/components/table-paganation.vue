@@ -207,7 +207,7 @@ export default {
       if (this.lockvalid && (fn = this.lockvalid(v.key))) {
         v.render = (h, { row, index }) => {
           const val = row[v.key]
-          if (val === '0' || !val) {
+          if ((!val) && val !== 0) {
             return ['—']
           }
           const a = fn(index)
@@ -295,6 +295,15 @@ export default {
               }
             }, raw))
           )
+        }
+      } else {
+        v.render = (h, { row }) => {
+          const val = row[v.key]
+          if ((!val) && val !== 0) {
+            return ['—']
+          } else {
+            return [val]
+          }
         }
       }
     })

@@ -1,6 +1,20 @@
 <template>
   <div class="flex select" :style="con">
     <div class="label">{{label}}</div>
+    <div class="operate flex-ter">
+      <i
+        @click="collapse=!collapse"
+        v-if="overheight"
+        class="el-icon-arrow-down"
+        :style="{transform:`scaleY(${collapse?1:-1})`}"
+      ></i>
+      <span v-if="attrs.mode.length>1">
+        <span @click="multiple=!multiple">
+          {{!multiple?'多选':'单选'}}
+          <i :class="!multiple?'el-icon-plus':'el-icon-check'"></i>
+        </span>
+      </span>
+    </div>
     <div class="options">
       <div class="flex-wrap" ref="option" v-if="!multiple">
         <div
@@ -17,20 +31,6 @@
             </div>
         </template>
       </el-checkbox-group>
-    </div>
-    <div class="operate flex-ter">
-      <i
-        @click="collapse=!collapse"
-        v-if="overheight"
-        class="el-icon-arrow-down"
-        :style="{transform:`scaleY(${collapse?1:-1})`}"
-      ></i>
-      <span v-if="attrs.mode.length>1">
-        <span @click="multiple=!multiple">
-          {{!multiple?'多选':'单选'}}
-          <i :class="!multiple?'el-icon-plus':'el-icon-check'"></i>
-        </span>
-      </span>
     </div>
   </div>
 </template>
@@ -116,7 +116,7 @@ export default {
     margin: 0 .5rem 0.3rem 0.5rem;
     line-height: 1.4rem;
     padding: 0 0.6rem;
-    border-radius: 0.5rem;
+    border-radius: 2rem;
     &:hover {
       color: #666;
     }
@@ -127,16 +127,15 @@ export default {
   }
 }
 .operate {
-  width: 5rem;
-  line-height: 1.4rem;
-  height: 1.4rem;
+  line-height: 1.3rem;
+  height: 1.3rem;
   color: var(--prcol);
   > i {
     transition: all 0.3s ease-in-out;
-    font-size: var(--xmfont);
+    font-size: var(--sfont);
     font-weight: bold;
     cursor: pointer;
-    margin-right: 1rem;
+    margin-right:.3rem;
   }
   span {
     line-height: 1.4rem;

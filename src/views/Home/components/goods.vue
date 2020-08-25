@@ -1,7 +1,7 @@
 <template>
   <div id="inst">
     <div class="module-box">
-      <div class="flex-ter nav">
+      <div class="flex-ter nav module-bar">
         <div class="t-title">直播商品月榜</div>
         <el-date-picker
           class="date"
@@ -10,6 +10,8 @@
           value-format="yyyy-MM"
           size="small"
           placeholder="选择月"
+          :clearable="false"
+          :editable="false"
           :picker-options="pickerOptions"
         ></el-date-picker>
         <input-suggestion
