@@ -239,12 +239,6 @@ export default {
     width: 45%;
     margin-right: 45%;
     flex:1;
-    .el-input__inner {
-      border-radius: 4px 0 0 4px;
-    }
-    .el-button {
-      border-radius: 0 4px 4px 0;
-    }
   }
   .filter-label {
     .label {

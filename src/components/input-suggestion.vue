@@ -1,5 +1,5 @@
 <template>
-<div class="flex">
+<div class="flex input-suggestion">
   <el-autocomplete
     v-bind="$attrs"
     clearable
@@ -57,6 +57,9 @@ export default {
 }
 </style>
 <style lang="less">
+.input-suggestion .el-autocomplete {
+      margin-right:1rem;
+}
 .suggestions{
   font-size:var(--xxsfont);
   line-height:1rem;

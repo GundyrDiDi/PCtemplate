@@ -189,13 +189,7 @@ export default {
   width: 26rem;
   .el-select {
     flex: 1;
-  }
-  .el-input__inner {
-    border-radius: 4px 0 0 4px;
-    font-size: var(--xs2font);
-  }
-  .el-button {
-    border-radius: 0 4px 4px 0;
+    margin-right:1rem;
   }
 }
 .custom-options {

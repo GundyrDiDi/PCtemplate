@@ -16,7 +16,7 @@
       </el-date-picker>
         <input-suggestion class="searchbox"
           size="small"
-          placeholder="搜索机构或主播"
+          placeholder="搜索机构"
           itemName="mechanismName"
           :request="request"
           @search="search"
@@ -96,15 +96,4 @@ export default {
 .module-box{
   margin-bottom:1rem;
 }
-</style>
-<style lang="less">
-  .searchbox {
-    .el-input__inner {
-      border-radius: 4px 0 0 4px;
-      font-size:var(--xs2font)
-    }
-    .el-button {
-      border-radius: 0 4px 4px 0;
-    }
-  }
 </style>

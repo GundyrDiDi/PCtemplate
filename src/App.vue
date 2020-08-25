@@ -136,6 +136,58 @@ a {
 .f-r {
   float: right;
 }
+.link {
+  cursor: pointer;
+  font-size: var(--xmfont);
+  color: @fontcolor;
+  position: relative;
+  &:hover {
+    color: desaturate(@fontcolor, 50%) !important;
+  }
+}
+.p-title {
+  font-size: var(--mfont);
+  text-align: left;
+  padding: 0 1rem;
+  &::before {
+    content: "";
+    display: block;
+    float: left;
+    height: 1.1rem;
+    border-left: 0.4rem solid var(--prcol);
+    margin-right: 0.7rem;
+  }
+}
+.pointer {
+  cursor: pointer;
+}
+.module-bar > * {
+  height: 32px;
+}
+.avator-shadow {
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.4));
+}
+.block-btn {
+  padding: 12px 25px;
+  margin-left: 25px !important;
+}
+.auth-des {
+  text-align: center;
+  font-size: var(--xsfont);
+  margin: 0.5rem 0;
+  color: #aaa;
+  letter-spacing: 1px;
+  font-family: "幼圆";
+  .count {
+    margin: 0 1rem 0 0.2rem;
+    color: #e4393c;
+    .bolder();
+  }
+}
+.auth-msg {
+  padding: 3px 5px;
+  font-size: var(--xs2font);
+}
 //
 @bgcolor: rgba(114, 203, 255, 0.3);
 @color: rgba(114, 203, 255, 0.3);
@@ -182,60 +234,8 @@ a {
 .el-button--warning {
   background: #ffc84c;
 }
-.link {
-  cursor: pointer;
-  font-size: var(--xmfont);
-  color: @fontcolor;
-  position: relative;
-  &:hover {
-    color: desaturate(@fontcolor, 50%) !important;
-  }
-}
-.p-title {
-  font-size: var(--mfont);
-  text-align: left;
-  padding: 0 1rem;
-  &::before {
-    content: "";
-    display: block;
-    float: left;
-    height: 1.1rem;
-    border-left: 0.4rem solid var(--prcol);
-    margin-right: 0.7rem;
-  }
-}
-.pointer {
-  cursor: pointer;
-}
-.auth-des {
-  text-align: center;
-  font-size: var(--xsfont);
-  margin: 0.5rem 0;
-  color: #aaa;
-  letter-spacing: 1px;
-  font-family: "幼圆";
-  .count {
-    margin: 0 1rem 0 0.2rem;
-    color: #e4393c;
-    .bolder();
-  }
-}
-.module-bar > * {
-  height: 32px;
-}
-.avator-shadow {
-  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.4));
-}
-.block-btn {
-  padding: 12px 25px;
-  margin-left: 25px !important;
-}
 .ivu-table-small {
   font-size: 14px !important;
-}
-.auth-msg {
-  padding: 3px 5px;
-  font-size: var(--xs2font);
 }
 // transition-group
 .list-leave-active {

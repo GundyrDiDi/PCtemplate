@@ -202,21 +202,7 @@ export default {
 .searchbox {
   .middle {
     width: 8rem;
-    .el-input__inner {
-      font-size:var(--xxsfont);
-      border-radius: 0;
-      border-left-width: 0;
-      &:focus {
-        box-shadow: -1px 0 1px var(--prcol);
-      }
-    }
-  }
-  .el-input__inner {
-    border-radius: 4px 0 0 4px;
-    font-size: var(--xs2font);
-  }
-  .el-button {
-    border-radius: 0 4px 4px 0;
+    margin-right:1rem;
   }
 }
 </style>
