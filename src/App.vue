@@ -126,6 +126,10 @@ a {
   background: var(--dbcol);
   padding: 1rem 1.5rem;
   text-align: center;
+  .t-title{
+    line-height:32px;
+    margin-right:1rem;
+  }
 }
 .brcircle {
   border-radius: 50%;
@@ -196,11 +200,13 @@ a {
 
 .el-menu-item {
   font-size: var(--sfont);
+  height:3rem;
+  line-height: 3rem;
 }
 .el-input__inner {
-  // height: 2rem;
-  // line-height: 2rem;
-  font-size: var(--xs2font) !important;
+  height: 1.6rem;
+  line-height: 1.6rem;
+  font-size: var(--xxsfont) !important;
 }
 .el-button {
   font-size: var(--xsfont);
@@ -235,7 +241,7 @@ a {
   background: #ffc84c;
 }
 .ivu-table-small {
-  font-size: var(--xs2font) !important;
+  font-size: var(--xxsfont) !important;
 }
 // transition-group
 .list-leave-active {

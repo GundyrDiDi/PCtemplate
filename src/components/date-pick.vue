@@ -150,4 +150,7 @@ export default {
     align-items: center;
   }
 }
+.el-range-editor--small .el-range-input{
+  font-size: var(--xs2font);
+}
 </style>

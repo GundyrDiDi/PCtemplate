@@ -123,8 +123,8 @@ export default {
         title: '粉丝变化趋势',
         name: 'fansflow',
         api: 'host/value',
-        names: '新增粉丝数/总粉丝数',
-        props: ['addFansNum', 'fansNum']
+        names: '新增粉丝数',
+        props: ['addFansNum']
       },
       {
         title: '观看UV/观看PV',
@@ -587,8 +587,6 @@ export default {
           if (anchorFlag) {
             this.$myalert('该大咖未直播过!')
           } else {
-            const fn = this.myauth.inst.columnEvent
-            if (fn && fn.call(this)) return
             this.$router.push({
               name: 'hostDetail',
               params: { host_id: anchorId }
@@ -601,6 +599,8 @@ export default {
           this.tables_setcelldata({ ...param, name: 'inst' })
         },
         modal2 (data, row) {
+          const fn = this.myauth.inst.columnEvent
+          if (fn && fn.call(this)) return
           data.inst = row.mechanismName
           this.$store.commit('tables/instHosts', data)
         }

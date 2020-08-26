@@ -117,6 +117,7 @@ header {
     background:var(--prcol);
     border-radius:1rem;
     padding:.2rem .5rem;
+    font-size:12px;
   }
   .user{
     flex:1;

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="f-title">{{label}}</div>
+    <!-- <div class="f-title">{{label}}</div> -->
     <div>
       <img :src="imgs.hotlive1" />
     </div>

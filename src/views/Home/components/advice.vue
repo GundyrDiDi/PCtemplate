@@ -20,7 +20,6 @@
       </el-form>
       <div class="update">
         <el-button type="primary" @click="updateadvice">提交</el-button>
-        <el-button type="default" @click="reset">重置</el-button>
       </div>
     </div>
   </div>

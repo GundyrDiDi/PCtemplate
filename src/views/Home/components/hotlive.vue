@@ -1,7 +1,7 @@
 <template>
   <div id="hotlive">
-    <div class="module-box flex-ter flex-bwn">
-      <div class="s-title">人气直播</div>
+    <div class="module-box flex-ter">
+      <div class="t-title">人气直播</div>
       <date-pick class="flex-center date" :time.sync="time"></date-pick>
       <div class="flex-ter rich-filter">
         <el-button type="primary" size="small" @click="filterModal = true">高级筛选器</el-button>
@@ -124,6 +124,8 @@ export default {
 <style scoped lang="less">
 .date {
   margin-right: 8rem;
+  flex:1;
+  justify-content: start;
 }
 .rich-filter {
   transform: translateY(1px);
