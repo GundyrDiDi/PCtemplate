@@ -149,7 +149,7 @@ export default {
       await this.forms_getrelative().then((data) => {
         this.goodrelative.forEach((v) => {
           const res = data[v.name]
-          v.attrs = v.pipe(res)
+          v.attrs = v.pipe(res, v)
         })
       })
     }

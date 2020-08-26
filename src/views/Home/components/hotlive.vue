@@ -109,7 +109,7 @@ export default {
         this.hotlistfilter.forEach(v => {
           const res = data[v.name]
           if (v.type === 'attrs') {
-            v.attrs = v.pipe(res)
+            v.attrs = v.pipe(res, v)
           }
         })
       })

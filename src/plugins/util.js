@@ -172,7 +172,7 @@ export function formatDate (date, fmt) {
 }
 
 /* not standard */
-export function calcRange ({ min, max }, props = {}) {
+export function calcRange ({ min, max }, parent, props = {}) {
   const units = ['', '万', '亿']
   let step = parseInt((max - min) / 1).toString()
   step = step.slice(0, 1).padEnd(step.length, '0')
@@ -184,5 +184,8 @@ export function calcRange ({ min, max }, props = {}) {
   props.value = [props.min, props.max]
   props.step = 1
   props.formatTooltip = val => val + props.unit
+  // 为了el-range中改变单位
+  props.parent = parent
+  props.initbase = 10 ** (wei * 4)
   return props
 }
