@@ -53,7 +53,8 @@ export default {
       data: [],
       total: 0,
       loading: false,
-      param: {}
+      param: {},
+      sortKey: ''
     }
   },
   computed: {
@@ -112,23 +113,16 @@ export default {
     sortchange ({ column, key, order }) {
       // auth
       if (this.sortvalid) {
-        this.sortvalid().then((res) => {
-          document
-            .querySelector(
-              `.ivu-icon.ivu-icon-md-arrow-drop${
-                order === 'normal'
-                  ? 'up'
-                  : order === 'asc'
-                  ? 'up.on'
-                  : 'down.on'
-              }`
-            )
-            .classList.remove('on')
-        })
+        this.sortvalid()
         return
       }
-      this.param.sort =
-        order === 'normal' ? this.defaultSort : key + ',' + order
+      const issame = this.sortKey === key
+      this.$set(this.column.find(v => v.key === key), 'className', issame ? '' : 'sort-active')
+      if (!issame && this.sortKey) {
+        this.$set(this.column.find(v => v.key === this.sortKey), 'className', '')
+      }
+      this.param.sort = issame ? this.defaultSort : key + ',desc'
+      this.sortKey = issame ? '' : key
       this.request()
     },
     async request () {
@@ -400,5 +394,22 @@ export default {
 }
 thead .margin-left div{
   margin-left:40px;
+}
+// 自定义排序样式
+.ivu-table-sort{
+  i.ivu-icon{
+    pointer-events: none;
+    color:transparent;
+  }
+  i.ivu-icon:last-of-type{
+    color:#aaa;
+    position:relative;
+    top:3px;
+  }
+}
+.sort-active{
+  i.ivu-icon:last-of-type{
+    color:#2d8cf0
+  }
 }
 </style>

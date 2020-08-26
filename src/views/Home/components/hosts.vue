@@ -202,6 +202,7 @@ export default {
               }, {})
             }))
           } else if (v.type === 'attrs') {
+            console.log(v)
             v.attrs = v.pipe(res)
           }
         })

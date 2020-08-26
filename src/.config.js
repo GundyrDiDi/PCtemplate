@@ -94,10 +94,10 @@ export default {
   charts: {
     watch: [
       {
-        title: '观看人数(UV)/观看次数(PV)',
+        title: '观看次数(PV)',
         name: 'uvpv',
         api: 'charts/watch',
-        props: ['uv', 'pv']
+        props: ['pv']
       },
       {
         title: '开播场次/开播主播数',
@@ -106,10 +106,10 @@ export default {
         props: ['liveCnt', 'anchorsCnt']
       },
       {
-        title: '新增主播数/总主播数',
+        title: '新增主播数',
         name: 'hostnum',
         api: 'charts/watch',
-        props: ['addAnchorsCnt', 'allAnchorsCnt']
+        props: ['addAnchorsCnt']
       },
       {
         title: '直播商品数/品牌数',
@@ -368,37 +368,37 @@ export default {
         { key: 'anchorType', title: '主播类型', minWidth: 120 },
         { key: 'skilledField', title: '擅长领域', minWidth: 100 },
         {
-          key: 'saleAmtPerLive_30d',
+          key: 'saleAmtPerLive30d',
           title: '近30天销售额(估)',
           sortable: 'custom',
           width: 170
         },
         {
-          key: 'saleQtyPerLive_30d',
+          key: 'saleQtyPerLive30d',
           title: '近30天销量(估)',
           sortable: 'custom',
           width: 160
         },
         {
-          key: 'perSalePricePerLive_30d',
+          key: 'perSalePricePerLive30d',
           title: '近30天客单价(估)',
           sortable: 'custom',
           width: 170
         },
         {
-          key: 'pvPerLive_30d',
+          key: 'pvPerLive30d',
           title: '近30天场均观看次数',
           sortable: 'custom',
           width: 170
         },
         {
-          key: 'commentNumPerLive_30d',
+          key: 'commentNumPerLive30d',
           title: '近30天场均评论数',
           sortable: 'custom',
           width: 170
         },
         {
-          key: 'praiseNumPerLive_30d',
+          key: 'praiseNumPerLive30d',
           title: '近30天场均点赞数',
           sortable: 'custom',
           width: 170
@@ -581,7 +581,7 @@ export default {
       ]
     },
     inslist: {
-      defaultSort: 'mechanismScore,desc',
+      defaultSort: 'mechanismFansNum,desc',
       events: {
         detail ({ anchorId, anchorFlag }) {
           if (anchorFlag) {
@@ -823,7 +823,7 @@ export default {
         pipe: calcRange
       },
       {
-        name: 'saleAmtPerLive_30d',
+        name: 'saleAmtPerLive30d',
         label: '近30天销售额(估)',
         rule: [],
         component: 'range',
@@ -836,7 +836,7 @@ export default {
         pipe: calcRange
       },
       {
-        name: 'saleQtyPerLive_30d',
+        name: 'saleQtyPerLive30d',
         label: '近30天销量(估)',
         rule: [],
         component: 'range',
@@ -849,7 +849,7 @@ export default {
         pipe: calcRange
       },
       {
-        name: 'pvPerLive_30d',
+        name: 'pvPerLive30d',
         label: '近30天场均观看次数',
         rule: [],
         component: 'range',
@@ -862,7 +862,7 @@ export default {
         pipe: calcRange
       },
       {
-        name: 'perSalePricePerLive_30d',
+        name: 'perSalePricePerLive30d',
         label: '近30天客单价(估)',
         rule: [],
         component: 'range',
@@ -875,7 +875,7 @@ export default {
         pipe: calcRange
       },
       {
-        name: 'commentNumPerLive_30d',
+        name: 'commentNumPerLive30d',
         label: '近30天场均评论数',
         rule: [],
         component: 'range',
@@ -888,7 +888,7 @@ export default {
         pipe: calcRange
       },
       {
-        name: 'praiseNumPerLive_30d',
+        name: 'praiseNumPerLive30d',
         label: '近30天场均点赞数',
         rule: [],
         component: 'range',
@@ -1068,7 +1068,9 @@ export default {
         name: 'liveTitle',
         label: '直播标题',
         component: 'input',
-        attrs: {}
+        attrs: {
+          size: 'small'
+        }
       }
     ],
     catalog: {

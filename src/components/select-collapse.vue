@@ -64,6 +64,7 @@ export default {
       this.calcHeight()
     },
     val (val) {
+      this.collapse = true
       this.$listeners.input(val)
     },
     value (v) {

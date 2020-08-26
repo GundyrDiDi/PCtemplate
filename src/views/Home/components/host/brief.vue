@@ -113,8 +113,8 @@ export default {
       this.trustmenu = a
     },
     getbind (name) {
-      if (this.actHost[`${name}_${this.trustmenu}d`]) {
-        const [num, unit] = this.actHost[`${name}_${this.trustmenu}d`].toString().split(/\b(?=\D$)/)
+      if (this.actHost[`${name}${this.trustmenu}d`]) {
+        const [num, unit] = this.actHost[`${name}${this.trustmenu}d`].toString().split(/\b(?=\D$)/)
         return {
           endVal: Number(num),
           decimals: num.includes('.') ? 2 : 0,

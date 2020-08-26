@@ -148,7 +148,7 @@ a {
 .p-title {
   font-size: var(--mfont);
   text-align: left;
-  padding: 0 1rem;
+  // padding: 0 1rem;
   &::before {
     content: "";
     display: block;
@@ -198,8 +198,8 @@ a {
   font-size: var(--sfont);
 }
 .el-input__inner {
-  height: 2rem;
-  line-height: 2rem;
+  // height: 2rem;
+  // line-height: 2rem;
   font-size: var(--xs2font) !important;
 }
 .el-button {
@@ -235,7 +235,7 @@ a {
   background: #ffc84c;
 }
 .ivu-table-small {
-  font-size: 14px !important;
+  font-size: var(--xs2font) !important;
 }
 // transition-group
 .list-leave-active {

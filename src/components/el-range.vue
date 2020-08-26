@@ -46,6 +46,9 @@ export default {
     block () {
       if (this.valid) this.valid()
     }
+  },
+  updated () {
+    console.log(this.$attrs)
   }
 }
 </script>

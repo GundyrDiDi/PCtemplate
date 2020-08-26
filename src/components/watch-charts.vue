@@ -50,7 +50,7 @@ export default {
               }),
               globalCoord: false // 缺省为 false
             },
-            shadowColor: 'rgba(0,0,0, .3)',
+            shadowColor: 'rgba(0,0,0, .05)',
             shadowBlur: 5,
             shadowOffsetY: 5
           }

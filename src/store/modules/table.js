@@ -319,6 +319,9 @@ export default {
                 v[m] = v[k]
               }
             }
+            if (typeof v2 === 'string' && v2.length > 50 && /[\u4e00-\u9fa5]+/.test(v2)) {
+              v[k] = v2.slice(0, 50) + '...'
+            }
           })
         })
         console.log(res)
