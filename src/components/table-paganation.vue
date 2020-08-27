@@ -1,6 +1,7 @@
 <template>
   <div>
     <Table
+      ref="table"
       :loading="loading"
       size="small"
       :columns="column"
@@ -43,6 +44,7 @@ export default {
     'events',
     'condition',
     'debounce',
+    'scroll',
     'sortvalid',
     'listvalid',
     'lockvalid',
@@ -54,7 +56,8 @@ export default {
       total: 0,
       loading: false,
       param: {},
-      sortKey: ''
+      sortKey: '',
+      isinit: true
     }
   },
   computed: {
@@ -134,6 +137,11 @@ export default {
         ...param
       })
       this.loading = false
+      if (this.scroll && !this.isinit) {
+        setTimeout(() => {
+          this.$el.scrollIntoView({ block: 'center' })
+        }, 200)
+      }
       // auth
       if (code) {
         return this.$block('您的查询次数已用尽，')
@@ -146,6 +154,7 @@ export default {
         this.data = data
       }
       this.total = total
+      this.isinit && (this.isinit = false)
     }
   },
   created () {

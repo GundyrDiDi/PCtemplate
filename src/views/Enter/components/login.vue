@@ -1,15 +1,18 @@
 <template>
   <div id="login" class="flex-center">
-    <div class="flex-col flex-ter logo">
-      <img :src="imgs.whale" />
-      <div class="s-title">鲸宸数据</div>
-    </div>
-    <div class="content flex-ter flex-col">
-      <div class="bolder">微信扫码登录</div>
-      <div>
-      <el-button @click="login(0)">免费版</el-button>
-      <el-button @click="login(1)" type="primary">标准版</el-button>
-      <el-button @click="login(2)" type="warning">高级版</el-button>
+    <div class="content flex">
+      <div class="logo">
+        <img :src="imgs.login" alt="">
+      </div>
+      <div class="form">
+        <div class="t-title">微信扫码登录</div>
+        <div class="flex-center group">
+          <div>
+            <el-button @click="login(0)">免费版</el-button>
+            <el-button @click="login(1)" type="primary">标准版</el-button>
+            <el-button @click="login(2)" type="warning">高级版</el-button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -35,24 +38,35 @@ export default {
 </script>
 
 <style scoped lang="less">
-#login{
-  height:100vh;
-  width:100vw;
-  background:#f0f6fe;
-  >div{
-    margin:0 4rem;
-    img{
-      width:200px;
-      margin-bottom:20px;
-    }
+#login {
+  height: 100vh;
+  width: 100vw;
+  background: #f0f6fe;
+  .content {
+    width: 50%;
+    height: 70%;
+    box-shadow: var(--boxshadow);
+    background: #fff;
+    border-radius: 4px;
+    overflow:hidden;
   }
-  .content{
-    padding:50px;
-    width:400px;
-    height:400px;
-    box-shadow:var(--boxshadow);
-    background:#Fff;
-    border-radius:2px;
+  .logo{
+    img{
+      width:100%;
+      height:100%;
+    }
+    height:100%;
+    width:40%;
+    box-shadow:1px 0 3px rgba(0,0,0,.1)
+  }
+  .form{
+    flex:1;
+    text-align: center;
+    padding:2rem 0;
+    .group{
+      height:100%;
+      padding-bottom:2rem;
+    }
   }
 }
 </style>

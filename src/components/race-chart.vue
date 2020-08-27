@@ -52,11 +52,10 @@ export default {
   },
   mounted () {
     this.ct = this.$echarts(this.$refs.c)
-    this.events = {
-      click (item) {
-        console.log(item)
-      }
-    }
+    this.events = {}
+    Object.entries(this.events).forEach(([event, fn]) => {
+      this.ct.on(event, fn)
+    })
     this.option = {
       color: ['#0E7CE2', '#FF8352', '#E271DE', '#F8456B', '#00FFFF', '#4AEAB0'],
       tooltip: {
@@ -77,9 +76,6 @@ export default {
         type: 'value'
       }
     }
-    Object.entries(this.events).forEach(([event, fn]) => {
-      this.ct.on(event, fn)
-    })
   }
 }
 </script>

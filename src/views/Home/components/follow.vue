@@ -46,7 +46,7 @@
     <transition-group tag="div" class="module-box flex-wrap list" name="list">
       <div v-for="v in followlist" :key="v.anchorId" class="myhost">
         <div>
-          <img v-lazy:src="v.anchorImg"/>
+          <img @click="godetail(v)" v-lazy:src="v.anchorImg"/>
           <div class="name bolder">{{v.anchorName}}</div>
           <div class="btns">
             <el-button size="mini" type="primary" @click="godetail(v)">查看主页</el-button>

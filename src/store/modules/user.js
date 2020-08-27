@@ -48,9 +48,13 @@ export default {
           })
           .then(() => {
             host.follow = 0
-            return Axios.post('user/notfollow', host).then(res => {
-              return { ...res, not: true }
-            })
+            return Axios.post('user/notfollow', host)
+              .then(res => {
+                return { ...res, not: true }
+              })
+              // .catch(() => {
+              //   return {}
+              // })
           })
           .catch(() => ({}))
       } else {

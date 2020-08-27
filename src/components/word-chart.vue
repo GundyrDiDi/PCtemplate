@@ -79,7 +79,9 @@ export default {
         shape: 'cloud',
         name: '关键词排行',
         gridSize: 8,
-        sizeRange: [12, 32],
+        width: '100%',
+        height: '100%',
+        sizeRange: [12, 48],
         rotationRange: [0, 45],
         autoSize: {
           enable: true,

@@ -1,5 +1,5 @@
 <template>
-  <div class="record">
+  <div class="record" id="record">
     <div class="flex-center">
       <div class="t-title">直播记录</div>
       <date-pick class="flex-center" :time.sync="time"></date-pick>
@@ -9,11 +9,15 @@
 </template>
 
 <script>
+import { formatDate } from '@/plugins/util'
 export default {
   name: 'record',
   data () {
     return {
-      time: [new Date(Date.now() - 7 * 24 * 60 * 60 * 1000), new Date()],
+      time: [
+        formatDate(new Date(Date.now() - 7 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd'),
+        formatDate(new Date(), 'yyyy-MM-dd')
+      ],
       condition: {}
     }
   },
@@ -26,6 +30,13 @@ export default {
         liveStartTime: this.time[0],
         liveEndTime: this.time[1]
       }
+    }
+  },
+  created () {
+    // 不重复请求
+    this.condition = {
+      liveStartTime: this.time[0],
+      liveEndTime: this.time[1]
     }
   }
 }

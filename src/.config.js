@@ -62,8 +62,10 @@ export default {
     dimandgray: require('@/assets/img/vip/dimandgray.png'),
     check: require('@/assets/img/vip/check.png'),
     gongzhonghao: require('@/assets/img/gongzhonghao.jpg'),
+    fuwuhao: require('@/assets/img/fuwuhao.jpg'),
     coop: require('@/assets/img/service.jpg'),
-    weixin: require('@/assets/img/weixin.png')
+    weixin: require('@/assets/img/weixin.png'),
+    login: require('@/assets/img/login.png')
   },
   routes: [
     {
@@ -455,6 +457,8 @@ export default {
           )
         }
       },
+      scroll: true,
+      defaultSort: 'startTime,asc',
       api: 'host/record',
       column: [
         {
@@ -511,6 +515,7 @@ export default {
           )
         }
       },
+      scroll: true,
       api: 'host/good',
       column: [
         {
@@ -1131,10 +1136,11 @@ export default {
           component: () => import('@/views/Home/components/hostDetail.vue'),
           meta: { title: '主播详情', second: true },
           beforeEnter (to, from, next) {
-            if (to.params.host_id) {
-              localStorage.host_id = to.params.host_id
-            }
-            this.commit('host/hostId', localStorage.host_id)
+            // if (to.params.host_id) {
+            //   localStorage.host_id = to.params.host_id
+            // }
+            this.commit('host/reset')
+            this.commit('host/hostId', to.params.host_id)
             this.dispatch('host/setacthost').then(res => {
               to.meta.title = res
               document.title = to.meta.title

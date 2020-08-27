@@ -156,6 +156,7 @@ export default {
   margin-bottom:2rem;
   > .description {
     width: 25%;
+    font-size: var(--xsfont);
     .des{
       font-size:var(--xxsfont);
       color:#aaa;
@@ -191,6 +192,7 @@ export default {
   }
   .price{
     width:75%;
+    font-size: var(--xsfont);
     >div{
       flex:1;
       position: relative;

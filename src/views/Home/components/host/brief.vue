@@ -8,7 +8,7 @@
           <div>擅长领域：
             <span class="bolder">{{actHost.goodat}}</span>
           </div>
-          <div>签约机构：
+          <div v-show="actHost.ins">签约机构：
             <span class="bolder">{{actHost.ins}}</span>
           </div>
         </div>

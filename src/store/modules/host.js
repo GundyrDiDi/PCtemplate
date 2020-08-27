@@ -70,7 +70,13 @@ export default {
     hostsbackup: []
   },
   getters: {},
-  mutations: {},
+  mutations: {
+    reset ({ hostDisplay }) {
+      hostDisplay.forEach(v => {
+        v.error = false
+      })
+    }
+  },
   actions: {
     // 绑定在hostDeital组件的路由事件
     setacthost (store, { param } = {}) {

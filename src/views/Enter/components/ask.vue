@@ -11,15 +11,25 @@
           <div class="bolder">{{company[v.name]}}</div>
         </div>
       </div>
+      <div class="flex qr">
+        <div class="flex-ter flex-col">
+          <a>公众号</a>
+        <img :src="imgs.gongzhonghao" alt="">
+        </div>
+        <div class="flex-ter flex-col">
+          <a>服务号</a>
+        <img class="bigimg" :src="imgs.fuwuhao" alt="">
+        </div>
+      </div>
       <img class="bg" :src="imgs.bubble1" alt="">
     </div>
     <div class="company con-cen yahei">
-      <div>
+      <!-- <div>
         <img class="logo" :src="imgs.logo" alt />
         <img :src="imgs.jingchen" alt />
-      </div>
-      <!-- <div class="bold">{{company.name}} {{company.icp}}</div>
-      <div class="bold">{{company.gip}}</div> -->
+      </div> -->
+      <div class="bold">{{company.name}} {{company.icp}}</div>
+      <div class="bold">{{company.gip}}</div>
     </div>
   </div>
 </template>
@@ -60,7 +70,7 @@ export default {
       padding:2rem 0;
     }
     .flex-ter{
-      padding:.8rem 0;
+      padding:.4rem 0;
     }
     .flex-ter>div{
       font-size:var(--mfont);
@@ -78,6 +88,21 @@ export default {
       height:var(--lfont);
       position:relative;
       top:.3rem;
+    }
+    .qr{
+      margin-left:4rem;
+      margin-right:4rem;
+      justify-content: space-around;
+      flex:1;
+      a{
+        color:#666;
+      }
+      img{
+        height:10rem;
+      }
+      .bigimg{
+        transform: scale(.9);
+      }
     }
   }
   .company {

@@ -4,7 +4,7 @@ export default {
   namespaced: true,
   state: {
     logoname: config.name,
-    description: config.description,
+    enterdescription: config.description,
     enternavs: config.enternavs,
     enterinfo: config.info,
     company: config.company,

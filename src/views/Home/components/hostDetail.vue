@@ -24,7 +24,6 @@ export default {
   },
   computed: {
     rightmodal () {
-      console.log(this.hostDisplay)
       return this.hostDisplay.filter(v => !v.error)
     }
   },

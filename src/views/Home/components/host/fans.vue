@@ -3,6 +3,9 @@
     <div class="t-title">
       粉丝画像
     </div>
+    <el-alert v-show="example" type="warning"
+      title="以下数据来源淘宝直播“雪梨_Cherie”，仅作为示例展示。">
+    </el-alert>
     <transition enter-active-class="animated faster zoomIn"
     leave-active-class="animated faster zoomOut"
     mode="out-in"
@@ -29,12 +32,18 @@ export default {
   data () {
     return {
       hide: false,
-      component: null
+      component: null,
+      example: false
     }
   },
   methods: {
     setexample () {
-      // this.hide = false
+      this.hide = false
+      this.example = true
+      const e = { anchorId: '791105148' } // 雪梨
+      this.charts.fanspicture.forEach(v => {
+        this.$set(v, 'example', e)
+      })
     },
     del () {
       this.$set(this.hostDisplay, this.index, {
@@ -72,8 +81,14 @@ export default {
     padding:0 5rem;
   }
   .t-title{
-    margin-left:1rem;
+    padding-left:1rem;
+    padding-bottom:.1rem;
     margin-bottom:.5rem;
+    margin-right:0 !important;
     text-align: left;
+    border-bottom:1px solid #ddd;
   }
+      .el-alert{
+        margin-bottom:.3rem;
+      }
 </style>

@@ -496,10 +496,18 @@ export default {
         }
       )
     },
-    _getkeydata (store, { api, props, startTime = '', endTime = '', num = 20 }) {
+    _getkeydata (
+      { state },
+      { api, props, startTime = '', endTime = '', num = 20, example = {} }
+    ) {
       startTime = startTime.replace(/[-/]/g, '')
       endTime = endTime.replace(/[-/]/g, '')
-      return Axios.get(api, { startTime, endTime, num }).then(
+      return Axios.get(api, {
+        startTime,
+        endTime,
+        num,
+        ...example
+      }).then(
         res => {
           return res.map(v => {
             return Object.entries(props).reduce((acc, [k, v2]) => {

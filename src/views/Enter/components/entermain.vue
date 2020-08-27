@@ -7,7 +7,7 @@
       <el-col :span="12" class="flex-ter">
         <div>
           <div class="h-title">{{logoname}}</div>
-          <div class="description">{{description}}</div>
+          <div class="description">{{enterdescription}}</div>
           <div>
             <el-button type="light">注册账户</el-button>
             <a href="#" class="link bolder">已有帐户 ?</a>

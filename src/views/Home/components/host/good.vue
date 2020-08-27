@@ -3,12 +3,15 @@
   <div class="t-title">
     商品分析
   </div>
+  <el-alert v-show="example" type="warning"
+    title="以下数据来源淘宝直播“雪梨_Cherie”,仅作为示例展示。">
+  </el-alert>
   <transition enter-active-class="animated faster zoomIn"
     leave-active-class="animated faster zoomOut"
     mode="out-in"
     >
     <div v-if="!hide" key="t">
-      <table-paganation ref="table" v-bind="hostgood" :condition="{}"></table-paganation>
+      <table-paganation ref="table" v-bind="hostgood" :condition="example?example:{}"></table-paganation>
     </div>
     <div v-else key="t2">
       <component :is="component" :label="label" :name="name" @example="setexample"></component>
@@ -24,12 +27,14 @@ export default {
   data () {
     return {
       hide: false,
-      component: null
+      component: null,
+      example: false
     }
   },
   methods: {
     setexample () {
       this.hide = false
+      this.example = { anchorId: '791105148' } // 雪梨
     }
   },
   mounted () {
@@ -39,7 +44,6 @@ export default {
       this.hide = hide
       this.component = component
     }
-    this.$refs.table.request()
   }
 }
 </script>
@@ -49,8 +53,14 @@ export default {
     min-height:20rem;
   }
   .t-title{
-    margin-left:1rem;
+    padding-left:1rem;
+    padding-bottom:.1rem;
     margin-bottom:.5rem;
+    margin-right:0 !important;
     text-align: left;
+    border-bottom:1px solid #ddd;
   }
+      .el-alert{
+        margin-bottom:.3rem;
+      }
 </style>

@@ -4,6 +4,7 @@
       <slot name="nav"></slot>
       <div class="flex-bwn menu">
         <div
+        class="bolder"
           v-for="(v,i) in tabs"
           :key="v.name"
           :class="{active:i===index}"
