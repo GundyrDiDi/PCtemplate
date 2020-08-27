@@ -77,7 +77,7 @@ export default {
   }
   .race-chart{
     margin-top:2rem;
-    height:20rem;
+    height:16rem;
     padding:0 5rem;
   }
   .t-title{

@@ -41,10 +41,26 @@ export default {
       this.ct.clear()
       this.option.yAxis = {
         type: 'category',
+        axisTick: {
+          show: false
+        },
         data: data.map(v => v.name)
       }
       this.option.series = {
         type: 'bar',
+        barWidth: 20,
+        itemStyle: {
+          normal: {
+            barBorderRadius: [0, 6, 6, 0],
+            color: new this.$echarts.graphic.LinearGradient(0, 0, 1, 0, [{
+              offset: 0,
+              color: 'rgb(90 159 243)'
+            }, {
+              offset: 1,
+              color: 'rgb(87 207 243)'
+            }])
+          }
+        },
         data: data.map(v => v.value)
       }
       this.ct.setOption(this.option)
