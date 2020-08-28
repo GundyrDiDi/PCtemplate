@@ -3,7 +3,7 @@
     <el-menu-item v-for="(v,i) in _treemenu" :key="i" :index="i.toString()">
       <div @click="go(v,i)" class="menu-item" :class="{active:i.toString()===activeIndex}">
         <!-- <img :src="imgs[v.name]" alt=""> -->
-        <i class="iconfont" :class="v.meta.icon"></i>
+        <i class="iconfont" :class="v.meta.icon" :style="i>5&&{fontSize:`var(--lfont)`,marginLeft:'-.1rem',marginRight:'.7rem'}"></i>
         <span slot="title" class="menu-title">{{v.meta.title}}</span>
       </div>
     </el-menu-item>

@@ -498,14 +498,13 @@ export default {
     },
     _getkeydata (
       { state },
-      { api, props, startTime = '', endTime = '', num = 20, example = {} }
+      { api, props, startTime = '', endTime = '', example = {} }
     ) {
       startTime = startTime.replace(/[-/]/g, '')
       endTime = endTime.replace(/[-/]/g, '')
       return Axios.get(api, {
         startTime,
         endTime,
-        num,
         ...example
       }).then(
         res => {

@@ -48,20 +48,21 @@ export default {
           })
           .then(() => {
             host.follow = 0
-            return Axios.post('user/notfollow', host)
-              .then(res => {
-                return { ...res, not: true }
-              })
-              // .catch(() => {
-              //   return {}
-              // })
+            return Axios.post('user/notfollow', host).then(res => {
+              return { ...res, not: true }
+            })
+            // .catch(() => {
+            //   return {}
+            // })
           })
           .catch(() => ({}))
       } else {
-        return Axios.post('user/followme', { ...host, status }).then(res => {
-          host.follow = 1
-          return res
-        })
+        if (host.anchorId) {
+          return Axios.post('user/followme', { ...host, status }).then(res => {
+            host.follow = 1
+            return res
+          })
+        }
       }
     },
     // 进入路由前获取权限保存

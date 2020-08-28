@@ -34,7 +34,7 @@ export default {
     },
     async getdata () {
       this.l = true
-      const data = await this.chart_getkeydata({ ...this.chartdata, ...this.condition, num: 40 })
+      const data = await this.chart_getkeydata({ ...this.chartdata, ...this.condition, example: { num: 40 } })
       this.l = false
       this.ct.clear()
       this.option.series[0].data = data.map((v, i) => {

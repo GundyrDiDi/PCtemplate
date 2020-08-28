@@ -590,12 +590,12 @@ export default {
       events: {
         detail ({ anchorId, anchorFlag }) {
           if (anchorFlag) {
-            this.$myalert('该大咖未直播过!')
-          } else {
             this.$router.push({
               name: 'hostDetail',
               params: { host_id: anchorId }
             })
+          } else {
+            this.$myalert('该大咖未直播过!')
           }
         },
         modal (param) {

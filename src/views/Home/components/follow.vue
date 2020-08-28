@@ -14,7 +14,7 @@
           :remote-method="remoteMethod"
           :loading="sloading"
         >
-          <el-option v-for="v in results" :key="v.anchorId" :label="v.anchorName" :value="v">
+          <el-option v-for="v in results" :key="v.anchorId" :label="v.anchorName" :value="v.anchorName">
             <div class="suggestions flex-ter">
               <img :src="'http:'+v.anchorImg" alt />
               <div>
@@ -72,12 +72,14 @@ export default {
       nodatatext: '加载中...'
     }
   },
+  computed: {
+    followhost () {
+      return this.results.find(v => v.anchorName === this.followWord) || {}
+    }
+  },
   watch: {
-    followWord: {
-      deep: true,
-      handler (f) {
-        this.text = !f.follow ? '添加主播' : '取消关注'
-      }
+    followhost (f) {
+      this.text = !f.follow ? '添加主播' : '取消关注'
     }
   },
   methods: {
@@ -90,16 +92,14 @@ export default {
     },
     followornot (v) {
       if (!v) {
-        v = this.followWord
+        v = this.followhost
       }
-      if (!v) return
+      if (!Object.keys(v).length) return
       this.loading = true
       this.user_followornot({ host: v, vm: this }).then(res => {
         if (res.code === 200) {
           this.success(res.obj)
-          if (!res.not) {
-            this.followWord = ''
-          }
+          this.followWord = ''
         }
         this.loading = false
       })
