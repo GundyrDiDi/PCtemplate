@@ -458,7 +458,7 @@ export default {
         }
       },
       scroll: true,
-      defaultSort: 'startTime,asc',
+      defaultSort: 'startTime,desc',
       api: 'host/record',
       column: [
         {

@@ -30,7 +30,7 @@ export default {
     celldata (newval) {
       if (newval) {
         requestAnimationFrame(() => {
-          this.$refs.table.request()
+          // this.$refs.table.request()
         })
       }
     }

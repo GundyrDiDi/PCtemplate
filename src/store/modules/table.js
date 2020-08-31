@@ -10,6 +10,7 @@ const Map = {
       link
     },
     condition: ['mechanismId', 'monthId'],
+    defaultSort: 'sale_amt,desc',
     column: [
       null,
       {
@@ -63,10 +64,10 @@ const Map = {
           key: 'taobao_shop_name',
           title: '店铺信息',
           custom: [
-            {
-              tag: 'img',
-              src: 'shop_img'
-            },
+            // {
+            //   tag: 'img',
+            //   src: 'shop_img'
+            // },
             { tag: 'span', text: 'taobao_shop_name' }
           ],
           width: 300
@@ -254,6 +255,7 @@ export default {
       const key = column.key
       const data = Map[name]
       const events = data.events || {}
+      const defaultSort = data.defaultSort || ''
       const cellcolumn = [...data.column]
       const condition = data.condition
       let i = 0
@@ -263,6 +265,7 @@ export default {
       })
       store.commit('celldata', {
         ...data[key],
+        defaultSort,
         events,
         column: cellcolumn.filter(v => !!v),
         condition: condition.reduce((acc, v) => {
@@ -283,6 +286,12 @@ export default {
               acc['large_' + k] = v.value[1] * v.base
             } else if (v.type === 'select') {
               acc[k] = Array.isArray(v.value) ? v.value.join() : v.value
+            } else if (v.type === 'cascader') {
+              if (v.options) {
+                acc[k] += ',' + v.options.children.map(v => v.value).join()
+              } else {
+                acc[k] = v.value
+              }
             } else {
               acc[k] = v.value
             }
@@ -319,7 +328,11 @@ export default {
                 v[m] = v[k]
               }
             }
-            if (typeof v2 === 'string' && v2.length > 50 && /[\u4e00-\u9fa5]+/.test(v2)) {
+            if (
+              typeof v2 === 'string' &&
+              v2.length > 50 &&
+              /[\u4e00-\u9fa5]+/.test(v2)
+            ) {
               v[k] = v2.slice(0, 50) + '...'
             }
           })

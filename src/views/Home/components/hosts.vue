@@ -108,7 +108,8 @@ export default {
           acc[v.name] = {
             type: v.component,
             value: v.value,
-            base: v.attrs.base
+            base: v.attrs.base,
+            options: v.attrs.options.find(v2 => v2.label === v.value)
           }
           return acc
         }, {})

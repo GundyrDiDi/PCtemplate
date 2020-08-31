@@ -45,9 +45,8 @@ export default {
     },
     async getdata () {
       this.l = true
-      let data = await this.chart_getkeydata({ ...this.chartdata, ...this.condition })
-      console.log(data)
-      data = data.slice(0, 100)
+      const data = await this.chart_getkeydata({ ...this.chartdata, ...this.condition })
+      // console.log(data)
       if (!data.length) return
       this.l = false
       this.ct.clear()
