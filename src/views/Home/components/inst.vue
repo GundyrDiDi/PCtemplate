@@ -16,11 +16,19 @@
       </el-date-picker>
         <input-suggestion class="searchbox"
           size="small"
-          placeholder="搜索机构"
+          placeholder="搜索机构或主播"
           itemName="mechanismName"
           :request="request"
           @search="search"
         >
+          <!-- <template #suffix>
+            <el-input
+              style="width:7rem;margin-right:1rem;"
+              size="small" clearable
+              v-model="anchorName"
+              placeholder="主播名"
+            ></el-input>
+          </template> -->
           <div class="suggestions flex-ter" slot-scope="{ item }">
             <img :src="item.mechanismLogo"/>
             <div>{{item.mechanismName}}</div>
@@ -43,6 +51,7 @@ export default {
   name: 'inst',
   data () {
     return {
+      anchorName: '',
       trustWord: '',
       time: formatDate(new Date(), 'yyyy-MM'),
       pickerOptions: {
@@ -56,7 +65,8 @@ export default {
     condition () {
       return {
         monthId: this.time,
-        mechanismName: this.trustWord
+        mechanismName: this.trustWord,
+        anchorName: this.anchorName
       }
     }
   },

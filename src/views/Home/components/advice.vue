@@ -3,7 +3,7 @@
     <div class="module-box">
       <el-form ref="form" :model="form" :rules="rules">
         <div class="text bolder">意见与反馈：</div>
-        <el-form-item prop="advice">
+        <!-- <el-form-item prop="advice">
           <el-input placeholder="您在使用过程中有任何不满或意见时，欢迎与我们及时联系，感谢使用！"
           type="textarea" v-model="form.advice" :autosize="{ minRows: 4, maxRows: 8}"></el-input>
         </el-form-item>
@@ -16,7 +16,8 @@
             <div>点击或将文件拖拽到此处上传</div>
             <div class="des">支持扩展名：.rar .zip .doc .docx .pdf .jpg...</div>
           </el-upload>
-        </el-form-item>
+        </el-form-item> -->
+        <div id="editor" ref="editor" style="text-align:left"></div>
       </el-form>
       <div class="update">
         <el-button type="primary" @click="updateadvice">提交</el-button>
@@ -26,10 +27,12 @@
 </template>
 
 <script>
+import wangeditor from 'wangeditor'
 export default {
   name: '',
   data () {
     return {
+      editor: {},
       form: {
         advice: '',
         snippet: null
@@ -54,21 +57,40 @@ export default {
   },
   methods: {
     updateadvice () {
-      this.$refs.form.validate(valid => {
-        console.log(valid)
+      // this.$refs.form.validate(valid => {
+      //   console.log(valid)
+      // })
+      console.log(this.editor.txt.html())
+      Axios.post('user/advices', {
+        content: this.editor.txt.html()
+      }).then(res => {
+        this.editor.txt.html('')
+        this.msgSuccess('提交成功 ！')
+      }).catch(res => {
+        this.msgFail('提交失败 ！')
       })
     },
     reset () {
       this.form.advice = ''
       this.form.snippet = null
     }
+  },
+  mounted () {
+    const E = wangeditor
+    const editor = new E('#editor')
+    editor.customConfig.menus = [
+      'image'
+    ]
+    editor.customConfig.uploadImgShowBase64 = true
+    editor.customConfig.justify = 'left'
+    editor.create()
+    this.editor = editor
   }
 }
 </script>
 
 <style scoped lang="less">
 .module-box {
-  width: 60%;
   margin: auto;
 }
 .el-form-item{

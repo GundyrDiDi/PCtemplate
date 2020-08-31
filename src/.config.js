@@ -310,12 +310,13 @@ export default {
           }).then(res => {
             // 关注或取消关注 成功
             if (res.code === 200) {
-              this[res.not ? 'msgSuccess' : '$myalert'](res.obj + '！')
+              this.msgSuccess(res.obj + '！')
               row.follow = !res.not
             } else {
               // 关注或取消关注 失败
               if (res.obj) {
-                this.$myalert(res.obj + '！')
+                // this.$myalert(res.obj + '！')
+                this.msgSuccess(res.obj + ' !')
               }
               // 取消操作
               row.follow = follow
@@ -368,7 +369,7 @@ export default {
         },
         { key: 'anchorArea', title: '所属区域', minWidth: 100 },
         { key: 'anchorType', title: '主播类型', minWidth: 120 },
-        { key: 'skilledField', title: '擅长领域', minWidth: 100 },
+        { key: 'skilledField', title: '擅长领域', minWidth: 120 },
         {
           key: 'saleAmtPerLive30d',
           title: '近30天销售额(估)',

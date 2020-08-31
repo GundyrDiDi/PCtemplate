@@ -243,6 +243,9 @@ a {
 .ivu-table-small {
   font-size: var(--xxsfont) !important;
 }
+.ivu-table-cell{
+  text-overflow: none;
+}
 // transition-group
 .list-leave-active {
   position: absolute;

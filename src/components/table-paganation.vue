@@ -137,9 +137,9 @@ export default {
         ...param
       })
       this.loading = false
-      if (this.scroll && !this.isinit) {
+      if (!this.isinit) {
         setTimeout(() => {
-          this.$el.scrollIntoView({ block: 'center' })
+          this.$el.scrollIntoView(this.scroll ? { block: 'center' } : true)
         }, 200)
       }
       // auth

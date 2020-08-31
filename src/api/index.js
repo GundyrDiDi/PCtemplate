@@ -172,6 +172,9 @@ export default {
       },
       isnotice: {
         url: 'premiere/updateById'
+      },
+      advices: {
+        url: 'feedback/insertFeedback'
       }
     }
   }

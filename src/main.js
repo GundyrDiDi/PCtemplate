@@ -13,7 +13,7 @@ import '@/assets/font/iconfont.css'
 import './plugins/iview.js'
 import './plugins/echarts.js'
 import '@/components/global.js'
-
+//
 Vue.config.productionTip = false
 new Vue({
   router,

@@ -109,7 +109,7 @@ export default {
             type: v.component,
             value: v.value,
             base: v.attrs.base,
-            options: v.attrs.options.find(v2 => v2.label === v.value)
+            options: v.attrs.options ? v.attrs.options.find(v2 => v2.label === v.value) : null
           }
           return acc
         }, {})
@@ -187,7 +187,7 @@ export default {
   },
   async mounted () {
     this.$forceUpdate()
-    this.$refs.table.request()
+    // this.$refs.table.request()
     if (!this.richFilter.loaded) {
       await this.forms_getrange().then((data) => {
         this.richFilter.forEach((v) => {

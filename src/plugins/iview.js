@@ -20,6 +20,11 @@ Vue.prototype.msgSuccess = function (msg) {
     content: msg || '操作成功 ！'
   })
 }
+Vue.prototype.msgFail = function (msg) {
+  this.$Message.warning({
+    content: msg || '操作成功 ！'
+  })
+}
 Vue.prototype.msgDestroy = function () {
   this.$Message.destroy()
 }
