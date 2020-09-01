@@ -27,6 +27,7 @@ export default {
   methods: {
     login (val) {
       this.User.level = val
+      this.User.auth = ['免费版', '标准版', '高级版'][val]
       console.log(this.User)
       this.$router.push({ name: 'overview' })
     }

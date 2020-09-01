@@ -84,8 +84,8 @@ export default {
         { label: '场均点赞', name: 'praiseNumPerLive' },
         { label: '场均评论', name: 'commentNumPerLive' },
         { label: '开播场次', name: 'liveCnt' },
-        { label: '场均销售额', name: 'saleAmtPerLive' },
-        { label: '场均销量', name: 'saleQtyPerLive' },
+        { label: '场均销售额(估)', name: 'saleAmtPerLive' },
+        { label: '场均销量(估)', name: 'saleQtyPerLive' },
         { label: '场均客单价(估)', name: 'perSalePricePerLive' }
       ],
       dropmenu: [
@@ -97,14 +97,6 @@ export default {
   },
   methods: {
     follow (v) {
-      // this.user_followornot({ host: v.premiereInfoDto, vm: this }).then(
-      //   res => {
-      //     if (res.code === 200) {
-      //       this[res.not ? 'msgSuccess' : '$myalert'](res.obj + '！')
-      //       v.follow = !res.not
-      //     }
-      //   }
-      // )
       this.hostslist.events.follow.call(this, { row: v })
     },
     command (a) {

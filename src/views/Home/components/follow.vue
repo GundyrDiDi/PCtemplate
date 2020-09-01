@@ -97,10 +97,8 @@ export default {
       if (!Object.keys(v).length) return
       this.loading = true
       this.user_followornot({ host: v, vm: this }).then(res => {
-        if (res.code === 200) {
-          this.success(res.obj)
-          this.followWord = ''
-        }
+        this.success(res.msg)
+        this.followWord = ''
         this.loading = false
       })
     },

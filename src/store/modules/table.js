@@ -111,12 +111,12 @@ const Map = {
       }
     ],
     anchorsCnt: {
-      name: '直播商品洞察',
+      name: '关联主播',
       column: [],
       api: 'tables/goodslist/rlthost'
     },
     liveCnt: {
-      name: '直播商品洞察',
+      name: '关联直播',
       column: [
         {
           key: 'live_title',
@@ -289,7 +289,11 @@ export default {
               acc[k] = Array.isArray(v.value) ? v.value.join() : v.value
             } else if (v.type === 'cascader') {
               if (v.options) {
-                acc[k] += ',' + v.options.children.map(v => v.value).join()
+                let arr = v.options.children.map(v => v.value)
+                arr = arr.concat(
+                  arr.map(v => v.replace(/市|县|(自治(区|州))/, ''))
+                )
+                acc[k] = v.value + ',' + arr.join()
               } else {
                 acc[k] = v.value
               }

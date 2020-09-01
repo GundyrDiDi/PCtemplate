@@ -244,7 +244,7 @@ a {
   font-size: var(--xxsfont) !important;
 }
 .ivu-table-cell{
-  text-overflow: none;
+  text-overflow: initial !important;
 }
 // transition-group
 .list-leave-active {

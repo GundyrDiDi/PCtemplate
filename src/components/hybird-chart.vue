@@ -45,15 +45,19 @@ export default {
     },
     async getdata () {
       this.l = true
-      const data = await this.chart_getkeydata({ ...this.chartdata, ...this.condition })
-      // console.log(data)
+      var data = await this.chart_getkeydata({ ...this.chartdata, ...this.condition })
+      console.log(data)
+      data = data.map(v => {
+        delete v.totalUv
+        return v
+      })
       if (!data.length) return
       this.l = false
       this.ct.clear()
       const legend = []
       let axis = []
       const series = []
-      let i = 0
+      // let i = 0
       Object.entries(data[0]).forEach(([k, v]) => {
         if (!/Axis/.test(v.type)) {
           legend.push(v.name)
@@ -61,19 +65,32 @@ export default {
             name: v.name,
             type: v.type,
             smooth: true,
-            yAxisIndex: Math.min(i++, 1),
+            yAxisIndex: k.includes('live') ? 1 : 0,
+            // yAxisIndex: Math.min(i++, 1),
             data: data.map(v2 => v2[k].value)
           })
         } else {
           axis = data.map(v2 => v2[k].value)
         }
       })
-      this.option.legend.data = legend
+      this.option.legend.data = legend.reverse()
       this.option.xAxis[0].data = axis
       this.option.series = series
       const name = [...legend]
+      const ccc = this.option.color.slice(0, 2)
       name[1] = name.slice(1).map(v => v).join('/')
-      this.option.yAxis = name.slice(0, 2).map(v => this.option._yAxis(v))
+      this.option.yAxis = name.slice(0, 2).map((v, i) => {
+        const option = this.option._yAxis(v)
+        option.nameTextStyle = {
+          color: ccc[i]
+        }
+        option.axisLine = {
+          lineStyle: {
+            color: ccc[i]
+          }
+        }
+        return option
+      }).reverse()
       this.ct.setOption(this.option)
     }
   },

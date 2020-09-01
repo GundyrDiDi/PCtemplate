@@ -22,14 +22,14 @@ export default {
       return Axios.get('user/search', {
         anchorName: param
       }).then(res => {
-        return res.obj
+        return res
       })
     },
     _getfollowlist (store) {
       return Axios.post('user/followlist').then(res => {
         store.commit(
           'followlist',
-          res.obj.content.filter(v => v.follow)
+          res.content.filter(v => v.follow)
         )
         return !!store.state.followlist.length
       })
@@ -49,18 +49,16 @@ export default {
           .then(() => {
             host.follow = 0
             return Axios.post('user/notfollow', host).then(res => {
-              return { ...res, not: true }
+              return { msg: res, not: true }
             })
-            // .catch(() => {
-            //   return {}
-            // })
           })
+          // 按取消按钮返回{}
           .catch(() => ({}))
       } else {
         if (host.anchorId) {
           return Axios.post('user/followme', { ...host, status }).then(res => {
             host.follow = 1
-            return res
+            return { msg: res }
           })
         }
       }
@@ -69,7 +67,7 @@ export default {
     getauths (store, param) {
       return Axios.get('user/auths').then(res => {
         const catalog = []
-        res.obj.forEach(v => {
+        res.forEach(v => {
           const obj =
             catalog.find(v2 => v2.label === v.power) ||
             (catalog[catalog.length] = {

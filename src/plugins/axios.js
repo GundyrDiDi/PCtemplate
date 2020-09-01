@@ -52,7 +52,8 @@ _axios.interceptors.request.use(
     }
     config.url = _url
     // auth
-    config.headers.openId = store.state.user.openid
+    config.headers.openid = store.state.user.openid
+    config.headers.userToken = 321321
     config.headers.queryType = store.state.user.queryType
     config.headers.vipLevel = store.state.user.User.level + 1
     console.log(config)
@@ -69,6 +70,10 @@ _axios.interceptors.request.use(
 _axios.interceptors.response.use(
   function (response) {
     store.commit('user/queryType', '')
+    const { data } = response
+    if (data.code === 200) {
+      return data.obj
+    }
     // Do something with response data
     return response.data
   },

@@ -24,7 +24,6 @@ export const MAP = {
   videoId: 'link'
 }
 export default {
-  tour: {},
   name: '鲸宸数据',
   description: '淘宝主播商家、主播、MCN优选的淘宝直播AI数据平台',
   company: {
@@ -35,10 +34,10 @@ export default {
     icp: '浙ICP备19017467号',
     gip: '浙公网安备 33010602010329号'
   },
-  keywords: [],
-  notify: {
-    msg: '点击关注服务号，可接收更多资讯哦！'
+  meta: {
+    keywords: []
   },
+  notify: {},
   imgs: {
     logo: require('@/assets/img/logo2.png'),
     jingchen: require('@/assets/img/jingchen.png'),
@@ -80,7 +79,6 @@ export default {
       name: 'Enter',
       component: () => import('@/views/Enter/index.vue'),
       meta: { title: '首页' }
-      // children: 'enternavs'
     },
     {
       path: '/login',
@@ -304,24 +302,26 @@ export default {
         // brief.vue 的 follow 方法也引用此函数
         follow ({ row }) {
           const follow = row.follow
+          const { id, ...host } = row.premiereInfoDto || row
           this.user_followornot({
-            host: row.premiereInfoDto || row,
+            host,
             vm: this
-          }).then(res => {
-            // 关注或取消关注 成功
-            if (res.code === 200) {
-              this.msgSuccess(res.obj + '！')
-              row.follow = !res.not
-            } else {
-              // 关注或取消关注 失败
-              if (res.obj) {
-                // this.$myalert(res.obj + '！')
-                this.msgSuccess(res.obj + ' !')
-              }
-              // 取消操作
-              row.follow = follow
-            }
           })
+            .then(res => {
+              // 关注或取消关注 成功
+              if (res.msg) {
+                this.msgSuccess(res.msg + '！')
+                row.follow = !res.not
+              } else {
+                // 取消操作
+                row.follow = follow
+              }
+            })
+            .catch(res => {
+              // 关注或取消关注 失败
+              // this.$myalert(res.obj + '！')
+              this.msgSuccess(res.obj.msg + ' !')
+            })
         },
         detail ({ row }) {
           this.$router.push({ name: 'hostDetail', params: { host_id: row.id } })
@@ -348,7 +348,14 @@ export default {
             },
             {
               tag: 'span',
-              text: 'anchorName'
+              text: 'anchorName',
+              style: {
+                cursor: 'pointer',
+                color: '#2d8cf0'
+              },
+              events: {
+                click: 'detail'
+              }
             }
           ],
           minWidth: 200
@@ -561,13 +568,13 @@ export default {
           minWidth: 140
         },
         {
-          key: 'rel_anchorsCnt',
+          key: 'anchorNum',
           title: '关联主播数',
           sortable: 'custom',
           minWidth: 140
         },
         {
-          key: 'rel_liveCnt',
+          key: 'liveNum',
           title: '关联直播数',
           sortable: 'custom',
           minWidth: 160
