@@ -9,7 +9,7 @@
           </div>
         </div>
         <div class="notify flex-center">
-          <el-button size="small" type="primary" @click="showQRcode=true">{{notify.msg}}</el-button>
+          <el-button size="small" type="primary" @click="showQRcode=true">点击关注服务号，可接收更多资讯哦！</el-button>
         </div>
         <div class="user flex-center">
           <img class="brcircle" :src="imgs.head" alt />

@@ -288,15 +288,14 @@ export default {
             } else if (v.type === 'select') {
               acc[k] = Array.isArray(v.value) ? v.value.join() : v.value
             } else if (v.type === 'cascader') {
+              let arr = [v.value]
               if (v.options) {
-                let arr = v.options.children.map(v => v.value)
-                arr = arr.concat(
-                  arr.map(v => v.replace(/市|县|(自治(区|州))/, ''))
-                )
-                acc[k] = v.value + ',' + arr.join()
-              } else {
-                acc[k] = v.value
+                arr = arr.concat(v.options.children.map(v => v.value))
               }
+              arr = arr.concat(
+                arr.map(v => v.replace(/省|市|县|(自治(区|州))/, ''))
+              )
+              acc[k] = arr.join()
             } else {
               acc[k] = v.value
             }

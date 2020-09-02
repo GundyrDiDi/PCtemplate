@@ -106,11 +106,12 @@ export function isdeepsame (obj1, obj2) {
   }
   return same
 }
-export function mergeObject (obj1, obj2) {
+export function mixin (obj1, obj2 = {}) {
+  if (obj1 === obj2) return obj1
   return Object.entries(obj1).reduce((obj2, [key, value]) => {
     if (key in obj2) {
       if (typeof obj1[key] === 'object' && typeof obj2[key] === 'object') {
-        obj2[key] = mergeObject(obj1[key], obj2[key])
+        obj2[key] = mixin(obj1[key], obj2[key])
       }
     } else {
       obj2[key] = value
