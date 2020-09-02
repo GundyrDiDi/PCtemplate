@@ -1,12 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import user from './modules/user'
-import variable from './modules/var'
-import chart from './modules/chart'
-import forms from './modules/forms'
-import tables from './modules/table'
-import host from './modules/host'
-import route from './modules/route'
+import allmodules from './modules/global.js'
 Vue.use(Vuex)
 const root = {
   // everyStore中命名modules
@@ -34,15 +28,7 @@ const root = {
     }
   },
   actions: {},
-  modules: {
-    user,
-    variable,
-    chart,
-    forms,
-    tables,
-    host,
-    myroute: route
-  },
+  modules: allmodules,
   plugins: []
 }
 const modules = everyStore(root)
