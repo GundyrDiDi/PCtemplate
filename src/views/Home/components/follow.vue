@@ -95,6 +95,7 @@ export default {
         v = this.followhost
       }
       if (!Object.keys(v).length) return
+      v = v.premiereInfoDto || v
       this.loading = true
       this.user_followornot({ host: v, vm: this }).then(res => {
         this.success(res.msg)
@@ -111,7 +112,7 @@ export default {
     },
     success (msg) {
       this.fengzhuang().then(res => {
-        this.msgSuccess(msg + ' ！')
+        msg && this.msgSuccess(msg + ' ！')
       })
       this.results = []
     },
