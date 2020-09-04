@@ -40,24 +40,28 @@ export default {
     _followornot (store, { host, vm }) {
       const status = store.state.isnotice ? 1 : 0
       if (host.follow) {
-        return vm
-          .$confirm(`不再关注 ${host.anchorName} ?`, '提示', {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
-            type: 'warning'
-          })
-          .then(() => {
-            host.follow = 0
-            return Axios.post('user/notfollow', host).then(res => {
-              return { msg: res, not: true }
+        return (
+          vm
+            .$confirm(`不再关注 ${host.anchorName} ?`, '提示', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'warning'
             })
-          })
-          // 按取消按钮返回{}
-          .catch(() => ({}))
+            .then(() => {
+              return Axios.post('user/notfollow', host).then(res => {
+                return { msg: res, not: true }
+              })
+            })
+            // 按取消按钮返回{}
+            .catch(() => ({}))
+        )
       } else {
         if (host.anchorId) {
-          return Axios.post('user/followme', { ...host, status }).then(res => {
-            host.follow = 1
+          return Axios.post('user/followme', {
+            ...host,
+            status,
+            follow: 1
+          }).then(res => {
             return { msg: res }
           })
         }

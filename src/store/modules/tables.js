@@ -1,10 +1,10 @@
 import config, { MAP } from '@/.config.js'
 import { formatNumber, addNumberUnit } from '@/plugins/util.js'
-// 单元格关联表
 function link ({ row }) {
   const link = row.taobao_goods_id ? row.taobao_goods_id : row.taobaoGoodsId
   window.open('https://item.taobao.com/item.htm?ft=t&id=' + link)
 }
+// 单元格关联表
 const Map = {
   inst: {
     events: {

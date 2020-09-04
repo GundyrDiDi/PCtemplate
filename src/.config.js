@@ -301,6 +301,7 @@ export default {
       events: {
         // brief.vue 的 follow 方法也引用此函数
         follow ({ row }) {
+          this.loading = true
           const follow = row.follow
           const { id, ...host } = row.premiereInfoDto || row
           this.user_followornot({
@@ -312,15 +313,18 @@ export default {
               if (res.msg) {
                 this.msgSuccess(res.msg + '！')
                 row.follow = !res.not
+                console.log(row.follow)
               } else {
                 // 取消操作
                 row.follow = follow
               }
+              this.loading = false
             })
             .catch(res => {
               // 关注或取消关注 失败
               // this.$myalert(res.obj + '！')
-              this.msgSuccess(res.obj.msg + ' !')
+              this.msgFail(res.obj + ' !')
+              this.loading = false
             })
         },
         detail ({ row }) {
@@ -360,59 +364,59 @@ export default {
           ],
           minWidth: 200
         },
-        { key: 'fansNum', title: '粉丝数', sortable: 'custom', minWidth: 120 },
-        {
-          key: 'liveCnt',
-          title: '开播场次',
-          sortable: 'custom',
-          minWidth: 120
-        },
-        { key: 'favorNum', title: '最爱TA', sortable: 'custom', minWidth: 120 },
-        {
-          key: 'totalPraiseNum',
-          title: '点赞数',
-          sortable: 'custom',
-          minWidth: 120
-        },
-        { key: 'anchorArea', title: '所属区域', minWidth: 100 },
-        { key: 'anchorType', title: '主播类型', minWidth: 120 },
-        { key: 'skilledField', title: '擅长领域', minWidth: 120 },
-        {
-          key: 'saleAmtPerLive30d',
-          title: '近30天销售额(估)',
-          sortable: 'custom',
-          width: 170
-        },
-        {
-          key: 'saleQtyPerLive30d',
-          title: '近30天销量(估)',
-          sortable: 'custom',
-          width: 160
-        },
-        {
-          key: 'perSalePricePerLive30d',
-          title: '近30天客单价(估)',
-          sortable: 'custom',
-          width: 170
-        },
-        {
-          key: 'pvPerLive30d',
-          title: '近30天场均观看次数',
-          sortable: 'custom',
-          width: 170
-        },
-        {
-          key: 'commentNumPerLive30d',
-          title: '近30天场均评论数',
-          sortable: 'custom',
-          width: 170
-        },
-        {
-          key: 'praiseNumPerLive30d',
-          title: '近30天场均点赞数',
-          sortable: 'custom',
-          width: 170
-        },
+        // { key: 'fansNum', title: '粉丝数', sortable: 'custom', minWidth: 120 },
+        // {
+        //   key: 'liveCnt',
+        //   title: '开播场次',
+        //   sortable: 'custom',
+        //   minWidth: 120
+        // },
+        // { key: 'favorNum', title: '最爱TA', sortable: 'custom', minWidth: 120 },
+        // {
+        //   key: 'totalPraiseNum',
+        //   title: '点赞数',
+        //   sortable: 'custom',
+        //   minWidth: 120
+        // },
+        // { key: 'anchorArea', title: '所属区域', minWidth: 100 },
+        // { key: 'anchorType', title: '主播类型', minWidth: 120 },
+        // { key: 'skilledField', title: '擅长领域', minWidth: 120 },
+        // {
+        //   key: 'saleAmtPerLive30d',
+        //   title: '近30天销售额(估)',
+        //   sortable: 'custom',
+        //   width: 170
+        // },
+        // {
+        //   key: 'saleQtyPerLive30d',
+        //   title: '近30天销量(估)',
+        //   sortable: 'custom',
+        //   width: 160
+        // },
+        // {
+        //   key: 'perSalePricePerLive30d',
+        //   title: '近30天客单价(估)',
+        //   sortable: 'custom',
+        //   width: 170
+        // },
+        // {
+        //   key: 'pvPerLive30d',
+        //   title: '近30天场均观看次数',
+        //   sortable: 'custom',
+        //   width: 170
+        // },
+        // {
+        //   key: 'commentNumPerLive30d',
+        //   title: '近30天场均评论数',
+        //   sortable: 'custom',
+        //   width: 170
+        // },
+        // {
+        //   key: 'praiseNumPerLive30d',
+        //   title: '近30天场均点赞数',
+        //   sortable: 'custom',
+        //   width: 170
+        // },
         {
           key: 'action',
           title: '操作',

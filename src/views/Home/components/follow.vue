@@ -98,6 +98,10 @@ export default {
       this.loading = true
       this.user_followornot({ host: v, vm: this }).then(res => {
         this.success(res.msg)
+      }).catch(res => {
+        // 关注或取消关注 失败
+        this.msgFail(res.obj + ' !')
+      }).finally(() => {
         this.followWord = ''
         this.loading = false
       })
