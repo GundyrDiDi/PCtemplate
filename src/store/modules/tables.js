@@ -11,21 +11,21 @@ const Map = {
       link
     },
     condition: ['mechanismId', 'monthId'],
-    defaultSort: 'sale_amt,desc',
+    defaultSort: 'saleAmt,desc',
     column: [
       null,
       {
-        key: 'cooperate_cnt',
+        key: 'cooperateCnt',
         title: '本月合作次数',
         sortable: 'custom'
       },
       {
-        key: 'sale_amt',
+        key: 'saleAmt',
         title: '销售额(估)',
         sortable: 'custom'
       },
       {
-        key: 'sale_qty',
+        key: 'saleQty',
         title: '销量(估)',
         sortable: 'custom'
       }
@@ -34,12 +34,12 @@ const Map = {
       name: '合作商品洞察',
       column: [
         {
-          key: 'taobao_goods_name',
+          key: 'taobaoGoodsName',
           title: '商品信息',
           custom: [
             {
               tag: 'img',
-              src: 'goods_img',
+              src: 'goodsImg',
               events: {
                 click: 'link'
               }
@@ -47,7 +47,7 @@ const Map = {
             {
               tag: 'a',
               class: 'lines',
-              text: 'taobao_goods_name',
+              text: 'taobaoGoodsName',
               events: {
                 click: 'link'
               }
@@ -62,14 +62,14 @@ const Map = {
       name: '合作商家洞察',
       column: [
         {
-          key: 'taobao_shop_name',
+          key: 'taobaoShopName',
           title: '店铺信息',
           custom: [
             // {
             //   tag: 'img',
-            //   src: 'shop_img'
+            //   src: 'shopImg'
             // },
-            { tag: 'span', text: 'taobao_shop_name' }
+            { tag: 'span', text: 'taobaoShopName' }
           ],
           width: 300
         }
@@ -82,55 +82,56 @@ const Map = {
     column: [
       null,
       {
-        key: 'anchor_name',
-        title: '主播',
-        custom: [
-          {
-            tag: 'img',
-            src: 'anchor_img'
-          },
-          {
-            tag: 'div',
-            children: [
-              { tag: 'span', text: 'anchor_name' },
-              { tag: 'label', text: 'fans_num', raw: ' 粉丝' }
-            ]
-          }
-        ],
-        width: 300
-      },
-      {
-        key: 'sale_amt',
+        key: 'saleAmt',
         title: '销售额(估)',
         sortable: 'custom'
       },
       {
-        key: 'sale_qty',
+        key: 'saleQty',
         title: '销量(估)',
         sortable: 'custom'
       }
     ],
     anchorsCnt: {
       name: '关联主播',
-      column: [],
+      column: [
+        {
+          key: 'anchorName',
+          title: '主播',
+          custom: [
+            {
+              tag: 'img',
+              src: 'anchorImg'
+            },
+            {
+              tag: 'div',
+              children: [
+                { tag: 'span', text: 'anchorName' },
+                { tag: 'label', text: 'fansNum', raw: ' 粉丝' }
+              ]
+            }
+          ],
+          width: 300
+        }
+      ],
       api: 'tables/goodslist/rlthost'
     },
     liveCnt: {
       name: '关联直播',
       column: [
         {
-          key: 'live_title',
+          key: 'liveTitle',
           title: '直播信息',
           custom: [
             {
               tag: 'img',
-              src: 'live_img'
+              src: 'liveImg'
             },
             {
               tag: 'div',
               children: [
-                { tag: 'span', text: 'live_title' },
-                { tag: 'label', text: 'live_date' }
+                { tag: 'span', text: 'liveTitle' },
+                { tag: 'label', text: 'liveDate' }
               ]
             }
           ],

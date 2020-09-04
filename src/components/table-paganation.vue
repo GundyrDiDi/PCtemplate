@@ -106,6 +106,8 @@ export default {
       this.events[event].apply(this, rest)
     },
     resetParam () {
+      const c = this.column.find(v => v.key === this.defaultSort.split(',')[0])
+      c && this.$set(c, 'className', 'sort-active')
       this.param = {
         size: 10,
         sizeOpts: [10, 20, 30, 40],
@@ -119,13 +121,22 @@ export default {
         this.sortvalid()
         return
       }
-      const issame = this.sortKey === key
-      this.$set(this.column.find(v => v.key === key), 'className', issame ? '' : 'sort-active')
-      if (!issame && this.sortKey) {
-        this.$set(this.column.find(v => v.key === this.sortKey), 'className', '')
-      }
-      this.param.sort = issame ? this.defaultSort : key + ',desc'
-      this.sortKey = issame ? '' : key
+      // 有默认排序
+      // const issame = this.sortKey === key
+      // this.$set(this.column.find(v => v.key === key), 'className', issame ? '' : 'sort-active')
+      // if (!issame && this.sortKey) {
+      //   this.$set(this.column.find(v => v.key === this.sortKey), 'className', '')
+      // }
+      // this.param.sort = issame ? this.defaultSort : key + ',desc'
+      // this.sortKey = issame ? '' : key
+
+      // 必须选一个降序
+      if (this.sortKey === key) return
+      this.column.forEach(v => {
+        this.$set(v, 'className', v.key === key ? 'sort-active' : '')
+      })
+      this.param.sort = key + ',desc'
+      this.sortKey = key
       this.request()
     },
     async request () {
