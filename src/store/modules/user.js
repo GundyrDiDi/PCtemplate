@@ -48,9 +48,11 @@ export default {
               type: 'warning'
             })
             .then(() => {
-              return Axios.post('user/notfollow', host).then(res => {
-                return { msg: res, not: true }
-              })
+              return Axios.post('user/notfollow', { ...host, follow: 0 }).then(
+                res => {
+                  return { msg: res, not: true }
+                }
+              )
             })
             // 按取消按钮返回{}
             .catch(() => ({}))
