@@ -97,10 +97,10 @@ export default {
       inslist: {
         url: 'org/findByMonthByPage',
         rltgood: {
-          url: 'org/findByMonthRelAnchor'
+          url: 'org/findByMonthRelGoods'
         },
         rltshop: {
-          url: 'org/findByMonthRelLive'
+          url: 'org/findByMonthRelShops'
         }
       },
       goodslist: {

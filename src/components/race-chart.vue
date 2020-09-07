@@ -51,7 +51,7 @@ export default {
         barWidth: 20,
         itemStyle: {
           normal: {
-            barBorderRadius: [0, 6, 6, 0],
+            barBorderRadius: [0, 20, 20, 0],
             color: new this.$echarts.graphic.LinearGradient(0, 0, 1, 0, [{
               offset: 0,
               color: 'rgb(90 159 243)'
