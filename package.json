@@ -69,7 +69,8 @@
     "rules": {},
     "globals": {
       "Axios": true,
-      "plus": true
+      "plus": true,
+      "WxLogin": true
     }
   },
   "browserslist": [

@@ -53,6 +53,7 @@
           <div>{{v.label}}</div>
           <div class="t-title" style="margin-right:0">
           <count-to
+          v-if="lockit(v)"
           :startVal="0"
           :duration="800"
           v-bind="getbind(v.name)"
@@ -115,6 +116,10 @@ export default {
       } else {
         return { endVal: 0 }
       }
+    },
+    lockit (v) {
+      console.log(v)
+      return true
     }
   }
 }

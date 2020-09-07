@@ -22,7 +22,9 @@
 export default {
   name: 'Login',
   data () {
-    return {}
+    return {
+      wxlogin: null
+    }
   },
   methods: {
     login (val) {
@@ -34,6 +36,16 @@ export default {
   },
   mounted () {
     this.$store.commit('init', true)
+    this.wxlogin = new WxLogin({
+      self_redirect: true,
+      id: 'login_container',
+      appid: '',
+      scope: '',
+      redirect_uri: '',
+      state: '',
+      style: '',
+      href: ''
+    })
   }
 }
 </script>

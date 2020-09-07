@@ -13,7 +13,7 @@
       </div>
       <div class="flex qr">
         <div class="flex-ter flex-col">
-          <a>公众号</a>
+          <a>商务微信</a>
         <img :src="imgs.gongzhonghao" alt="">
         </div>
         <div class="flex-ter flex-col">
@@ -28,7 +28,10 @@
         <img class="logo" :src="imgs.logo" alt />
         <img :src="imgs.jingchen" alt />
       </div> -->
-      <div class="bold">{{company.name}} {{company.icp}}</div>
+      <div class="bold">
+      {{company.name}}
+        <span style="display:inline-block;width:1.2rem"></span>
+      <a href="https://beian.miit.gov.cn/#/Integrated/recordQuery" target="_blank">{{company.icp}}</a></div>
       <div class="bold">{{company.gip}}</div>
     </div>
   </div>
@@ -52,8 +55,9 @@ export default {
 
 <style scoped lang="less">
 #ask {
+  margin-top:10vh;
   height: 100vh;
-  @contact:70%;
+  @contact:80%;
   @width:90%;
   .contact{
     height:@contact;
