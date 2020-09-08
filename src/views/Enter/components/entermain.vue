@@ -8,10 +8,10 @@
         <div>
           <div class="h-title">{{logoname}}</div>
           <div class="description">{{enterdescription}}</div>
-          <!-- <div>
+          <div>
             <el-button type="light">注册账户</el-button>
             <a href="#" class="link bolder">已有帐户 ?</a>
-          </div> -->
+          </div>
         </div>
       </el-col>
     </el-row>

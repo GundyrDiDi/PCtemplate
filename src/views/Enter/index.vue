@@ -18,7 +18,7 @@
         </el-menu>
       </el-col>
       <el-col :span="3" class="flex-ter">
-        <!-- <el-button v-if="false" type="primary" size="small" @click="$router.push({name:'Login'})">登录/注册</el-button> -->
+        <el-button type="primary" size="small" @click="$router.push({name:'Login'})">登录/注册</el-button>
       </el-col>
     </el-row>
     <!-- content -->
