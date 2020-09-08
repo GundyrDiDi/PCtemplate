@@ -80,9 +80,9 @@ export default {
 }
 </script>
 <style lang="less">
-#vip .ivu-modal-mask {
-  background: rgba(0, 0, 0, 0);
-}
+// #vip .ivu-modal-mask {
+//   background: rgba(0, 0, 0, 0);
+// }
 #pay {
   padding-bottom: 10px;
   .title {

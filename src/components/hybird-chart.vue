@@ -45,8 +45,8 @@ export default {
     },
     async getdata () {
       this.l = true
-      var data = await this.chart_getkeydata({ ...this.chartdata, ...this.condition })
-      console.log(data)
+      let data = await this.chart_getkeydata({ ...this.chartdata, ...this.condition })
+      // console.log(data)
       data = data.map(v => {
         delete v.totalUv
         return v
@@ -57,40 +57,28 @@ export default {
       const legend = []
       let axis = []
       const series = []
-      // let i = 0
-      Object.entries(data[0]).forEach(([k, v]) => {
+      let i = 0
+      Object.entries(data[0]).reverse().forEach(([k, v]) => {
         if (!/Axis/.test(v.type)) {
           legend.push(v.name)
           series.push({
             name: v.name,
             type: v.type,
             smooth: true,
-            yAxisIndex: k.includes('live') ? 1 : 0,
-            // yAxisIndex: Math.min(i++, 1),
+            barWidth: 30,
+            yAxisIndex: Math.min(i++, 1),
             data: data.map(v2 => v2[k].value)
           })
         } else {
           axis = data.map(v2 => v2[k].value)
         }
       })
-      this.option.legend.data = legend.reverse()
+      this.option.legend.data = legend
       this.option.xAxis[0].data = axis
       this.option.series = series
       const name = [...legend]
-      const ccc = this.option.color.slice(0, 2)
       name[1] = name.slice(1).map(v => v).join('/')
-      this.option.yAxis = name.slice(0, 2).map((v, i) => {
-        const option = this.option._yAxis(v)
-        option.nameTextStyle = {
-          color: ccc[i]
-        }
-        option.axisLine = {
-          lineStyle: {
-            color: ccc[i]
-          }
-        }
-        return option
-      }).reverse()
+      this.option.yAxis = name.slice(0, 2).map(v => this.option._yAxis(v))
       this.ct.setOption(this.option)
     }
   },
@@ -105,7 +93,7 @@ export default {
       this.ct.on(event, fn)
     })
     this.option = {
-      color: ['#2ec7c9', '#b6a2de', '#5ab1ef'],
+      color: ['#b6a2de', '#2ec7c9', '#5ab1ef'],
       legend: {
         data: null
       },
@@ -125,8 +113,7 @@ export default {
       xAxis: [
         {
           type: 'category',
-          axisTick: { show: false },
-          data: ['2012', '2013', '2014', '2015', '2016']
+          axisTick: { show: false }
         }
       ],
       _yAxis (name) {

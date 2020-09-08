@@ -57,7 +57,7 @@
         </div>
       </div>
     </div>
-    <Modal v-model="showpay" width="600px" footer-hide :transfer="false">
+    <Modal v-model="showpay" width="600px" footer-hide class="flex-center">
       <Pay :version="version" :levels="levels.slice(1)"></Pay>
     </Modal>
     <modal-table></modal-table>
@@ -129,6 +129,17 @@ export default {
 }
 </script>
 
+<style>
+.flex-center .ivu-modal-wrap{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.flex-center .ivu-modal{
+  top: 0;
+  /* transform: translateY(-50%); */
+}
+</style>
 <style scoped lang="less">
 #vip{
   position:relative;
