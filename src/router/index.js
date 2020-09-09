@@ -39,6 +39,9 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   store.commit('myroute/push', to)
   NProgress.start()
+  if (to.path.includes('home')) {
+    console.log(to)
+  }
   if (store.state.init && to.path.includes('home')) {
     Promise.all([
       store.dispatch('user/getauths').then(() => {

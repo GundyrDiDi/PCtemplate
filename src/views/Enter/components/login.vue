@@ -5,13 +5,14 @@
         <img :src="imgs.login" alt="">
       </div>
       <div class="form">
-        <div class="t-title">微信扫码登录</div>
-        <div class="flex-center group">
-          <div>
+        <div class="group flex-center flex-col">
+          <div class="s-title" style="margin-bottom:1rem">微信扫码登录</div>
+          <div id="login_container"></div>
+          <!-- <div>
             <el-button @click="login(0)">免费版</el-button>
             <el-button @click="login(1)" type="primary">标准版</el-button>
             <el-button @click="login(2)" type="warning">高级版</el-button>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
@@ -37,14 +38,14 @@ export default {
   mounted () {
     this.$store.commit('init', true)
     this.wxlogin = new WxLogin({
-      self_redirect: true,
+      self_redirect: false,
       id: 'login_container',
-      appid: '',
-      scope: '',
-      redirect_uri: '',
-      state: '',
-      style: '',
-      href: ''
+      appid: 'wx63f7586f80a3a043',
+      scope: 'snsapi_login',
+      redirect_uri: encodeURIComponent('http://www.jingchendata.com/#home'),
+      state: 'wxlogin',
+      // style: '',
+      href: encodeURIComponent('http://www.jingchendata.com/static/qrcode.css')
     })
   }
 }
@@ -78,8 +79,10 @@ export default {
     padding:2rem 0;
     .group{
       height:100%;
-      padding-bottom:2rem;
     }
+  }
+  #login_container{
+    height:16rem;
   }
 }
 </style>
