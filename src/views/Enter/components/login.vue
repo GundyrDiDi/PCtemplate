@@ -6,7 +6,9 @@
       </div>
       <div class="form">
         <div class="group flex-center flex-col">
-          <div class="s-title" style="margin-bottom:1rem">微信扫码登录</div>
+          <div class="t-title" style="margin-bottom:1rem;font-weight:600">微信扫码登录</div>
+          <!-- <img class="qrcode" :src="qrcode" alt=""> -->
+          <div>欢迎使用鲸宸数据</div>
           <div id="login_container"></div>
           <!-- <div>
             <el-button @click="login(0)">免费版</el-button>
@@ -24,7 +26,8 @@ export default {
   name: 'Login',
   data () {
     return {
-      wxlogin: null
+      wxlogin: null,
+      qrcode: ''
     }
   },
   methods: {
@@ -42,11 +45,16 @@ export default {
       id: 'login_container',
       appid: 'wx63f7586f80a3a043',
       scope: 'snsapi_login',
-      redirect_uri: encodeURIComponent('http://www.jingchendata.com/#home'),
-      state: 'wxlogin',
-      // style: '',
-      href: encodeURIComponent('http://www.jingchendata.com/static/qrcode.css')
+      redirect_uri: encodeURIComponent('https://www.jingchendata.com/#home'),
+      state: 'wxlogin'
     })
+    // console.log(window.WxLogin)
+    // Axios.get('user/qrcode', {
+    //   url: document.getElementsByTagName('iframe')[0].src
+    // }).then(res => {
+    //   console.log(res)
+    //   this.qrcode = res
+    // })
   }
 }
 </script>
@@ -83,6 +91,10 @@ export default {
   }
   #login_container{
     height:16rem;
+    // display: none;
+  }
+  .qrcode{
+    height:10rem;
   }
 }
 </style>

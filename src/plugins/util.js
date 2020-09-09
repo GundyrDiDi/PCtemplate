@@ -70,6 +70,7 @@ export function colorRGBtoHex (rgb) {
 
 export function formatNumber (num) {
   return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+  // return num.toLocaleString('en-us');
 }
 export function addNumberUnit (
   num,
