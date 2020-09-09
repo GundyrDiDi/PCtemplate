@@ -46,7 +46,8 @@ export default {
       appid: 'wx63f7586f80a3a043',
       scope: 'snsapi_login',
       redirect_uri: encodeURIComponent('https://www.jingchendata.com/#home'),
-      state: 'wxlogin'
+      state: 'wxlogin',
+      href: 'https://www.jingchendata.com/static/qrcode.css'
     })
     // console.log(window.WxLogin)
     // Axios.get('user/qrcode', {

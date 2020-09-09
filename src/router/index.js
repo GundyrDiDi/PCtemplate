@@ -26,6 +26,7 @@ const getroutechildren = routes => {
 const routes = getroutechildren(config.routes)
 
 const router = new VueRouter({
+  // mode: 'history',
   routes,
   scrollBehavior (to, from, savedPosition) {
     if (to.hash) {
