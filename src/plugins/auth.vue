@@ -2,7 +2,7 @@
   <div>
     <!-- <div class="f-title">{{label}}</div> -->
     <div>
-      <img :src="imgs.hotlive1" />
+      <img :src="imgs[img]" />
     </div>
     <div class="des">
       <i class="el-icon-warning"></i>
@@ -19,22 +19,33 @@ export default {
   name: 'auth',
   props: ['name', 'label'],
   data () {
-    return {}
+    return {
+      img: 'shili1'
+    }
   },
   methods: {
     emit () {
       this.$emit('example')
+    }
+  },
+  mounted () {
+    console.log(this.name)
+    if (this.name === 'good') {
+      this.img = 'shili2'
     }
   }
 }
 </script>
 <style scoped lang="less">
   img{
-    width:50%;
+    padding:1rem;
+    width:60%;
+    margin-top:2rem;
+    box-shadow:0 2px 4px 2px rgba(0,0,0,.1)
   }
   .des{
     font-size:var(--xsfont);
-    margin:.5rem
+    margin:1rem
   }
   .el-icon-warning{
     font-size:var(--sfont);
@@ -46,5 +57,8 @@ export default {
   }
   .userlevel{
     color:var(--prcol)
+  }
+  .el-button{
+    margin-bottom:2rem;
   }
 </style>

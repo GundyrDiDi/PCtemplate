@@ -137,7 +137,7 @@ export default {
     reset () {
       this.goodsWord = ''
       this.brandWord = ''
-      this.time = ''
+      this.time = formatDate(new Date(), 'yyyy-MM')
       this.catalog.value = ''
       this.goodrelative.forEach((v) => {
         v.value = [v.attrs.min, v.attrs.max]

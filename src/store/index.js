@@ -7,25 +7,13 @@ const root = {
   name: '',
   state: {
     // 异步事件需要延迟执行的存放队列
-    queue: [],
+    asyncQ: Promise.resolve(),
     // 登录初始化加载
     init: true
   },
   getters: {
-    // 触发
-    emitqueue ({ queue }) {
-      return () => {
-        while (queue.length) {
-          queue.shift()()
-        }
-      }
-    }
   },
   mutations: {
-    // 存放
-    pushqueue (state, fn) {
-      state.queue.push(fn)
-    }
   },
   actions: {},
   modules: allmodules,

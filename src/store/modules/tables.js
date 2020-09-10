@@ -79,6 +79,7 @@ const Map = {
   },
   goods: {
     condition: ['taobaoGoodsId', 'monthId'],
+    defaultSort: 'saleAmt,desc',
     column: [
       null,
       {
@@ -145,6 +146,7 @@ const Map = {
     events: {
       link
     },
+    defaultSort: 'saleAmt,desc',
     condition: ['liveId'],
     column: [
       {

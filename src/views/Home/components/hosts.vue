@@ -28,7 +28,7 @@
           </input-suggestion>
           <el-popover
             placement="bottom"
-            width="180"
+            width="160"
             trigger="click">
             <template>
               <div>
@@ -238,6 +238,7 @@ export default {
   >*{
     display:block;
     margin:.3rem 0;
+    font-size:var(--xxsfont)
   }
 }
 </style>
@@ -278,4 +279,7 @@ export default {
     }
   }
 }
+    .el-checkbox__label{
+      font-size:var(--xxsfont)
+    }
 </style>

@@ -106,8 +106,15 @@ export default {
       this.events[event].apply(this, rest)
     },
     resetParam () {
-      const c = this.column.find(v => v.key === this.defaultSort.split(',')[0])
-      c && this.$set(c, 'className', 'sort-active')
+      console.log('icuodnmfownmoiewm')
+      this.column.forEach(v => {
+        if (v.key === this.defaultSort.split(',')[0]) {
+          this.$set(v, 'className', 'sort-active')
+        } else {
+          this.$set(v, 'className', '')
+        }
+      })
+      // const c = this.column.find(v => v.key === this.defaultSort.split(',')[0])
       this.param = {
         size: 10,
         sizeOpts: [10, 20, 30, 40],
@@ -383,6 +390,11 @@ export default {
   width: 40px;
   border-radius: 50%;
   margin: 10px;
+  transition:all .15s linear;
+  &:hover{
+    transform:scale(1.25);
+    box-shadow: 0 1px 2px rgba(0,0,0,.2);
+  }
 }
 .table-div {
   height: 60px;

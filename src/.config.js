@@ -64,7 +64,9 @@ export default {
     fuwuhao: require('@/assets/img/fuwuhao.jpg'),
     coop: require('@/assets/img/service.jpg'),
     weixin: require('@/assets/img/weixin.png'),
-    login: require('@/assets/img/login.png')
+    login: require('@/assets/img/login.png'),
+    shili1: require('@/assets/img/示例1.png'),
+    shili2: require('@/assets/img/示例2.png')
   },
   routes: [
     {

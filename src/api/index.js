@@ -1,8 +1,8 @@
 import store from '@/store'
 export default {
-  baseURL: '/api',
+  // baseURL: '/api',
   // baseURL: 'http://10.228.88.46:8000/api',
-  // baseURL: 'http://10.228.88.9:8000/api',
+  baseURL: 'http://10.228.88.9:8000/api',
   get: {
     _params () {
       return {
@@ -154,6 +154,9 @@ export default {
       },
       qrcode: {
         url: 'wxLogin/getQrCode'
+      },
+      polling: {
+        url: 'wxLogin/wxPolling'
       }
     }
   },
