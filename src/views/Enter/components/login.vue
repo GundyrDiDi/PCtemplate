@@ -8,7 +8,7 @@
         <div class="group flex-center flex-col">
           <div class="t-title" style="margin-bottom:1rem;font-weight:600">微信扫码登录</div>
           <!-- <img class="qrcode" :src="qrcode" alt=""> -->
-          <div>欢迎使用鲸宸数据</div>
+          <!-- <div>欢迎使用鲸宸数据</div> -->
           <div id="login_container"></div>
           <!-- <div>
             <el-button @click="login(0)">免费版</el-button>
@@ -22,6 +22,7 @@
 </template>
 
 <script>
+// import axios from 'axios'
 export default {
   name: 'Login',
   data () {
@@ -45,8 +46,8 @@ export default {
       id: 'login_container',
       appid: 'wx63f7586f80a3a043',
       scope: 'snsapi_login',
-      redirect_uri: encodeURIComponent('https://www.jingchendata.com/#home'),
-      state: 'wxlogin',
+      redirect_uri: encodeURIComponent('https://www.jingchendata.com/#home/follow'),
+      state: (1000 * Math.random()).toFixed(),
       href: 'https://www.jingchendata.com/static/qrcode.css'
     })
     // console.log(window.WxLogin)

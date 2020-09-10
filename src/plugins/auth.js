@@ -223,6 +223,10 @@ Vue.prototype.$block = function (msg) {
   //   })
   //   .catch(() => {})
   return new Promise(resolve => {
+    const {
+      User: { level }
+    } = store.state.user
+    const rank = (this.User.auth = ['免费版', '标准版', '高级版'][level + 1])
     this.$Message.warning({
       render: h => {
         return h(
@@ -231,9 +235,7 @@ Vue.prototype.$block = function (msg) {
             class: 'auth-msg'
           },
           [
-            ...(msg
-              ? [msg]
-              : ['该功能为 ', h('a', '标准版'), ' 以上会员使用，']),
+            ...(msg ? [msg] : ['该功能为 ', h('a', rank), ' 以上会员使用，']),
             h(
               'a',
               {
