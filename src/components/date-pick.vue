@@ -51,7 +51,7 @@ export default {
                 callback()
                 this.$emit('update:time', value.map(v => formatDate(v, this.format)))
               } else if (
-                new Date(end).toDateString() === new Date().toDateString()
+                new Date(end).toDateString() === new Date(this.originDate).toDateString()
               ) {
                 const ms = Date.parse(start) - Date.parse(end)
                 this.btn = this.buttons.find(v => v.time === ms)
@@ -59,8 +59,8 @@ export default {
                 this.$emit('update:time', value)
               } else {
                 this.btn = null
-                if (Date.parse(start) > Date.now() || Date.parse(end) > Date.now()) {
-                  callback(new Error('选择的时间范围大于当前日期！'))
+                if (Date.parse(start) > this.originDate || Date.parse(end) > this.originDate) {
+                  callback(new Error('选择的时间范围内含有暂未抓取的日期数据，请重新输入！'))
                 } else {
                   this.$emit('update:time', value)
                 }
@@ -73,6 +73,7 @@ export default {
       },
       format: 'yyyy-MM-dd',
       btn: null,
+      originDate: this.$store.state.user.newdate,
       buttons: [
         { name: '近7天', time: -(7 * 24 * 60 * 60 * 1000) },
         { name: '近15天', time: -(15 * 24 * 60 * 60 * 1000) },
@@ -106,10 +107,10 @@ export default {
       this.auth && this.block()
     },
     quickset (v) {
-      const end = new Date()
-      const start = new Date()
-      start.setTime(start.getTime() + v.time)
-      return [start, end]
+      const end = this.originDate
+      const start = end + v.time
+      // start.setTime(start + v.time)
+      return [start, end].map(v => new Date(v))
     },
     quicksetvalue (v) {
       this.btn = v

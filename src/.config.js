@@ -299,7 +299,7 @@ export default {
   },
   tables: {
     hostslist: {
-      defaultSort: 'fansNum,desc',
+      defaultSort: 'pvPerLive30d,desc',
       events: {
         // brief.vue 的 follow 方法也引用此函数
         follow ({ row }) {
@@ -400,25 +400,25 @@ export default {
           key: 'perSalePricePerLive30d',
           title: '近30天客单价(估)',
           sortable: 'custom',
-          width: 170
+          width: 180
         },
         {
           key: 'pvPerLive30d',
           title: '近30天场均观看次数',
           sortable: 'custom',
-          width: 170
+          width: 190
         },
         {
           key: 'commentNumPerLive30d',
           title: '近30天场均评论数',
           sortable: 'custom',
-          width: 170
+          width: 190
         },
         {
           key: 'praiseNumPerLive30d',
           title: '近30天场均点赞数',
           sortable: 'custom',
-          width: 170
+          width: 180
         },
         {
           key: 'action',
@@ -467,6 +467,7 @@ export default {
     hostrecord: {
       events: {
         playlive ({ row }) {
+          console.log(row)
           window.open(
             'https://taobaolive.taobao.com/room/index.htm?feedId=' + row.topic
           )
@@ -531,6 +532,7 @@ export default {
         }
       },
       scroll: true,
+      defaultSort: 'saleAmt,desc',
       api: 'host/good',
       column: [
         {
@@ -575,28 +577,16 @@ export default {
           minWidth: 140
         },
         {
-          key: 'anchorNum',
+          key: 'allAnchorCnt',
           title: '关联主播数',
           sortable: 'custom',
           minWidth: 140
         },
         {
-          key: 'liveNum',
+          key: 'allLiveCnt',
           title: '关联直播数',
           sortable: 'custom',
           minWidth: 160
-        },
-        {
-          key: 'totalSaleQty',
-          title: '累计直播销量(估)',
-          sortable: 'custom',
-          minWidth: 170
-        },
-        {
-          key: 'totalSaleAmt',
-          title: '累计直播销售额(估)',
-          sortable: 'custom',
-          minWidth: 170
         }
       ]
     },
@@ -1033,7 +1023,7 @@ export default {
         pipe: calcRange
       },
       {
-        label: '客单价',
+        label: '客单价(元)',
         name: 'perSalePrice',
         component: 'range',
         value: [0, 9999],

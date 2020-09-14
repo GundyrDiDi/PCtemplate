@@ -47,6 +47,7 @@ router.beforeEach((to, from, next) => {
       store.dispatch('user/getauths').then(() => {
         store.commit('user/myauth', myauth())
       }),
+      store.dispatch('user/getnewdate'),
       store.dispatch('variable/loadimg')
     ]).then(res => {
       store.commit('init', false)

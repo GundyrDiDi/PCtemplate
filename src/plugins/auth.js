@@ -27,7 +27,7 @@ const pipe = [
         if (typeof time === 'string') {
           time = new Date(time)
         }
-        return Date.now() - Date.parse(time) > limit
+        return store.state.user.newdate - Date.parse(time) > limit
       }
     }
   },

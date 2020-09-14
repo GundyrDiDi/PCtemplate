@@ -7,14 +7,15 @@ export default {
       expire: '永久',
       auth: '免费版',
       club: '免费会员',
-      level: 0,
+      level: 2,
       payrecord: 0
     },
     followlist: [],
     isnotice: true,
     auths: null,
     myauth: {},
-    queryType: ''
+    queryType: '',
+    newdate: Date.now()
   },
   mutations: {},
   actions: {
@@ -69,7 +70,13 @@ export default {
         }
       }
     },
-    // 进入路由前获取权限保存
+    // 进入路由前获取权限保存，最新数据日期
+    getnewdate ({ state }) {
+      Axios.get('user/newdate').then(res => {
+        console.log(res)
+        state.newdate = Date.parse(res)
+      })
+    },
     getauths (store, param) {
       return Axios.get('user/auths').then(res => {
         const catalog = []

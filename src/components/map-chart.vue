@@ -36,8 +36,10 @@ export default {
       this.l = false
       this.ct.clear()
       this.ct.setOption(this.option({
-        data,
-        name: '主播人数',
+        data: data.map(v => {
+          return v || 0
+        }),
+        name: '直播场次',
         min: data.reduce((acc, v) => Math.min(acc, v.value), Infinity),
         max: data.reduce((acc, v) => Math.max(acc, v.value), 0)
       }))
@@ -55,7 +57,7 @@ export default {
       {
         name = '',
         mapType = 'china',
-        rangeColor = ['rgba(159,205,253,0.50)', '#60ACFC'],
+        rangeColor = ['rgba(159,205,253,0.50)', '#0b6fbc'],
         min = 0,
         max = 500,
         shadowColor = '#60ACFC',

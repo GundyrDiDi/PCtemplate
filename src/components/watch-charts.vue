@@ -81,6 +81,10 @@ export default {
         })
       })
       this.option.legend.data = data.map(v => v.name)
+      if (this.option.legend.data.length < 2) {
+        this.option.legend.show = false
+      }
+      // time轴
       this.option.series = data.map((v, i) => {
         v.data.forEach(v1 => (v1.value = [v1.name, v1.value]))
         return {
@@ -88,7 +92,14 @@ export default {
           ...this.lineStyle[i]
         }
       })
-      console.log(this.option.series)
+      // category轴
+      // this.option.series = data.map((v, i) => {
+      //   return {
+      //     data: v.data.map(v => v.value),
+      //     ...this.lineStyle[i]
+      //   }
+      // })
+      // this.option.xAxis.data = data[0].data.map(v => v.name)
       this.option.yAxis = data.map(v => this.option._yAxis(v.name))
       this.ct.setOption(this.option)
     }

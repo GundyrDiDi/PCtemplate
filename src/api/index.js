@@ -1,8 +1,7 @@
 import store from '@/store'
 export default {
-  // baseURL: '/api',
-  // baseURL: 'http://10.228.88.46:8000/api',
-  baseURL: 'http://10.228.88.9:8000/api',
+  baseURL: '/api',
+  // baseURL: 'http://10.228.88.9:8000/api',
   get: {
     _params () {
       return {
@@ -157,6 +156,9 @@ export default {
       },
       polling: {
         url: 'wxLogin/wxPolling'
+      },
+      newdate: {
+        url: 'anchor/getDataUpdateTime'
       }
     }
   },
@@ -181,6 +183,9 @@ export default {
       },
       advices: {
         url: 'feedback/insertFeedback'
+      },
+      createCost: {
+        url: 'wxPay/createPreOrder'
       }
     }
   }

@@ -5,10 +5,10 @@
       <date-pick :time.sync="time"></date-pick>
     </div>
     <watch-charts class="module-box" :chartdata="charts.watch" :condition="condition"></watch-charts>
-    <ring-chart class="module-box" :chartdata="charts.ring[0]" :condition="condition"></ring-chart>
-    <ring-chart class="module-box" :chartdata="charts.ring[1]" :condition="condition"></ring-chart>
     <map-chart class="module-box" :chartdata="charts.map[0]" :condition="condition"></map-chart>
     <word-chart class="module-box" :chartdata="charts.keyword[0]" :condition="condition"></word-chart>
+    <ring-chart class="module-box" :chartdata="charts.ring[1]" :condition="condition"></ring-chart>
+    <ring-chart class="module-box" :chartdata="charts.ring[0]" :condition="condition"></ring-chart>
     <hybird-chart class="module-box" :chartdata="charts.hybird[0]" :condition="condition"></hybird-chart>
   </div>
 </template>
@@ -17,8 +17,12 @@
 export default {
   name: 'overview',
   data () {
+    const newdate = this.$store.state.user.newdate
     return {
-      time: [new Date(Date.now() - 30 * 24 * 60 * 60 * 1000), new Date()],
+      time: [
+        new Date(newdate - 7 * 24 * 60 * 60 * 1000),
+        new Date(newdate)
+      ],
       condition: {}
     }
   },

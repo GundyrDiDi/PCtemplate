@@ -13,6 +13,7 @@
         :label="v.label"
         :prop="v.name">
           <component
+          ref="cpt"
           v-model="form[v.name]"
           :is="'el-'+v.component"
           v-bind="v.attrs">
@@ -65,15 +66,17 @@ export default {
     }
   },
   watch: {
-    _show () {
-      this.preForm = { ...this.form }
-      Object.keys(this.preForm).forEach(k => {
-        const v = this.preForm[k]
-        if (typeof v === 'object') {
-          this.preForm[k] = { ...v }
-        }
-      })
-      this.reset()
+    _show (v) {
+      if (v) {
+        this.updateform()
+        this.preForm = { ...this.form }
+        Object.keys(this.preForm).forEach(k => {
+          const v = this.preForm[k]
+          if (typeof v === 'object') {
+            this.preForm[k] = { ...v }
+          }
+        })
+      }
     }
   },
   methods: {
@@ -85,6 +88,7 @@ export default {
         if (v.component === 'range') {
           const [min, max] = this.form[v.name]
           if (min === v.attrs.min && max === v.attrs.max) {
+            // v.attrs.value = [min, max]
             v.value = undefined
             return
           }
@@ -105,15 +109,24 @@ export default {
       this.$emit('update', this.formrule.filter(v => v.value))
       this.$emit('update:show', false)
     },
-    reset () {
+    updateform () {
       this.form = this.formrule.reduce((acc, v) => {
         acc[v.name] = (v.value || v.attrs.value) || ''
+        // if (Array.isArray(acc[v.name])) {
+        //   acc[v.name] = [...acc[v.name]]
+        // }
         return acc
       }, {})
+    },
+    reset (save) {
+      this.formrule.forEach(v => {
+        save || this.$set(v, 'value', null)
+        this.form[v.name] = (v.attrs.value) || ''
+      })
     }
   },
   created () {
-    this.reset()
+    this.reset(false)
   }
 }
 </script>

@@ -97,13 +97,30 @@ export default {
       filterModal: false,
       filterLabel: [],
       loaded: false,
-      checkedColumn: []
+      checkedColumn: [],
+      condition: {
+        anchorType: '1,2,3'
+      }
     }
   },
-  computed: {
-    condition () {
-      return {
+  watch: {
+    filterLabel (v) {
+      this.condition = {
         anchorName: this.trustWord,
+        ...this.filterLabel.reduce((acc, v) => {
+          acc[v.name] = {
+            type: v.component,
+            value: v.value,
+            base: v.attrs.base,
+            options: v.attrs.options ? v.attrs.options.find(v2 => v2.label === v.value) : null
+          }
+          return acc
+        }, {})
+      }
+    },
+    trustWord (v) {
+      this.condition = {
+        anchorName: v,
         ...this.filterLabel.reduce((acc, v) => {
           acc[v.name] = {
             type: v.component,
@@ -121,7 +138,7 @@ export default {
     request (param) {
       const { api } = this.hostslist
       const condition = { ...this.condition, ...param }
-      return this.tables_getdata({ api, page: 1, size: 6, condition })
+      return this.tables_getdata({ api, page: 1, size: 6, sort: 'fansNum,desc', condition })
     },
     search (trustWord) {
       // this.$refs.table.resetParam()
@@ -207,6 +224,8 @@ export default {
           }
         })
       })
+    } else {
+      console.log(this.richFilter)
     }
     this.loaded = this.richFilter.loaded = true
     // auth

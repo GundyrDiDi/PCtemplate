@@ -52,12 +52,21 @@
         <div class="item" v-for="v in ability" :key="v.label">
           <div>{{v.label}}</div>
           <div class="t-title" style="margin-right:0">
-          <count-to
-            v-if="lockit(v)"
-            :startVal="0"
-            :duration="800"
-            v-bind="getbind(v.name)"
-          ></count-to>
+            <div v-if="hasData(v)">
+              <my-lock
+              style="font-size:var(--xsfont)"
+              v-if="myauth.hosts.lock&&myauth.hosts.lock(v.name)"
+              ></my-lock>
+              <count-to
+                v-else
+                :startVal="0"
+                :duration="1000"
+                v-bind="getbind(v.name)"
+              ></count-to>
+            </div>
+            <div v-else>
+              —
+            </div>
           </div>
         </div>
       </div>
@@ -81,9 +90,9 @@ export default {
     return {
       ability: [
         { label: '场均观看PV', name: 'pvPerLive' },
-        { label: '场均观看UV', name: 'uvPerLive' },
+        // { label: '场均观看UV', name: 'uvPerLive' },
         { label: '场均点赞', name: 'praiseNumPerLive' },
-        { label: '场均评论', name: 'commentNumPerLive' },
+        // { label: '场均评论', name: 'commentNumPerLive' },
         { label: '开播场次', name: 'liveCnt' },
         { label: '场均销售额(估)', name: 'saleAmtPerLive' },
         { label: '场均销量(估)', name: 'saleQtyPerLive' },
@@ -114,12 +123,11 @@ export default {
           suffix: unit
         }
       } else {
-        return { endVal: 0 }
+        return {}
       }
     },
-    lockit (v) {
-      console.log(v)
-      return true
+    hasData (v) {
+      return this.actHost[`${v.name}${this.trustmenu}d`]
     }
   }
 }
@@ -164,7 +172,7 @@ export default {
       flex-wrap: wrap;
     }
     .item{
-      width:25%;
+      width:33%;
     }
   }
 }

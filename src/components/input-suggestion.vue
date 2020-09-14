@@ -46,6 +46,9 @@ export default {
     search (item) {
       this.keyword = item ? item[this.itemName] : this.keyword
       this.$emit('search', this.keyword)
+    },
+    clear () {
+      this.keyword = ''
     }
   }
 }

@@ -106,7 +106,6 @@ export default {
       this.events[event].apply(this, rest)
     },
     resetParam () {
-      console.log('icuodnmfownmoiewm')
       this.column.forEach(v => {
         if (v.key === this.defaultSort.split(',')[0]) {
           this.$set(v, 'className', 'sort-active')
@@ -114,7 +113,6 @@ export default {
           this.$set(v, 'className', '')
         }
       })
-      // const c = this.column.find(v => v.key === this.defaultSort.split(',')[0])
       this.param = {
         size: 10,
         sizeOpts: [10, 20, 30, 40],
@@ -155,11 +153,6 @@ export default {
         ...param
       })
       this.loading = false
-      if (!this.isinit) {
-        setTimeout(() => {
-          this.$el.scrollIntoView(this.scroll ? { block: 'center' } : true)
-        }, 200)
-      }
       // auth
       if (code) {
         return this.$block('您的查询次数已用尽，')
@@ -172,7 +165,14 @@ export default {
         this.data = data
       }
       this.total = total
-      this.isinit && (this.isinit = false)
+      if (!this.isinit) {
+        setTimeout(() => {
+          this.$el.scrollIntoView(this.scroll ? { block: 'center' } : true)
+        }, 200)
+      }
+      setTimeout(e => {
+        this.isinit && (this.isinit = false)
+      }, 500)
     }
   },
   created () {

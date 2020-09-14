@@ -13,11 +13,12 @@ import { formatDate } from '@/plugins/util'
 export default {
   name: 'record',
   data () {
+    const newdate = this.$store.state.user.newdate
     return {
       time: [
-        formatDate(new Date(Date.now() - 7 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd'),
-        formatDate(new Date(), 'yyyy-MM-dd')
-      ],
+        new Date(newdate - 7 * 24 * 60 * 60 * 1000),
+        new Date(newdate)
+      ].map(v => formatDate(v, 'yyyy-MM-dd')),
       condition: {}
     }
   },

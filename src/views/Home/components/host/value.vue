@@ -14,8 +14,12 @@
 export default {
   name: 'value',
   data () {
+    const newdate = this.$store.state.user.newdate
     return {
-      time: [new Date(Date.now() - 7 * 24 * 60 * 60 * 1000), new Date()],
+      time: [
+        new Date(newdate - 7 * 24 * 60 * 60 * 1000),
+        new Date(newdate)
+      ],
       condition: {}
     }
   },

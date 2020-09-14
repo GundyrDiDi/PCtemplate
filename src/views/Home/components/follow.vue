@@ -162,10 +162,13 @@ export default {
     height: 8rem;
     width: 8rem;
     cursor: pointer;
-    filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.5));
+    filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.2));
   }
   .name {
     padding-bottom: 0.4rem;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow:hidden;
   }
 }
 .suggestions{

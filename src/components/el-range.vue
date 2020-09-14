@@ -75,6 +75,7 @@ export default {
       this.$set(this.parent.attrs, 'base', val)
       this.$set(this.parent.attrs, 'min', Math.round(this.parent.attrs.min * times))
       this.$set(this.parent.attrs, 'max', Math.round(this.parent.attrs.max * times))
+      this.$set(this.parent.attrs, 'value', [this.parent.attrs.min, this.parent.attrs.max])
       this._value = this._value.map(v => Math.round(v * times))
     }
   }

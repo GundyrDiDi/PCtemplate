@@ -6,7 +6,7 @@
     </div>
     <div class="title flex-ter">
       <div>套餐版本</div>
-      <el-radio-group v-model="version.level" size="medium" @change="a">
+      <el-radio-group v-model="version.level" size="medium" @change="changeLevel">
         <el-radio-button v-for="v in levels" :key="v.label" :label="v.level">{{v.label}}</el-radio-button>
       </el-radio-group>
     </div>
@@ -34,12 +34,14 @@
       <div class="money">{{formatNumber(parseInt(time*parseFloat(version.price)))}} 元</div>
     </div>
     <div>
-      <el-button type="primary" style="padding:12px 30px;">立即支付</el-button>
+      <el-button type="primary" style="padding:12px 30px;" @click="paymoney">立即支付</el-button>
+      <div id="qrcode"></div>
     </div>
   </div>
 </template>
 <script>
 import { formatDate, formatNumber } from '@/plugins/util'
+import QRCode from 'qrcodejs2'
 export default {
   name: 'pay',
   props: ['version', 'levels'],
@@ -68,13 +70,31 @@ export default {
     }
   },
   methods: {
-    a (v) {
+    changeLevel (v) {
+      console.log(v)
       this.version.price = this.levels[v - 2].price
     },
     calcdate (month) {
       const date = new Date()
       date.setDate(date.getDate() + month)
       return formatDate(date, 'yyyy年MM月dd日')
+    },
+    paymoney () {
+      console.log(this.version)
+      Axios.post('user/createCost', {
+        goodsName: '测试',
+        openid: 'okzki1iYKO7aZf3_m5tm1XPRsSoY',
+        timeLength: 30,
+        vipLevel: 2
+      }).then(res => {
+        console.log(res)
+        const qrcode = new QRCode('qrcode', {
+          width: 124,
+          height: 124, // 高度
+          text: res.code_url
+        })
+        console.log(qrcode)
+      })
     }
   }
 }

@@ -21,6 +21,7 @@
     "mockjs": "^1.1.0",
     "normalize.css": "^8.0.1",
     "nprogress": "^0.2.0",
+    "qrcodejs2": "0.0.2",
     "view-design": "^4.0.0",
     "vue": "^2.6.11",
     "vue-count-to": "^1.0.13",

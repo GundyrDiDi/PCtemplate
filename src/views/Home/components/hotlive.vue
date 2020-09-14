@@ -37,14 +37,15 @@ import { formatDate } from '@/plugins/util'
 export default {
   name: 'hotlive',
   data () {
+    const newdate = this.$store.state.user.newdate
     return {
       time: [
-        formatDate(new Date(Date.now() - 30 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd'),
-        formatDate(new Date(), 'yyyy-MM-dd')
+        formatDate(new Date(newdate - 30 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd'),
+        formatDate(new Date(newdate), 'yyyy-MM-dd')
       ],
-      proxytime: [],
       filterModal: false,
-      filterLabel: []
+      filterLabel: [],
+      condition: {}
     }
   },
   watch: {
@@ -52,14 +53,23 @@ export default {
     time (newval, oldval) {
       const fn = this.myauth.hotlive.time
       if (fn && fn.call(this, newval, oldval, 'time')) return
-      this.proxytime = newval
-    }
-  },
-  computed: {
-    condition () {
-      return {
-        liveStartTime: this.proxytime[0],
-        liveEndTime: this.proxytime[1],
+      this.condition = {
+        liveStartTime: this.time[0],
+        liveEndTime: this.time[1],
+        ...this.filterLabel.reduce((acc, v) => {
+          acc[v.name] = {
+            type: v.component,
+            value: v.value,
+            base: v.attrs.base
+          }
+          return acc
+        }, {})
+      }
+    },
+    filterLabel (v) {
+      this.condition = {
+        liveStartTime: this.time[0],
+        liveEndTime: this.time[1],
         ...this.filterLabel.reduce((acc, v) => {
           acc[v.name] = {
             type: v.component,
@@ -101,7 +111,11 @@ export default {
   },
   created () {
     // 不重复请求
-    this.proxytime = this.time
+    this.condition = {
+      ...this.condition,
+      liveStartTime: this.time[0],
+      liveEndTime: this.time[1]
+    }
   },
   async mounted () {
     if (!this.hotlistfilter.loaded) {

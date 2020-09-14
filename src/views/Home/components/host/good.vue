@@ -11,7 +11,7 @@
     mode="out-in"
     >
     <div v-if="!hide" key="t">
-      <table-paganation ref="table" v-bind="hostgood" :condition="example?example:{}"></table-paganation>
+      <table-paganation ref="table" v-bind="hostgood" :condition="example?example:temp"></table-paganation>
     </div>
     <div v-else key="t2">
       <component :is="component" :label="label" :name="name" @example="setexample"></component>
@@ -28,7 +28,8 @@ export default {
     return {
       hide: false,
       component: null,
-      example: false
+      example: false,
+      temp: {}
     }
   },
   methods: {

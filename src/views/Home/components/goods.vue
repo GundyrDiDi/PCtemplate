@@ -21,6 +21,7 @@
           itemName="taobaoGoodsName"
           :request="request"
           @search="search"
+          ref="input"
         >
           <template slot-scope="{ item }">
             <div class="suggestions flex-ter">
@@ -136,6 +137,7 @@ export default {
     },
     reset () {
       this.goodsWord = ''
+      this.$refs.input.clear()
       this.brandWord = ''
       this.time = formatDate(new Date(), 'yyyy-MM')
       this.catalog.value = ''

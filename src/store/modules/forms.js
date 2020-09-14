@@ -44,9 +44,9 @@ export default {
     _getrelative (store) {
       return Promise.resolve({
         small_anchorsCnt: 0,
-        large_anchorsCnt: 300,
+        large_anchorsCnt: 9999,
         small_liveCnt: 0,
-        large_liveCnt: 300
+        large_liveCnt: 9999
       }).then(res => {
         const o = {}
         for (const k in res) {

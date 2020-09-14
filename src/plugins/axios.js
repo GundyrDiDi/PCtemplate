@@ -75,7 +75,7 @@ _axios.interceptors.response.use(
       return data.obj
     }
     // Do something with response data
-    return Promise.reject(response.data)
+    return response.data
   },
   function (error) {
     // Do something with response error
