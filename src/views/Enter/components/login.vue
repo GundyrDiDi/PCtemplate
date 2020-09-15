@@ -57,7 +57,7 @@ export default {
       qrcode: '',
       ticket: '',
       toggle: true,
-      cellPhone: '13372543376',
+      cellPhone: '',
       validCode: '',
       decate: 60,
       loading: false
@@ -89,7 +89,7 @@ export default {
           }).then((res) => {
             console.log('polling=>', res)
             if (!res[200] && this.qrcode !== '') {
-              setTimeout(st, 1500)
+              setTimeout(st, 1000)
             } else if (res[200]) {
               const user = res[200]
               this.user_setUser({
@@ -106,8 +106,9 @@ export default {
                 sex: user.sex,
                 payrecord: 0
               })
-              console.log(this.User)
+              console.log(user)
               if (user.cellPhone) {
+                this.msgSuccess('欢迎使用鲸宸数据...')
                 this.$router.replace({ name: 'overview' })
               } else {
                 this.toggle = false
@@ -161,7 +162,7 @@ export default {
         // console.log(res)
         this.msgDestroy()
         if (typeof res === 'string') {
-          this.msgSuccess('正在进入系统...')
+          this.msgSuccess('欢迎使用鲸宸数据...')
           setTimeout(e => {
             this.$router.replace({ name: 'overview' })
           }, 1000)
