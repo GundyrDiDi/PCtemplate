@@ -7,7 +7,7 @@ export default {
       expire: '永久',
       auth: '免费版',
       club: '免费会员',
-      level: 2,
+      level: 0,
       payrecord: 0
     },
     followlist: [],
@@ -102,7 +102,7 @@ export default {
               des: v.describe
             })
           const level = child.level
-          level[v.members_level - 1] = {
+          level[v.members_level] = {
             text: v.is_enble === 'hook' ? true : v.is_enble
           }
         })

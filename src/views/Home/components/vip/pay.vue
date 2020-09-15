@@ -119,7 +119,7 @@ export default {
             Axios.get('user/checkPaid').then(res => {
               if (res) {
                 this.$myalert('支付成功，刷新页面后即可体验！')
-                // location.reload()
+                location.reload()
               } else {
                 st()
               }
