@@ -39,7 +39,7 @@
             @click="bindPhone"
             style="padding:.6rem 1.6rem" type="primary">确认</el-button>
             <el-button style="margin-left:2rem;padding:.6rem 1.6rem"
-            @click="toggle=false"
+            @click="toggle=true"
             >返回</el-button>
           </div>
         </div>
