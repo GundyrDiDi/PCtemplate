@@ -45,7 +45,7 @@
       :show-close="false"
       :visible.sync="toggleQC" width="300px">
         <template #title>
-          <img :src="imgs.weixin" alt style="margin-left:55px"/>
+          <img :src="imgs.weixin" alt style="margin-left:53px"/>
         </template>
         <div ref="qc" id="qrcode" class="flex-center" style="transform:translateY(-15px)"></div>
         <div style="font-size: var(--xs2font);margin-top:10px" class="flex-cen">使用微信扫描二维码付款</div>

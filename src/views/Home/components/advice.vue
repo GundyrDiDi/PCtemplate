@@ -63,7 +63,8 @@ export default {
       const content = this.editor.txt.html().replace(/<script>.*<\/script>/, '')
       if (content.length > 17) {
         Axios.post('user/advices', {
-          content
+          content,
+          ...this.User
         }).then(res => {
           this.editor.txt.html('')
           this.msgSuccess('提交成功 ！')
