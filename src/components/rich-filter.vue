@@ -4,12 +4,13 @@
       高级筛选器
     </header>
     <section>
-      <el-form ref="form" class="flex"
+      <el-form ref="form"
         :model="form"
         :rules="rules"
         label-width="130px"
       >
-        <el-form-item v-for="v in formrule" :key="v.name"
+      <div class="wrap flex" v-for="(f,i) in breaklist" :key="i">
+        <el-form-item v-for="v in f" :key="v.name"
         :label="v.label"
         :prop="v.name">
           <component
@@ -25,6 +26,7 @@
             </template>
           </component>
         </el-form-item>
+      </div>
       </el-form>
     </section>
     <footer slot="footer">
@@ -56,6 +58,11 @@ export default {
     }
   },
   computed: {
+    breaklist () {
+      const i = this.formrule.findIndex(v => v.break)
+      console.log(i)
+      return [this.formrule.slice(0, i), this.formrule.slice(i)]
+    },
     _show: {
       get () {
         return this.show
@@ -102,7 +109,7 @@ export default {
             }
           }
           v.value = value
-        } else if (this.form[v.name]) {
+        } else if (this.form[v.name] !== undefined) {
           v.value = this.form[v.name]
         }
       })
@@ -135,9 +142,8 @@ export default {
 section{
   .flex{
     flex-wrap: wrap;
-    >.el-form-item{
+    .el-form-item{
       width:50%;
-      // border-bottom:1px dotted #ddd;
     }
     .el-select,.el-cascader{
       width: 100%;
@@ -168,7 +174,7 @@ footer{
     font-size:var(--xs2font);
     /* text-align: center; */
   }
-  .el-form-item:nth-child(odd)>label{
+  .wrap:nth-child(odd)>label{
     text-align:left;
   }
 </style>

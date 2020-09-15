@@ -4,11 +4,11 @@
     <el-slider :disabled="disable" v-model="_value" v-bind="$attrs" range></el-slider>
     <el-input-number :disabled="disable" :controls="false" v-model="input_1" :max="$attrs.max"></el-input-number>
     <Dropdown trigger="click" @on-click="changeunit">
-          <a>{{$attrs.unit}}</a>
-          <DropdownMenu slot="list" style="min-width:50px;">
+          <a v-html="$attrs.unit"></a>
+          <DropdownMenu slot="list" style="min-width:50px">
               <DropdownItem v-for="v in _units" :key="v.name" :name="v.name">{{v.name}}</DropdownItem>
           </DropdownMenu>
-      </Dropdown>
+    </Dropdown>
   </div>
 </template>
 
@@ -23,8 +23,29 @@ export default {
         { name: '千万', val: 10 ** 7 },
         { name: '百万', val: 10 ** 6 },
         { name: '万', val: 10 ** 4 },
-        { name: '千', val: 10 ** 3 }
+        { name: '千', val: 10 ** 3 },
+        { name: '', val: 1 }
       ]
+    }
+  },
+  watch: {
+    parent: {
+      handler (v) {
+        if (!v) return
+        if (/(销售额)|(单价)/.test(v.label)) {
+          this.units[this.units.length - 1].name = '元'
+        } else if (/(商品)|(销量)/.test(v.label)) {
+          this.units[this.units.length - 1].name = '件'
+        } else if (/(涨粉)|(粉丝)/.test(v.label)) {
+          this.units[this.units.length - 1].name = '位'
+        } else if (/(次)|(点赞)/.test(v.label)) {
+          this.units[this.units.length - 1].name = '次'
+        } else if (/(评论)/.test(v.label)) {
+          this.units[this.units.length - 1].name = '条'
+        }
+      },
+      // deep: true,
+      immediate: true
     }
   },
   computed: {

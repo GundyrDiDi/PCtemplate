@@ -30,27 +30,22 @@
             </div>
           </template>
           <template #suffix>
-            <el-select
-              v-model="brandWord"
-              filterable
-              clearable
-              remote
-              :remote-method="remoteMethod"
+            <input-suggestion
               size="small"
               class="middle"
               placeholder="商品品牌"
-              no-match-text="无匹配品牌"
-              popper-class="custom-options">
-              <el-option
-                v-for="v in brands"
-                :key="v.name"
-                :label="v.name"
-                :value="v.name">
-                <div class="flex-ter">
-                  <span>{{v.name}}</span>
+              itemName="brandName"
+              :nobtn="true"
+              :request="remoteMethod"
+              @search="remoteSearch"
+              ref="remote"
+            >
+              <template slot-scope="{ item }">
+                <div class="suggestions flex-ter">
+                  <div>{{item.brandName}}</div>
                 </div>
-              </el-option>
-            </el-select>
+              </template>
+            </input-suggestion>
           </template>
         </input-suggestion>
         <el-button size="small" type="default" @click="reset">重置</el-button>
@@ -88,7 +83,6 @@ export default {
     return {
       goodsWord: '',
       brandWord: '',
-      brands: [],
       time: formatDate(new Date(), 'yyyy-MM'),
       pickerOptions: {
         disabledDate (date) {
@@ -126,19 +120,20 @@ export default {
     },
     search (trustWord) {
       this.$refs.table.resetParam()
+      this.$refs.remote.search()
       this.goodsWord = trustWord
     },
-    async remoteMethod (word) {
-      if (word) {
-        this.brands = await this.forms_getbrand(word)
-      } else {
-        this.brands = []
-      }
+    remoteMethod (word) {
+      return this.forms_getbrand(word)
+    },
+    remoteSearch (trustWord) {
+      this.brandWord = trustWord
     },
     reset () {
       this.goodsWord = ''
       this.$refs.input.clear()
       this.brandWord = ''
+      this.$refs.remote.clear()
       this.time = formatDate(new Date(), 'yyyy-MM')
       this.catalog.value = ''
       this.goodrelative.forEach((v) => {

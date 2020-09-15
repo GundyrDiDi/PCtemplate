@@ -77,8 +77,18 @@ export default {
       this.option.xAxis[0].data = axis
       this.option.series = series
       const name = [...legend]
-      name[1] = name.slice(1).map(v => v).join('/')
-      this.option.yAxis = name.slice(0, 2).map(v => this.option._yAxis(v))
+      this.option.yAxis = name.map((v, i) => {
+        const option = this.option._yAxis(v)
+        option.nameTextStyle = {
+          color: this.option.color[i]
+        }
+        option.axisLine = {
+          lineStyle: {
+            color: this.option.color[i]
+          }
+        }
+        return option
+      })
       this.ct.setOption(this.option)
     }
   },

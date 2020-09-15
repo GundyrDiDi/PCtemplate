@@ -129,10 +129,10 @@ export default {
         props: ['addFansNum']
       },
       {
-        title: '观看UV/观看PV',
+        title: '观看PV',
         name: 'uvpv',
         api: 'host/value',
-        props: ['totalUv', 'totalPv']
+        props: ['totalPv']
       },
       {
         title: '点赞数',
@@ -140,12 +140,12 @@ export default {
         api: 'host/value',
         props: ['totalPraiseNum']
       },
-      {
-        title: '评论数',
-        name: 'commentnum',
-        api: 'host/value',
-        props: ['totalCommentNum']
-      },
+      // {
+      //   title: '评论数',
+      //   name: 'commentnum',
+      //   api: 'host/value',
+      //   props: ['totalCommentNum']
+      // },
       {
         title: '销售额(估)/销量(估)',
         name: 'moneyamount',
@@ -305,7 +305,13 @@ export default {
         follow ({ row }) {
           this.loading = true
           const follow = row.follow
-          const host = row.premiereInfoDto || row
+          const host = row.premiereInfoDto || {
+            anchorId: row.anchorId,
+            anchorImg: row.anchorImg,
+            anchorName: row.anchorName,
+            id: row.fid,
+            follow
+          }
           this.user_followornot({
             host,
             vm: this
@@ -315,7 +321,8 @@ export default {
               if (res.msg) {
                 this.msgSuccess(res.msg + '！')
                 host.follow = res.not ? 0 : 1
-                row.follow = !res.not
+                this.$set(row, 'follow', !res.not)
+                res.id && this.$set(row, 'fid', res.id)
                 console.log(row.follow)
               } else {
                 // 取消操作
@@ -408,12 +415,12 @@ export default {
           sortable: 'custom',
           width: 190
         },
-        {
-          key: 'commentNumPerLive30d',
-          title: '近30天场均评论数',
-          sortable: 'custom',
-          width: 190
-        },
+        // {
+        //   key: 'commentNumPerLive30d',
+        //   title: '近30天场均评论数',
+        //   sortable: 'custom',
+        //   width: 190
+        // },
         {
           key: 'praiseNumPerLive30d',
           title: '近30天场均点赞数',
@@ -781,7 +788,7 @@ export default {
           ]
         },
         { key: 'anchorName', title: '主播' },
-        { key: 'uv', title: '观看人数', sortable: 'custom' },
+        // { key: 'uv', title: '观看人数', sortable: 'custom' },
         { key: 'pv', title: '观看次数', sortable: 'custom' },
         { key: 'addFansNum', title: '直播涨粉数', sortable: 'custom' },
         {
@@ -884,19 +891,19 @@ export default {
         type: 'attrs',
         pipe: calcRange
       },
-      {
-        name: 'commentNumPerLive30d',
-        label: '近30天场均评论数',
-        rule: [],
-        component: 'range',
-        attrs: {
-          value: [0, 9999],
-          min: -Infinity,
-          max: Infinity
-        },
-        type: 'attrs',
-        pipe: calcRange
-      },
+      // {
+      //   name: 'commentNumPerLive30d',
+      //   label: '近30天场均评论数',
+      //   rule: [],
+      //   component: 'range',
+      //   attrs: {
+      //     value: [0, 9999],
+      //     min: -Infinity,
+      //     max: Infinity
+      //   },
+      //   type: 'attrs',
+      //   pipe: calcRange
+      // },
       {
         name: 'praiseNumPerLive30d',
         label: '近30天场均点赞数',
@@ -911,6 +918,7 @@ export default {
         pipe: calcRange
       },
       {
+        break: true,
         name: 'anchorType',
         label: '播主类型',
         rule: [],
@@ -1023,7 +1031,7 @@ export default {
         pipe: calcRange
       },
       {
-        label: '客单价(元)',
+        label: '客单价',
         name: 'perSalePrice',
         component: 'range',
         value: [0, 9999],
@@ -1288,9 +1296,9 @@ export default {
     }
   ],
   livedata: [
-    { name: '昨日直播观看次数', value: 123456, unit: '万', link: '' },
-    { name: '昨日开播数', value: 3980, unit: '', link: '' },
-    { name: '昨日直播商品数(估)', value: 123456, unit: '万', link: '' },
-    { name: '昨日带货量(估)', value: 30980, unit: '万', link: '' }
+    { name: '昨日直播观看次数', value: 0, unit: '万', link: '' },
+    { name: '昨日开播数', value: 0, unit: '', link: '' },
+    { name: '昨日直播商品数(估)', value: 0, unit: '万', link: '' },
+    { name: '昨日带货量(估)', value: 0, unit: '万', link: '' }
   ]
 }

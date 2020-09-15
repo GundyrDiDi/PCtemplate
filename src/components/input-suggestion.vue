@@ -19,7 +19,7 @@
   </el-autocomplete>
   <slot name="suffix">
   </slot>
-  <el-button :size="$attrs.size" type="primary" @click="search()">{{btntext||'搜索'}}</el-button>
+  <el-button v-if="!nobtn" :size="$attrs.size" type="primary" @click="search()">{{btntext||'搜索'}}</el-button>
   <el-input ref="a" class="a"></el-input>
 </div>
 </template>
@@ -27,7 +27,7 @@
 <script>
 export default {
   name: 'input-suggestion',
-  props: ['request', 'itemName', 'btntext'],
+  props: ['request', 'itemName', 'btntext', 'nobtn'],
   data () {
     return {
       keyword: ''

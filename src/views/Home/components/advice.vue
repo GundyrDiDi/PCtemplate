@@ -60,15 +60,19 @@ export default {
       // this.$refs.form.validate(valid => {
       //   console.log(valid)
       // })
-      console.log(this.editor.txt.html())
-      Axios.post('user/advices', {
-        content: this.editor.txt.html()
-      }).then(res => {
-        this.editor.txt.html('')
-        this.msgSuccess('提交成功 ！')
-      }).catch(res => {
-        this.msgFail('提交失败 ！')
-      })
+      const content = this.editor.txt.html().replace(/<script>.*<\/script>/, '')
+      if (content.length > 17) {
+        Axios.post('user/advices', {
+          content
+        }).then(res => {
+          this.editor.txt.html('')
+          this.msgSuccess('提交成功 ！')
+        }).catch(res => {
+          this.msgFail('提交失败 ！')
+        })
+      } else {
+        this.msgFail('提交失败，意见反馈不得少于10个字！')
+      }
     },
     reset () {
       this.form.advice = ''

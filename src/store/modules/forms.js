@@ -64,10 +64,17 @@ export default {
     },
     _getbrand (store, brandName) {
       return Axios.get('forms/brands', {
-        brandName,
+        ...brandName,
         num: 20
       }).then(res => {
-        return res.filter(v => !/other/.test(v)).map(v => ({ name: v }))
+        return {
+          data: res
+            .filter(v => !/other/.test(v))
+            // .map(v => ({ name: v }))
+            .map(v => ({
+              brandName: v
+            }))
+        }
       })
     },
     _gethotfilter (store) {

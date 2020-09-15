@@ -9,8 +9,8 @@
           <div class="h-title">{{logoname}}</div>
           <div class="description">{{enterdescription}}</div>
           <div>
-            <el-button type="light">注册账户</el-button>
-            <a href="#" class="link bolder">已有帐户 ?</a>
+            <el-button type="light" @click="$router.push({name:'Login'})">注册账户</el-button>
+            <a href="#" class="link bolder" @click="$router.push({name:'Login'})">已有帐户 ?</a>
           </div>
         </div>
       </el-col>
@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import { formatDate, addNumberUnit } from '@/plugins/util'
+import { addNumberUnit } from '@/plugins/util'
 export default {
   name: 'entermain',
   data () {
@@ -51,14 +51,20 @@ export default {
       this.$refs.count.forEach(v => v.start())
     }
   },
-  mounted () {
+  async mounted () {
     const keys = ['pv', 'liveCnt', 'goodsCnt', 'saleQty']
+    const days = ['今', '昨', '前']
+    const date = await Axios.get('user/newdate')
+    const prev = Math.floor((Date.now() - Date.parse(date)) / (1000 * 3600 * 24))
     Axios.get('charts/watch', {
-      dateId: formatDate(new Date(), 'yyyyMMdd')
+      dateId: date.replace(/-/g, '')
     }).then(res => {
       console.log(res[0])
       keys.forEach((v, i) => {
-        const [num, unit] = addNumberUnit(res[0][v]).split(/\b(?=\D$)/)
+        const [num, unit] = addNumberUnit(res[0][v], [
+          { value: '万', wei: 4 }
+        ], 3).split(/\b(?=\D$)/)
+        this.livedata[i].name = this.livedata[i].name.replace(/.{1}/, days[prev] ? days[prev] : date)
         this.livedata[i].value = isNaN(Number(num)) ? 0 : Number(num)
         this.livedata[i].unit = unit
       })

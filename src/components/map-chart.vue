@@ -57,7 +57,7 @@ export default {
       {
         name = '',
         mapType = 'china',
-        rangeColor = ['rgba(159,205,253,0.50)', '#0b6fbc'],
+        rangeColor = ['rgba(159,205,253,0.1)', '#0b6fbc'],
         min = 0,
         max = 500,
         shadowColor = '#60ACFC',

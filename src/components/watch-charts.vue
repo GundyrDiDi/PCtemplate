@@ -81,8 +81,11 @@ export default {
         })
       })
       this.option.legend.data = data.map(v => v.name)
+      console.log(this.option.legend.data)
       if (this.option.legend.data.length < 2) {
         this.option.legend.show = false
+      } else {
+        this.option.legend.show = true
       }
       // time轴
       this.option.series = data.map((v, i) => {

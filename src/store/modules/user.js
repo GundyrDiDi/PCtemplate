@@ -1,7 +1,7 @@
 export default {
   namespaced: true,
   state: {
-    openid: '123',
+    openid: '',
     User: {
       name: 'CHENFAN',
       expire: '永久',
@@ -65,7 +65,11 @@ export default {
             status,
             follow: 1
           }).then(res => {
-            return { msg: res }
+            console.log(res)
+            if (typeof res === 'string') {
+              return { msg: res }
+            }
+            return { msg: '关注成功', id: res.id }
           })
         }
       }
@@ -73,7 +77,6 @@ export default {
     // 进入路由前获取权限保存，最新数据日期
     getnewdate ({ state }) {
       Axios.get('user/newdate').then(res => {
-        console.log(res)
         state.newdate = Date.parse(res)
       })
     },
@@ -107,6 +110,12 @@ export default {
         store.commit('auths', catalog)
       })
     },
-    _getUser (store, param) {}
+    _setUser ({ state }, { openid, ...param }) {
+      state.openid = openid
+      state.User = param
+    },
+    _logout ({ state }) {
+      state.openid = ''
+    }
   }
 }

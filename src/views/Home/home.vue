@@ -12,14 +12,14 @@
           <el-button size="small" type="primary" @click="showQRcode=true">点击关注服务号，可接收更多资讯哦！</el-button>
         </div>
         <div class="user flex-center">
-          <img class="brcircle" :src="imgs.head" alt />
+          <img class="brcircle" :src="User.headimg" alt />
           <div class="info">
             <div>{{User.name}}</div>
             <div>使用权限: {{User.expire}}</div>
           </div>
           <div class="f-r">
-            <div class="auth">{{User.auth}}</div>
-            <div class="exit" @click="$router.push({name:'Enter'})">退出</div>
+            <div class="auth">{{User.club}}</div>
+            <div class="exit" @click="logout">退出</div>
           </div>
         </div>
       </header>
@@ -64,6 +64,12 @@ export default {
   },
   components: {
     treeMenu
+  },
+  methods: {
+    logout () {
+      this.user_logout()
+      this.$router.push({ name: 'Enter' })
+    }
   }
 }
 </script>

@@ -151,14 +151,20 @@ export default {
       payrecord: {
         url: 'vipHistory/selectVipOrderHistory'
       },
+      newdate: {
+        url: 'anchor/getDataUpdateTime'
+      },
       qrcode: {
         url: 'wxLogin/getQrCode'
       },
       polling: {
         url: 'wxLogin/wxPolling'
       },
-      newdate: {
-        url: 'anchor/getDataUpdateTime'
+      validcode: {
+        url: 'wxLogin/sendPhoneSMS'
+      },
+      validPhone: {
+        url: 'wxLogin/loginSMS'
       }
     }
   },
@@ -186,6 +192,9 @@ export default {
       },
       createCost: {
         url: 'wxPay/createPreOrder'
+      },
+      savePhone: {
+        url: 'wxLogin/savePhone'
       }
     }
   }

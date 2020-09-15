@@ -1,14 +1,47 @@
 <template>
   <div id="login" class="flex-center">
-    <div class="content flex">
+    <div class="content flex" v-loading="loading">
       <div class="logo">
         <img :src="imgs.login" alt />
       </div>
       <div class="form">
-        <div class="group flex-center flex-col">
-          <div class="t-title" style="margin-bottom:2rem;font-weight:600">微信扫码登录</div>
-          <img class="qrcode" :src="qrcode" alt @click="reload" />
+        <div v-if="toggle" class="group flex-center flex-col">
+          <div class="t-title bolder" style="margin-bottom:2rem">微信扫码登录</div>
+          <div class="flex-center" style="height:10rem;width:10rem;">
+            <img v-if="qrcode" class="qrcode" :src="qrcode" alt/>
+            <div v-else class="reload flex-center flex-col" @click="reload">
+              <div>点击</div>
+              <div>刷新</div>
+            </div>
+          </div>
           <div class="bottom">欢迎使用鲸宸数据</div>
+        </div>
+        <div v-else class="cell flex-col flex-ter">
+          <div class="t-title bolder" style="margin-bottom:1rem">绑定手机号码</div>
+          <div class="cell-form flex-col">
+            <div>手机号：</div>
+            <div>
+              <el-input maxlength="16" v-model="cellPhone" placeholder="请输入手机号码"></el-input>
+            </div>
+            <div>验证码：</div>
+            <div class="flex withbtn">
+              <el-input maxlength="10" v-model="validCode"></el-input>
+              <el-button
+              :disabled="decate!==60"
+              @click="getvalidcode"
+              type="primary" size="small">
+              {{decate===60?'获取验证码':`${decate}秒后重新获取`}}
+              </el-button>
+            </div>
+          </div>
+          <div>
+            <el-button
+            @click="bindPhone"
+            style="padding:.6rem 1.6rem" type="primary">确认</el-button>
+            <el-button style="margin-left:2rem;padding:.6rem 1.6rem"
+            @click="toggle=false"
+            >返回</el-button>
+          </div>
         </div>
       </div>
     </div>
@@ -22,7 +55,12 @@ export default {
     return {
       wxlogin: null,
       qrcode: '',
-      ticket: ''
+      ticket: '',
+      toggle: true,
+      cellPhone: '13372543376',
+      validCode: '',
+      decate: 60,
+      loading: false
     }
   },
   methods: {
@@ -38,32 +76,107 @@ export default {
       }
     },
     getqr () {
-      let timer
       Axios.get('user/qrcode').then((res) => {
-        console.log(res)
         this.qrcode = res.qrcode
         this.ticket = res.ticket
         setTimeout(() => {
           this.qrcode = ''
-          clearInterval(timer)
-        }, 1000 * 60 * 3)
+        }, 1000 * 60 * 1)
       }).then(res => {
-        timer = setInterval(() => {
+        const st = () => {
           Axios.get('user/polling', {
             ticket: this.ticket
           }).then((res) => {
             console.log('polling=>', res)
-            if (res[200]) {
-              clearInterval(timer)
+            if (!res[200] && this.qrcode !== '') {
+              setTimeout(st, 1500)
+            } else if (res[200]) {
+              const user = res[200]
+              this.user_setUser({
+                id: user.id,
+                cellPhone: user.cellPhone,
+                name: user.nickname,
+                headimg: user.headimgurl,
+                expire: user.expire || '永久',
+                openid: user.openid,
+                level: user.vipLevel,
+                auth: ['免费版', '标准版', '高级版'][user.vipLevel],
+                club: ['免费会员', '标准会员', '高级会员'][user.vipLevel],
+                province: user.province,
+                sex: user.sex,
+                payrecord: 0
+              })
+              console.log(this.User)
+              if (user.cellPhone) {
+                this.$router.replace({ name: 'overview' })
+              } else {
+                this.toggle = false
+              }
             }
           })
-        }, 1000)
+        }
+        setTimeout(st, 1000)
+      })
+    },
+    getvalidcode () {
+      if (!/^1[0-9]{10}$/.test(this.cellPhone)) {
+        return this.msgFail('手机号无效，请检查后重新输入。')
+      }
+      this.loading = true
+      Axios.get('user/validcode', {
+        phone: this.cellPhone
+      }).then(res => {
+        this.loading = false
+        this.msgSuccess('发送成功! 请注意查收短信。')
+        const st = () => {
+          this.decate--
+          if (this.decate) {
+            setTimeout(st, 1000)
+          } else {
+            this.decate = 60
+          }
+        }
+        st()
+      })
+    },
+    async bindPhone () {
+      if (!/^1[0-9]{10}$/.test(this.cellPhone)) {
+        return this.msgFail('手机号无效，请检查后重新输入。')
+      }
+      if (!/^[0-9]{6}$/.test(this.validCode)) {
+        return this.msgFail('验证码错误，请检查后重新输入。')
+      }
+      const valid = await Axios.get('user/validPhone', {
+        phone: this.cellPhone,
+        number: this.validCode
+      })
+      if (valid.code) {
+        return this.msgFail('验证失败，请检查验证码是否正确。')
+      }
+      this.msgSuccess('正在绑定手机号...')
+      Axios.post('user/savePhone', {
+        id: this.User.id,
+        cellPhone: this.cellPhone
+      }).then(res => {
+        // console.log(res)
+        this.msgDestroy()
+        if (typeof res === 'string') {
+          this.msgSuccess('正在进入系统...')
+          setTimeout(e => {
+            this.$router.replace({ name: 'overview' })
+          }, 1000)
+        }
       })
     }
   },
   mounted () {
-    this.$store.commit('init', true)
-    this.getqr()
+    // 有openId自动跳转overview
+    if (this.openid) {
+      this.$router.replace({ name: 'overview' })
+    } else {
+      this.$store.commit('init', true)
+      this.getqr()
+    }
   }
 }
 </script>
@@ -72,10 +185,10 @@ export default {
 #login {
   height: 100vh;
   width: 100vw;
-  background: #f0f6fe;
+  background: #fffafd;
   .content {
     width: 50%;
-    height: 70%;
+    height: 30vw;
     box-shadow: var(--boxshadow);
     background: #fff;
     border-radius: 4px;
@@ -97,12 +210,29 @@ export default {
     .group {
       height: 100%;
     }
+    .cell{
+      padding:5% 15%;
+      height: 100%;
+      text-align: left;
+    }
+  }
+  .cell-form{
+    width:100%;
+    margin-bottom:2rem;
+    >div{
+      padding:.5rem 0;
+    }
   }
   .qrcode {
-    height: 10rem;
-    width: 10rem;
-    background: rgba(0, 0, 0, 0.5);
+    width: 100%;
+  }
+  .reload{
     cursor: pointer;
+    height: 9rem;
+    width: 9rem;
+    background: #666;
+    color:#fff;
+    font-weight:400
   }
   .bottom {
     width: 50%;
@@ -112,4 +242,16 @@ export default {
     font-size: var(--xs2font);
   }
 }
+</style>
+<style lang="less">
+  .el-input__inner{
+    height:2rem;
+    font-size:var(--xsfont) !important
+  }
+  .withbtn input{
+    border-radius: 4px 0 0 4px;
+  }
+  .withbtn button{
+    border-radius: 0 4px 4px 0;
+  }
 </style>
