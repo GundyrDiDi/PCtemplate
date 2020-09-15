@@ -31,11 +31,25 @@
     </div>
     <div class="title flex-ter">
       <div>应付金额</div>
-      <div class="money">{{formatNumber(parseInt(time*parseFloat(version.price)))}} 元</div>
+      <div class="money">
+        <!-- {{formatNumber(parseInt(time*parseFloat(version.price)))}} 元 -->
+        0.01 元
+        <span style="font-size:10px;" class="bolder">（ 限时优惠 ）</span>
+      </div>
     </div>
     <div>
       <el-button type="primary" style="padding:12px 30px;" @click="paymoney">立即支付</el-button>
-      <div id="qrcode"></div>
+      <el-dialog
+      :append-to-body="true"
+      top="24vh"
+      :show-close="false"
+      :visible.sync="toggleQC" width="300px">
+        <template #title>
+          <img :src="imgs.weixin" alt style="margin-left:55px"/>
+        </template>
+        <div ref="qc" id="qrcode" class="flex-center" style="transform:translateY(-15px)"></div>
+        <div style="font-size: var(--xs2font);margin-top:10px" class="flex-cen">使用微信扫描二维码付款</div>
+      </el-dialog>
     </div>
   </div>
 </template>
@@ -55,23 +69,28 @@ export default {
         { name: '365天', value: 365, onsale: '优惠' }
       ],
       time: 1,
-      formatNumber
+      formatNumber,
+      qrcode: '',
+      toggleQC: false,
+      timer: null
     }
   },
   watch: {
     version: {
       handler (v) {
         console.log(v)
+        // Axios.post('user/payorder', {})
       },
       deep: true
     },
-    time (v) {
-      console.log(v)
+    toggleQC (v) {
+      if (!v) {
+        clearTimeout(this.timer)
+      }
     }
   },
   methods: {
     changeLevel (v) {
-      console.log(v)
       this.version.price = this.levels[v - 2].price
     },
     calcdate (month) {
@@ -82,18 +101,32 @@ export default {
     paymoney () {
       console.log(this.version)
       Axios.post('user/createCost', {
-        goodsName: '测试',
-        openid: 'okzki1iYKO7aZf3_m5tm1XPRsSoY',
-        timeLength: 30,
-        vipLevel: 2
+        goodsName: '鲸宸数据限时优惠',
+        timeLength: this.time,
+        vipLevel: this.version.level
       }).then(res => {
-        console.log(res)
-        const qrcode = new QRCode('qrcode', {
-          width: 124,
-          height: 124, // 高度
-          text: res.code_url
+        this.toggleQC = true
+        requestAnimationFrame(() => {
+          this.$refs.qc.innerHTML = ''
+          const qrcode = new QRCode('qrcode', {
+            width: 168,
+            height: 168
+          })
+          qrcode.makeCode(res.obj.code_url)
         })
-        console.log(qrcode)
+        const st = () => {
+          this.timer = setTimeout(() => {
+            Axios.get('user/checkPaid').then(res => {
+              if (res) {
+                this.$myalert('支付成功，刷新页面后即可体验！')
+                // location.reload()
+              } else {
+                st()
+              }
+            })
+          }, 1000)
+        }
+        st()
       })
     }
   }

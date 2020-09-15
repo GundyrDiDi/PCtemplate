@@ -72,7 +72,6 @@ export default {
       this.l = true
       const tab = this.chartdata.find(v => v.name === this.actTab)
       const data = await this.chart_getmuldata({ ...tab, ...this.condition })
-      console.log(data)
       this.l = false
       this.ct.clear()
       data.forEach((v, i, arr) => {
@@ -81,7 +80,6 @@ export default {
         })
       })
       this.option.legend.data = data.map(v => v.name)
-      console.log(this.option.legend.data)
       if (this.option.legend.data.length < 2) {
         this.option.legend.show = false
       } else {

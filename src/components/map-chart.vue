@@ -37,7 +37,10 @@ export default {
       this.ct.clear()
       this.ct.setOption(this.option({
         data: data.map(v => {
-          return v || 0
+          if (isNaN(v.value)) {
+            v.value = 0
+          }
+          return v
         }),
         name: '直播场次',
         min: data.reduce((acc, v) => Math.min(acc, v.value), Infinity),

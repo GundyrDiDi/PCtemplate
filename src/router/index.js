@@ -41,6 +41,9 @@ router.beforeEach((to, from, next) => {
   store.commit('myroute/push', to)
   NProgress.start()
   // 验证openid
+  if (!store.state.user.openid) {
+    store.dispatch('user/getLocal')
+  }
   if (to.path.includes('home') && !store.state.user.openid) {
     NProgress.done()
     return next({ name: 'Login' })

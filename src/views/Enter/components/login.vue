@@ -60,7 +60,8 @@ export default {
       cellPhone: '',
       validCode: '',
       decate: 60,
-      loading: false
+      loading: false,
+      tempuser: {}
     }
   },
   methods: {
@@ -91,24 +92,10 @@ export default {
             if (!res[200] && this.qrcode !== '') {
               setTimeout(st, 1000)
             } else if (res[200]) {
-              const user = res[200]
-              this.user_setUser({
-                id: user.id,
-                cellPhone: user.cellPhone,
-                name: user.nickname,
-                headimg: user.headimgurl,
-                expire: user.expire || '永久',
-                openid: user.openid,
-                level: user.vipLevel,
-                auth: ['免费版', '标准版', '高级版'][user.vipLevel],
-                club: ['免费会员', '标准会员', '高级会员'][user.vipLevel],
-                province: user.province,
-                sex: user.sex,
-                payrecord: 0
-              })
-              console.log(user)
-              if (user.cellPhone) {
-                this.msgSuccess('欢迎使用鲸宸数据...')
+              this.tempuser = res[200]
+              if (this.tempuser.cellPhone) {
+                this.user_setUser({ ...this.tempuser, fromqrcode: true })
+                this.msgSuccess('欢迎使用鲸宸数据')
                 this.$router.replace({ name: 'overview' })
               } else {
                 this.toggle = false
@@ -156,13 +143,15 @@ export default {
       }
       this.msgSuccess('正在绑定手机号...')
       Axios.post('user/savePhone', {
-        id: this.User.id,
+        id: this.tempuser.id,
+        openid: this.tempuser.openid,
         cellPhone: this.cellPhone
       }).then(res => {
         // console.log(res)
         this.msgDestroy()
         if (typeof res === 'string') {
-          this.msgSuccess('欢迎使用鲸宸数据...')
+          this.msgSuccess('欢迎使用鲸宸数据')
+          this.user_setUser({ ...this.tempuser, fromqrcode: true })
           setTimeout(e => {
             this.$router.replace({ name: 'overview' })
           }, 1000)

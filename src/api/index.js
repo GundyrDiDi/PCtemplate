@@ -1,7 +1,7 @@
 import store from '@/store'
 export default {
-  baseURL: '/api',
-  // baseURL: 'http://10.228.88.9:8000/api',
+  // baseURL: '/api',
+  baseURL: 'http://10.228.88.9:8000/api',
   get: {
     _params () {
       return {
@@ -165,6 +165,12 @@ export default {
       },
       validPhone: {
         url: 'wxLogin/loginSMS'
+      },
+      getUserbyopenid: {
+        url: 'wxLogin/selectPhone'
+      },
+      checkPaid: {
+        url: 'wxPay/wxPayIsSuccess'
       }
     }
   },
@@ -191,6 +197,9 @@ export default {
         url: 'feedback/insertFeedback'
       },
       createCost: {
+        url: 'wxPay/createPreOrder'
+      },
+      paymoney: {
         url: 'wxPay/createPreOrder'
       },
       savePhone: {

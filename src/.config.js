@@ -500,7 +500,7 @@ export default {
           ]
         },
         { key: 'livetime', title: '直播时间', width: 200 },
-        { key: 'uv', title: 'UV' },
+        // { key: 'uv', title: 'UV' },
         { key: 'pv', title: 'PV' },
         { key: 'fansofraise', title: '直播涨粉' },
         { key: 'goodnum', title: '商品数' },

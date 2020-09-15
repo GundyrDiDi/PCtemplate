@@ -35,7 +35,9 @@ export default {
         return !!store.state.followlist.length
       })
     },
-    _pushnotice (store, param) {
+    _pushnotice ({ state }, param) {
+      console.log(param)
+      state.isnotice = !!param.status
       return Axios.post('user/isnotice', param)
     },
     _followornot (store, { host, vm }) {
@@ -110,12 +112,45 @@ export default {
         store.commit('auths', catalog)
       })
     },
-    _setUser ({ state }, { openid, ...param }) {
-      state.openid = openid
-      state.User = param
+    _setUser ({ state, dispatch }, { openid, fromqrcode, ...user }) {
+      state.User = {
+        id: user.id,
+        cellPhone: user.cellPhone,
+        name: user.nickname,
+        headimg: user.headimgurl,
+        expire: user.expire || '永久',
+        openid: openid,
+        level: user.vipLevel,
+        auth: ['免费版', '标准版', '高级版'][user.vipLevel - 1],
+        club: ['免费会员', '标准会员', '高级会员'][user.vipLevel - 1],
+        province: user.province,
+        sex: user.sex,
+        payrecord: 0
+      }
+      if (fromqrcode) {
+        state.openid = openid
+        dispatch('saveLocal', openid)
+      }
+    },
+    saveLocal (store, openid) {
+      localStorage.jc_expire = Date.now() + 1000 * 12 * 3600
+      localStorage.jc_openid = openid
+    },
+    getLocal ({ state, dispatch }) {
+      if (localStorage.jc_expire > Date.now()) {
+        state.openid = localStorage.jc_openid
+        Axios.get('user/getUserbyopenid', {
+          openid: state.openid
+        }).then(res => {
+          dispatch('_setUser', res)
+        })
+      } else {
+        dispatch('_logout')
+      }
     },
     _logout ({ state }) {
-      state.openid = ''
+      state.openid = localStorage.jc_openid = ''
+      localStorage.jc_expire = ''
     }
   }
 }

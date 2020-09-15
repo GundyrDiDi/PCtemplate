@@ -70,6 +70,17 @@ export default {
       this.user_logout()
       this.$router.push({ name: 'Enter' })
     }
+  },
+  mounted () {
+    const timer = setInterval(e => {
+      if (localStorage.jc_expire < Date.now()) {
+        this.$myalert('当前登录凭证已过期，请重新登录')
+        clearInterval(timer)
+        setTimeout(e => {
+          this.logout()
+        }, 3000)
+      }
+    }, 1000 * 60 * 5)
   }
 }
 </script>
