@@ -49,7 +49,7 @@
             <div :key="v.label">
               <div class="coll-title"></div>
               <div :style="{height:v.collapse?'0px':heights[i]+'px'}">
-                <div class="line" v-for="v in v.children" :key="v.label" v-html="format(v.level[l].text)"></div>
+                <div class="line" v-for="v in v.children" :key="v.label" v-html="format(v.level[l+1].text)"></div>
               </div>
             </div>
             </template>
