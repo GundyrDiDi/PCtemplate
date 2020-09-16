@@ -35,6 +35,8 @@ export default {
       const data = await this.chart_getkeydata({ ...this.chartdata, ...this.condition, example: { num: 40 } })
       this.l = false
       this.ct.clear()
+      console.log(data)
+      data.push({ name: '南海诸岛', value: 0 })
       this.ct.setOption(this.option({
         data: data.map(v => {
           if (isNaN(v.value)) {
