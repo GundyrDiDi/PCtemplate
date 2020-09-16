@@ -10,7 +10,7 @@
         <div>
           <span class="payhistory" @click="showrecord">
             我的购买记录
-            (<span>{{User.payrecord}}</span>)
+            <!-- (<span>{{User.payrecord}}</span>) -->
           </span>
         </div>
       </div>

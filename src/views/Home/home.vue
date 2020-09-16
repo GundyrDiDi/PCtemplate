@@ -59,7 +59,8 @@ export default {
   data () {
     return {
       collapse: false,
-      showQRcode: false
+      showQRcode: false,
+      timer: null
     }
   },
   components: {
@@ -72,15 +73,18 @@ export default {
     }
   },
   mounted () {
-    const timer = setInterval(e => {
+    this.timer = setInterval(e => {
       if (localStorage.jc_expire < Date.now()) {
         this.$myalert('当前登录凭证已过期，请重新登录')
-        clearInterval(timer)
+        clearInterval(this.timer)
         setTimeout(e => {
           this.logout()
         }, 3000)
       }
     }, 1000 * 60 * 5)
+  },
+  beforeDestroy () {
+    clearInterval(this.timer)
   }
 }
 </script>

@@ -195,6 +195,7 @@ export default function myauth () {
     auths,
     User: { level }
   } = store.state.user
+  console.log(level)
   const myauth = auths.reduce((acc, view) => {
     acc[viewmap[view.label]] = view.children.reduce((acc, v) => {
       return validmap(acc, {
