@@ -196,6 +196,7 @@ export default function myauth () {
     User: { level }
   } = store.state.user
   console.log(level)
+  console.log(auths)
   const myauth = auths.reduce((acc, view) => {
     acc[viewmap[view.label]] = view.children.reduce((acc, v) => {
       return validmap(acc, {
@@ -227,7 +228,9 @@ Vue.prototype.$block = function (msg) {
     const {
       User: { level }
     } = store.state.user
-    const rank = (this.User.auth = ['免费版', '标准版', '高级版'][level + 1])
+    const rank = (this.User.auth = ['', '免费版', '标准版', '高级版'][
+      level + 1
+    ])
     this.$Message.warning({
       render: h => {
         return h(

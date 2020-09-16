@@ -86,7 +86,7 @@ export default {
   computed: {
     // auth
     auth () {
-      return this.user.User.level < 2
+      return this.user.User.level < 3
     },
     pickerOptions () {
       const shortcuts = this.buttons.map(v => {
