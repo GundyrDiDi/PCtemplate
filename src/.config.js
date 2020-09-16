@@ -1128,6 +1128,96 @@ export default {
         type: 'attrs',
         pipe: calcRange
       }
+    ],
+    taxForm: [
+      {
+        label: '发票类型',
+        component: 'input',
+        value: '',
+        attrs: {},
+        rule: [],
+        name: 'invoiceStatus'
+      },
+      {
+        label: '开票金额',
+        component: 'input',
+        value: '',
+        attrs: {},
+        rule: [],
+        name: 'invoiceMoney'
+      },
+      {
+        label: '企业名称',
+        component: 'input',
+        value: '',
+        attrs: {},
+        rule: [{ required: true }],
+        name: 'enterpriseName'
+      },
+      {
+        label: '纳税人识别号',
+        component: 'input',
+        value: '',
+        attrs: {},
+        rule: [{ required: true }],
+        name: 'identificationNumber'
+      },
+      {
+        label: '电话',
+        component: 'input',
+        value: '',
+        attrs: {},
+        rule: [{ required: true }],
+        name: 'userPhone'
+      },
+      {
+        label: '开票地址',
+        component: 'input',
+        value: '',
+        attrs: {},
+        rule: [{ required: true }],
+        name: 'invoiceAddress'
+      },
+      {
+        label: '开票银行',
+        component: 'input',
+        value: '',
+        attrs: {},
+        rule: [{ required: true }],
+        name: 'invoiceBank'
+      },
+      {
+        label: '开票卡号',
+        component: 'input',
+        value: '',
+        attrs: {},
+        rule: [{ required: true }],
+        name: 'invoiceNumber'
+      },
+      {
+        label: '收件人',
+        component: 'input',
+        value: '',
+        attrs: {},
+        rule: [{ required: true }],
+        name: 'applyTime'
+      },
+      {
+        label: '收件电话',
+        component: 'input',
+        value: '',
+        attrs: {},
+        rule: [{ required: true }],
+        name: 'receiptPhone'
+      },
+      {
+        label: '收件地址',
+        component: 'input',
+        value: '',
+        attrs: {},
+        rule: [{ required: true }],
+        name: 'receiptAddress'
+      }
     ]
   },
   treemenu: [

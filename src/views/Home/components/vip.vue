@@ -61,6 +61,7 @@
       <Pay :version="version" :levels="levels.slice(1)"></Pay>
     </Modal>
     <modal-table></modal-table>
+    <modal-form></modal-form>
   </div>
 </template>
 
@@ -127,6 +128,7 @@ export default {
       this.y = Math.max(0, e.target.scrollTop - offsetTop)
     })
     Axios.get('user/payrecord').then(res => {
+      console.log(res)
       this.record = res.totalElements
     })
   }

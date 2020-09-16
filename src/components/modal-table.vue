@@ -29,9 +29,9 @@ export default {
   watch: {
     celldata (newval) {
       if (newval) {
-        requestAnimationFrame(() => {
-          // this.$refs.table.request()
-        })
+        // requestAnimationFrame(() => {
+        //   this.$refs.table.request()
+        // })
       }
     }
   }

@@ -196,51 +196,60 @@ const Map = {
   vip: {
     condition: [],
     column: [],
+    events: {
+      tax (param) {
+        this.$store.commit('tables/taxOrder', param.row)
+      }
+    },
     record: {
-      events: {
-        tax (param) {
-          console.log(param)
-        }
-      },
       name: '购买记录',
       column: [
-        {
-          key: 'orderId',
-          title: '订单编号'
-        },
-        {
-          key: 'goodsName',
-          title: '商品',
-          width: 200
-        },
-        {
-          key: 'money',
-          title: '支付金额'
-        },
+        // {
+        //   key: 'orderId',
+        //   title: '订单编号',
+        //   width: 250
+        // },
+        // {
+        //   key: 'goodsName',
+        //   title: '商品',
+        //   width: 200
+        // },
+        // {
+        //   key: 'money',
+        //   title: '支付金额',
+        //   width: 100
+        // },
         {
           key: 'validityTime',
           title: '有效期',
-          width: 250,
+          width: 320,
           custom: [
             {
               tag: 'span',
+              style: {
+                margin: 'auto',
+                float: 'none'
+              },
               dyna: {
                 param: 'validityTime',
-                fn (date) {
-                  return formatDate(new Date(date), 'yyyy-MM-dd')
+                fn (date, row) {
+                  return [new Date(row.rechargeTime), new Date(date)]
+                    .map(v => formatDate(v, 'yyyy-MM-dd hh:mm:ss'))
+                    .join(' 至 ')
                 }
               }
             }
           ]
         },
         {
-          key: 'dddddd',
+          key: 'orderState',
           title: '订单说明',
           width: 250
         },
         {
           key: 'id',
           title: '操作',
+          width: 100,
           custom: [
             {
               tag: 'a',
@@ -261,7 +270,8 @@ export default {
   state: {
     ...config.tables,
     celldata: null,
-    instHosts: null
+    instHosts: null,
+    taxOrder: null
   },
   getters: {},
   mutations: {},
@@ -326,7 +336,7 @@ export default {
         }
         res.content.forEach(v => {
           Object.entries(v).forEach(([k, v2]) => {
-            if (!/id/i.test(k) && /^(-)?[0-9.]+$/.test(v2)) {
+            if (!/(id)|(time)/i.test(k) && /^(-)?[0-9.]+$/.test(v2)) {
               v[k] = formatNumber(addNumberUnit(v2))
             }
             if (k === 'anchorType') {

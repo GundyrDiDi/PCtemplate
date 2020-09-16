@@ -139,13 +139,13 @@ export default {
     getLocal ({ state, dispatch }) {
       if (localStorage.jc_expire > Date.now()) {
         state.openid = localStorage.jc_openid
-        Axios.get('user/getUserbyopenid', {
+        return Axios.get('user/getUserbyopenid', {
           openid: state.openid
         }).then(res => {
           dispatch('_setUser', res)
         })
       } else {
-        dispatch('_logout')
+        return dispatch('_logout')
       }
     },
     _logout ({ state }) {

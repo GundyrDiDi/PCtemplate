@@ -4,7 +4,7 @@
       {{instHosts?instHosts.inst:''}} — 旗下大咖
     </header>
     <div class="flex-wrap" style="max-height:460px;overflow:auto">
-        <div v-for="v in instHosts" :key="v.anchorId" class="myhost">
+      <div v-for="v in instHosts" :key="v.anchorId" class="myhost">
         <div @click="detail(v)">
           <img v-lazy:src="v.anchorImg"/>
           <div class="name bolder">{{v.anchorName}}</div>

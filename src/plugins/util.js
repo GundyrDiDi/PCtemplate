@@ -120,9 +120,9 @@ export function mixin (obj1, obj2 = {}) {
     return obj2
   }, obj2)
 }
-export function arraytoObject (arr, prop) {
+export function arraytoObject (arr, prop, filter = v => v) {
   return arr.reduce((acc, v) => {
-    acc[v[prop]] = v
+    acc[v[prop]] = filter(v)
     return acc
   }, {})
 }
