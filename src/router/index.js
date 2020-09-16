@@ -37,12 +37,12 @@ const router = new VueRouter({
   }
 })
 // 路由守卫
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
   store.commit('myroute/push', to)
   NProgress.start()
   // 验证openid
   if (!store.state.user.openid) {
-    store.dispatch('user/getLocal')
+    await store.dispatch('user/getLocal')
   }
   if (to.path.includes('home') && !store.state.user.openid) {
     NProgress.done()

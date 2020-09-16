@@ -117,6 +117,7 @@ export default {
         const st = () => {
           this.timer = setTimeout(() => {
             Axios.get('user/checkPaid').then(res => {
+              console.log(res)
               if (res) {
                 this.$myalert('支付成功，刷新页面后即可体验！')
                 location.reload()
