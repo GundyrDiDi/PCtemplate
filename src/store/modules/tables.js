@@ -1,5 +1,5 @@
 import config, { MAP } from '@/.config.js'
-import { formatNumber, addNumberUnit } from '@/plugins/util.js'
+import { formatNumber, addNumberUnit, formatDate } from '@/plugins/util.js'
 function link ({ row }) {
   const link = row.taobao_goods_id ? row.taobao_goods_id : row.taobaoGoodsId
   window.open('https://item.taobao.com/item.htm?ft=t&id=' + link)
@@ -220,7 +220,18 @@ const Map = {
         {
           key: 'validityTime',
           title: '有效期',
-          width: 250
+          width: 250,
+          custom: [
+            {
+              tag: 'span',
+              dyna: {
+                param: 'validityTime',
+                fn (date) {
+                  return formatDate(new Date(date), 'yyyy-MM-dd')
+                }
+              }
+            }
+          ]
         },
         {
           key: 'dddddd',
