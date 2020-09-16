@@ -96,6 +96,9 @@ export default {
   },
   methods: {
     buy (v) {
+      if (v.level < this.User.level) {
+        return this.msgFail('您当前的会员等级高于购买版本！')
+      }
       this.version = { ...v }
       this.showpay = true
     },

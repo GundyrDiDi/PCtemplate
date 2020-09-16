@@ -1132,21 +1132,43 @@ export default {
     taxForm: [
       {
         label: '发票类型',
-        component: 'input',
-        value: '',
-        attrs: {},
-        rule: [],
-        name: 'invoiceStatus'
+        component: 'radio-group',
+        value: '普通发票',
+        listeners: {
+          change (e) {
+            if (e === '个人发票') {
+              this.temp = 1
+            } else {
+              this.temp = 0
+            }
+            console.log(e)
+          }
+        },
+        attrs: {
+          size: 'mini'
+        },
+        rule: [{ required: true }],
+        name: 'invoiceStatus',
+        slot: [
+          { component: 'radio-button', value: 0, label: '普通发票' },
+          { component: 'radio-button', value: 1, label: '专用发票' },
+          { component: 'radio-button', value: 2, label: '个人发票' }
+        ]
       },
       {
         label: '开票金额',
-        component: 'input',
+        component: 'alert',
         value: '',
-        attrs: {},
-        rule: [],
+        attrs: {
+          title: '',
+          closable: false,
+          type: 'success'
+        },
+        rule: [{ required: true }],
         name: 'invoiceMoney'
       },
       {
+        temp: 0,
         label: '企业名称',
         component: 'input',
         value: '',
@@ -1155,6 +1177,7 @@ export default {
         name: 'enterpriseName'
       },
       {
+        temp: 0,
         label: '纳税人识别号',
         component: 'input',
         value: '',
@@ -1163,6 +1186,7 @@ export default {
         name: 'identificationNumber'
       },
       {
+        temp: 0,
         label: '电话',
         component: 'input',
         value: '',
@@ -1171,6 +1195,7 @@ export default {
         name: 'userPhone'
       },
       {
+        temp: 0,
         label: '开票地址',
         component: 'input',
         value: '',
@@ -1179,6 +1204,7 @@ export default {
         name: 'invoiceAddress'
       },
       {
+        temp: 0,
         label: '开票银行',
         component: 'input',
         value: '',
@@ -1187,6 +1213,7 @@ export default {
         name: 'invoiceBank'
       },
       {
+        temp: 0,
         label: '开票卡号',
         component: 'input',
         value: '',
@@ -1195,12 +1222,30 @@ export default {
         name: 'invoiceNumber'
       },
       {
+        temp: 1,
+        label: '姓名',
+        component: 'input',
+        value: '',
+        attrs: {},
+        rule: [{ required: true }],
+        name: 'userName'
+      },
+      {
+        temp: 1,
+        label: '身份证号码',
+        component: 'input',
+        value: '',
+        attrs: {},
+        rule: [{ required: true }],
+        name: 'idNumber'
+      },
+      {
         label: '收件人',
         component: 'input',
         value: '',
         attrs: {},
         rule: [{ required: true }],
-        name: 'applyTime'
+        name: 'recipient'
       },
       {
         label: '收件电话',

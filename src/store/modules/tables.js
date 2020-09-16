@@ -204,21 +204,21 @@ const Map = {
     record: {
       name: '购买记录',
       column: [
-        // {
-        //   key: 'orderId',
-        //   title: '订单编号',
-        //   width: 250
-        // },
-        // {
-        //   key: 'goodsName',
-        //   title: '商品',
-        //   width: 200
-        // },
-        // {
-        //   key: 'money',
-        //   title: '支付金额',
-        //   width: 100
-        // },
+        {
+          key: 'orderId',
+          title: '订单编号',
+          width: 250
+        },
+        {
+          key: 'goodsName',
+          title: '商品',
+          width: 200
+        },
+        {
+          key: 'money',
+          title: '支付金额',
+          width: 100
+        },
         {
           key: 'validityTime',
           title: '有效期',

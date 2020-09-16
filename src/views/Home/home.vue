@@ -15,7 +15,7 @@
           <img class="brcircle" :src="User.headimg" alt />
           <div class="info">
             <div>{{User.name}}</div>
-            <div>使用权限: {{User.expire}}</div>
+            <div>会员到期: {{User.expire}}</div>
           </div>
           <div class="f-r">
             <div class="auth">{{User.club}}</div>

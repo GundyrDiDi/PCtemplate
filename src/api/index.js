@@ -1,7 +1,7 @@
 import store from '@/store'
 export default {
-  baseURL: '/api',
-  // baseURL: 'http://10.228.88.9:8000/api',
+  // baseURL: '/api',
+  baseURL: 'http://10.228.88.9:8000/api',
   get: {
     _params () {
       return {
@@ -144,6 +144,9 @@ export default {
       search: {
         url: 'premiere/queryAll'
       },
+      followlist: {
+        url: 'premiere/selectPremiereInfo'
+      },
       auths: {
         _params: {},
         url: 'members/selectMemberAll'
@@ -184,9 +187,6 @@ export default {
       followme: {
         url: 'premiere/focusHost'
       },
-      followlist: {
-        url: 'premiere/selectPremiereInfo'
-      },
       notfollow: {
         url: 'premiere/updateFocusStatus'
       },
@@ -204,6 +204,9 @@ export default {
       },
       savePhone: {
         url: 'wxLogin/savePhone'
+      },
+      tax: {
+        url: 'invoiceInfo/saveInvoiceInfo'
       }
     }
   }

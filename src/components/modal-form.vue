@@ -6,19 +6,19 @@
     <div class="flex-wrap" style="max-height:460px;overflow:auto">
         <el-form ref="form" :model="form" :rules="rules"
         label-width="7rem" style="width:80%;">
-            <el-form-item v-for="v in taxForm" :key="v.name"
+            <el-form-item v-for="v in formlist" :key="v.name"
             :label="v.label" :prop="v.name">
                 <component :is="'el-'+v.component"
-                v-model="form[v.name]" v-bind="v.attrs">
+                v-model="form[v.name]" v-bind="v.attrs" v-on="v.listeners">
                     <template v-if="v.slot">
-                        <component v-for="v in v.slot" :key="v.name"
-                        :is="'el-'+v.component"></component>
+                        <component v-for="v in v.slot" :key="v.value"
+                        :is="'el-'+v.component" :label="v.label"></component>
                     </template>
                 </component>
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="submitForm">确认</el-button>
-                <el-button type="default" @click="cancel">取消</el-button>
+                <el-button style="margin-left:2rem" type="default" @click="cancel">取消</el-button>
             </el-form-item>
         </el-form>
     </div>
@@ -32,10 +32,22 @@ export default {
   data () {
     return {
       form: {},
-      rules: {}
+      rules: {},
+      temp: 0,
+      formlist: []
+    }
+  },
+  watch: {
+    temp () {
+      this.createFrom()
+    },
+    taxOrder (v) {
+      this.form.invoiceMoney = v.money + ' 元'
+      this.$set(this.taxForm[1].attrs, 'title', v.money + ' 元')
     }
   },
   created () {
+    this.createFrom()
     this.form = arraytoObject(this.taxForm, 'name', v => v.value || '')
     this.rules = arraytoObject(this.taxForm, 'name', v => {
       const rule = v.rule
@@ -47,7 +59,6 @@ export default {
       })
       return rule
     })
-    console.log(this.rules)
   },
   computed: {
     _show: {
@@ -68,6 +79,34 @@ export default {
     submitForm () {
       this.$refs.form.validate(valid => {
         console.log(valid)
+        console.log(this.form)
+        if (valid) {
+          const status = {
+            普通发票: 0,
+            专用发票: 1,
+            个人发票: 2
+          }
+          Axios.post('user/tax', {
+            ...this.form,
+            invoiceStatus: status[this.form.invoiceStatus],
+            id: this.taxOrder.id
+          }).then(res => {
+            if (!res) {
+              this.msgSuccess('开票成功，我们将邮寄的方式发送给您，请注意查收！')
+              this.cancel()
+            }
+          })
+        }
+      })
+    },
+    createFrom () {
+      this.formlist = this.taxForm.filter(v => {
+        if (v.listeners) {
+          for (const k in v.listeners) {
+            v.listeners[k] = v.listeners[k].bind(this)
+          }
+        }
+        return v.temp !== undefined ? v.temp === this.temp : true
       })
     }
   }
@@ -77,5 +116,8 @@ export default {
 <style scoped lang="less">
 .el-form-item {
     margin-bottom: 1rem;
+  }
+  .el-alert{
+      padding:0;
   }
 </style>

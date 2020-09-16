@@ -1,3 +1,4 @@
+import { formatDate } from '@/plugins/util.js'
 export default {
   namespaced: true,
   state: {
@@ -27,7 +28,10 @@ export default {
       })
     },
     _getfollowlist (store) {
-      return Axios.post('user/followlist').then(res => {
+      return Axios.get('user/followlist', {
+        size: 300,
+        page: 0
+      }).then(res => {
         store.commit(
           'followlist',
           res.content.filter(v => v.follow)
@@ -113,12 +117,15 @@ export default {
       })
     },
     _setUser ({ state, dispatch }, { openid, fromqrcode, ...user }) {
+      console.log(user)
       state.User = {
         id: user.id,
         cellPhone: user.cellPhone,
         name: user.nickname,
         headimg: user.headimgurl,
-        expire: user.expire || '永久',
+        expire: user.validityTime
+          ? formatDate(new Date(user.validityTime), 'yyyy-MM-dd')
+          : '永久',
         openid: openid,
         level: user.vipLevel,
         auth: ['免费版', '标准版', '高级版'][user.vipLevel - 1],

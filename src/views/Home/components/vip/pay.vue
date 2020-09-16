@@ -7,7 +7,9 @@
     <div class="title flex-ter">
       <div>套餐版本</div>
       <el-radio-group v-model="version.level" size="medium" @change="changeLevel">
-        <el-radio-button v-for="v in levels" :key="v.label" :label="v.level">{{v.label}}</el-radio-button>
+        <el-radio-button v-for="v in levels" :key="v.label" :label="v.level"
+        :disabled="v.level<User.level"
+        >{{v.label}}</el-radio-button>
       </el-radio-group>
     </div>
     <div class="title flex-ter">
@@ -76,13 +78,13 @@ export default {
     }
   },
   watch: {
-    version: {
-      handler (v) {
-        console.log(v)
-        // Axios.post('user/payorder', {})
-      },
-      deep: true
-    },
+    // version: {
+    //   handler (v) {
+    //     console.log(v)
+    //     // Axios.post('user/payorder', {})
+    //   },
+    //   deep: true
+    // },
     toggleQC (v) {
       if (!v) {
         clearTimeout(this.timer)
