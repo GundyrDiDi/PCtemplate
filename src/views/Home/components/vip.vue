@@ -10,7 +10,7 @@
         <div>
           <span class="payhistory" @click="showrecord">
             我的购买记录
-            <!-- (<span>{{User.payrecord}}</span>) -->
+            (<span>{{record}}</span>)
           </span>
         </div>
       </div>
@@ -81,7 +81,8 @@ export default {
       heights: [],
       y: '',
       showpay: false,
-      version: {}
+      version: {},
+      record: 0
     }
   },
   computed: {
@@ -124,6 +125,9 @@ export default {
     const offsetTop = this.$refs.paylist.offsetTop + this.$el.offsetTop
     this.$el.parentNode.addEventListener('scroll', (e) => {
       this.y = Math.max(0, e.target.scrollTop - offsetTop)
+    })
+    Axios.get('user/payrecord').then(res => {
+      this.record = res.totalElements
     })
   }
 }
