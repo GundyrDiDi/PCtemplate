@@ -64,7 +64,9 @@ export default {
       if (content.length > 17) {
         Axios.post('user/advices', {
           content,
-          ...this.User
+          // ...this.User
+          name: this.User.name,
+          cellPhone: this.User.cellPhone
         }).then(res => {
           this.editor.txt.html('')
           this.msgSuccess('提交成功 ！')
