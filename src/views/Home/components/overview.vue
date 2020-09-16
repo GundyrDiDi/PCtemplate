@@ -28,7 +28,7 @@ export default {
   },
   watch: {
     time (newval, oldval) {
-      const fn = this.myauth.hostDetail.time
+      const fn = this.myauth.overview.time
       if (fn && fn.call(this, newval, oldval, 'time')) return
       this.condition = {
         startTime: this.time[0],

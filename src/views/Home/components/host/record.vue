@@ -4,7 +4,12 @@
       <div class="t-title">直播记录</div>
       <date-pick class="flex-center" :time.sync="time"></date-pick>
     </div>
-    <table-paganation class="table" ref="table" :condition="condition" v-bind="hostrecord"></table-paganation>
+    <table-paganation
+    class="table" ref="table"
+    :condition="condition"
+    v-bind="hostrecord"
+    :lockvalid="myauth.hostDetail.lock"
+    ></table-paganation>
   </div>
 </template>
 

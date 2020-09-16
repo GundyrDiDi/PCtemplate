@@ -225,6 +225,7 @@ export default {
       v.align = v.align || 'center'
       // auth
       let fn = ''
+      console.log(v.key)
       if (this.lockvalid && (fn = this.lockvalid(v.key))) {
         v.render = (h, { row, index }) => {
           const val = row[v.key]
