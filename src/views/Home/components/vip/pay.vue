@@ -6,7 +6,7 @@
     </div>
     <div class="title flex-ter">
       <div>套餐版本</div>
-      <el-radio-group v-model="version.level" size="medium" @change="changeLevel">
+      <el-radio-group v-model="version.level" size="medium">
         <el-radio-button v-for="v in levels" :key="v.label" :label="v.level"
         :disabled="v.level<User.level"
         >{{v.label}}</el-radio-button>
@@ -14,7 +14,7 @@
     </div>
     <div class="title flex-ter">
       <div>套餐时长</div>
-      <el-radio-group v-model="time" size="medium">
+      <el-radio-group v-model="time" size="medium" @change="changeTime">
         <el-radio-button v-for="v in times" :key="v.name" :label="v.value">
           {{v.name}}
           <span v-show="v.onsale"></span>
@@ -34,9 +34,9 @@
     <div class="title flex-ter">
       <div>应付金额</div>
       <div class="money">
-        <!-- {{formatNumber(parseInt(time*parseFloat(version.price)))}} 元 -->
-        0.01 元
-        <span style="font-size:10px;" class="bolder">（ 限时优惠 ）</span>
+        {{cost}} 元
+        <!-- 0.01 元 -->
+        <!-- <span style="font-size:10px;" class="bolder">（ 限时优惠 ）</span> -->
       </div>
     </div>
     <div>
@@ -74,17 +74,18 @@ export default {
       formatNumber,
       qrcode: '',
       toggleQC: false,
-      timer: null
+      timer: null,
+      cost: 0
     }
   },
   watch: {
-    // version: {
-    //   handler (v) {
-    //     console.log(v)
-    //     // Axios.post('user/payorder', {})
-    //   },
-    //   deep: true
-    // },
+    version: {
+      handler (v) {
+        this.getcost()
+      },
+      deep: true,
+      immediate: true
+    },
     toggleQC (v) {
       if (!v) {
         clearTimeout(this.timer)
@@ -92,8 +93,17 @@ export default {
     }
   },
   methods: {
-    changeLevel (v) {
-      this.version.price = this.levels[v - 2].price
+    changeTime (v) {
+      this.getcost()
+    },
+    getcost () {
+      Axios.post('vip/price', {
+        timeLength: this.time,
+        vipLevel: this.version.level
+      }).then(res => {
+        console.log(res)
+        this.cost = res.money
+      })
     },
     calcdate (month) {
       const date = new Date()

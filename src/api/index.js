@@ -1,7 +1,7 @@
 import store from '@/store'
 export default {
-  baseURL: '/api',
-  // baseURL: 'http://10.228.88.9:8000/api',
+  // baseURL: '/api',
+  baseURL: 'http://10.228.88.9:8000/api',
   get: {
     _params () {
       return {
@@ -178,12 +178,12 @@ export default {
     }
   },
   post: {
+    _params () {
+      return {
+        openid: store.state.user.openid
+      }
+    },
     user: {
-      _params () {
-        return {
-          openid: store.state.user.openid
-        }
-      },
       followme: {
         url: 'premiere/focusHost'
       },
@@ -207,6 +207,11 @@ export default {
       },
       tax: {
         url: 'invoiceInfo/saveInvoiceInfo'
+      }
+    },
+    vip: {
+      price: {
+        url: 'vipOrder/selectMoney'
       }
     }
   }

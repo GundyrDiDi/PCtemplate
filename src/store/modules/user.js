@@ -149,9 +149,10 @@ export default {
         state.openid = localStorage.jc_openid
         return Axios.get('user/getUserbyopenid', {
           openid: state.openid
-        }).then(res => {
-          dispatch('_setUser', res)
         })
+          .then(res => {
+            dispatch('_setUser', res)
+          })
       } else {
         return dispatch('_logout')
       }

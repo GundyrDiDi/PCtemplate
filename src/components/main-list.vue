@@ -6,7 +6,7 @@
         v-for="item in 5"
         :key="item"
         >
-          <el-table :data="_liverlist">
+          <el-table :data="data">
             <el-table-column
             v-for="(c,prop) in columns"
             :key="prop"
@@ -17,7 +17,7 @@
             label-class-name="boldest"
             >
               <template slot-scope="scope">
-                <img class="head" v-if="c.img" :src="imgs[c.img]" alt="">
+                <img class="head" v-if="c.img" :src="scope.row.img" alt="">
                 <img class="crown" v-if="c.img&&scope.$index<2" :src="imgs.crown" alt="">
                 <el-tag v-if="c.slot" effect="dark" type="primary">{{scope.row[prop]}}</el-tag>
                 <div v-else>{{scope.row[prop]}}</div>
@@ -31,6 +31,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   name: 'main-list',
   data () {
@@ -42,13 +43,29 @@ export default {
         zan: { label: '点赞数' },
         dist: { label: '所属地区' },
         label: { label: '标签', slot: true }
-      }
+      },
+      data: []
     }
   },
   computed: {
     _liverlist () {
       return new Array(3).fill(this.liverlist).flat()
     }
+  },
+  mounted () {
+    axios.get('/api/anchor/queryAll?openid=&page=0&size=6&sort=pvPerLive30d,desc').then(res => {
+      this.data = res.data.obj.content.slice(0, 6).map(v => {
+        return {
+          img: v.anchorImg,
+          nick: v.anchorName,
+          fansnum: v.fansNum,
+          lovest: v.fansNum,
+          zan: v.totalPraiseNum,
+          dist: v.anchorArea,
+          label: v.skilledField
+        }
+      })
+    })
   }
 }
 </script>
@@ -75,6 +92,7 @@ export default {
   height:1.6rem;
   width:1.6rem;
   margin-right:.5rem;
+  border-radius:50%;
 }
 .crown{
   position:absolute;

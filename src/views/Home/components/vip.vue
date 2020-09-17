@@ -40,7 +40,8 @@
                 <img class="dimand" :src="imgs[v.icon]" alt="">
                 {{v.label}}
               </div>
-              <div class="pricenum">{{v.price}}</div>
+              <div class="pricenum" v-html="l>0?`<b style='color:var(--prcol)'>${v.price}</b> 元/天`:v.price">
+              </div>
               <el-button @click="buy(v)" v-if="v.btn" type="warning" class="buy" size="small">
                 立即购买
               </el-button>
@@ -133,6 +134,17 @@ export default {
     Axios.get('user/payrecord').then(res => {
       console.log(res)
       this.record = res.totalElements
+    })
+    this.levels.forEach(v => {
+      if (v.level > 1) {
+        Axios.post('vip/price', {
+          timeLength: 1,
+          vipLevel: v.level
+        }).then(res => {
+          console.log(res)
+          this.$set(v, 'price', res.money)
+        })
+      }
     })
   }
 }
