@@ -75,12 +75,12 @@ export default {
           name: '管理员',
           headimg: '',
           expire: '永久',
-          openid: '666666',
+          openid: 'okzki1rh27xhasmly8Xn8hnlEP0I',
           level: 3,
           auth: '白嫖版',
           club: '白嫖会员'
         })
-        this.$store.commit('user/openid', '666666')
+        this.$store.commit('user/openid', 'okzki1rh27xhasmly8Xn8hnlEP0I')
         this.$router.replace({ name: 'overview' })
       }
     }
