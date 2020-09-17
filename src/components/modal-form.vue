@@ -17,7 +17,7 @@
                 </component>
             </el-form-item>
             <el-form-item>
-                <el-button type="primary" @click="submitForm">确认</el-button>
+                <el-button type="primary" @click="submitForm" :disabled="submiting">确认</el-button>
                 <el-button style="margin-left:2rem" type="default" @click="cancel">取消</el-button>
             </el-form-item>
         </el-form>
@@ -34,7 +34,8 @@ export default {
       form: {},
       rules: {},
       temp: 0,
-      formlist: []
+      formlist: [],
+      submiting: false
     }
   },
   watch: {
@@ -86,11 +87,14 @@ export default {
             专用发票: 1,
             个人发票: 2
           }
+          this.submiting = true
           Axios.post('user/tax', {
             ...this.form,
             invoiceStatus: status[this.form.invoiceStatus],
-            id: this.taxOrder.id
+            id: this.taxOrder.id,
+            orderId: this.taxOrder.orderId
           }).then(res => {
+            this.submiting = false
             if (res === '成功') {
               this.msgSuccess('开票成功，我们将邮寄的方式发送给您，请注意查收！', 4)
               this.taxOrder.status = '1'
