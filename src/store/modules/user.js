@@ -4,12 +4,14 @@ export default {
   state: {
     openid: '',
     User: {
-      name: 'CHENFAN',
-      expire: '永久',
-      auth: '免费版',
-      club: '免费会员',
+      cellPhone: '',
+      name: '',
+      headimg: '',
+      expire: '',
+      openid: '',
       level: 0,
-      payrecord: 0
+      auth: '',
+      club: ''
     },
     followlist: [],
     isnotice: true,
@@ -135,13 +137,12 @@ export default {
         payrecord: 0
       }
       if (fromqrcode) {
-        state.openid = openid
         dispatch('saveLocal', openid)
       }
     },
-    saveLocal (store, openid) {
+    saveLocal ({ state }, openid) {
       localStorage.jc_expire = Date.now() + 1000 * 12 * 3600
-      localStorage.jc_openid = openid
+      localStorage.jc_openid = state.openid = openid
     },
     getLocal ({ state, dispatch }) {
       if (localStorage.jc_expire > Date.now()) {

