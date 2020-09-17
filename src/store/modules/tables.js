@@ -198,7 +198,9 @@ const Map = {
     column: [],
     events: {
       tax (param) {
-        this.$store.commit('tables/taxOrder', param.row)
+        if (param.row.status === '0') {
+          this.$store.commit('tables/taxOrder', param.row)
+        }
       }
     },
     record: {
@@ -253,7 +255,12 @@ const Map = {
           custom: [
             {
               tag: 'a',
-              raw: '申请开票',
+              dyna: {
+                param: 'status',
+                fn (status) {
+                  return status === '0' ? '申请开票' : '已开票'
+                }
+              },
               events: {
                 click: 'tax'
               }

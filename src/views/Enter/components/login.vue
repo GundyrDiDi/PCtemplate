@@ -68,18 +68,19 @@ export default {
   watch: {
     directives (v) {
       if (v.join() === '101,103,105,97,99,101') {
+        this.qrcode = ''
         this.$store.commit('user/User', {
           id: 9999,
           cellPhone: '13914702847',
           name: '管理员',
           headimg: '',
           expire: '永久',
-          openid: 'okzki1rh27xhasmly8Xn8hnlEP0I',
+          openid: '666666',
           level: 3,
           auth: '白嫖版',
           club: '白嫖会员'
         })
-        this.$store.commit('user/openid', 'okzki1rh27xhasmly8Xn8hnlEP0I')
+        this.$store.commit('user/openid', '666666')
         this.$router.replace({ name: 'overview' })
       }
     }

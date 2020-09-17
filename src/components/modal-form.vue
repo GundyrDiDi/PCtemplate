@@ -92,7 +92,8 @@ export default {
             id: this.taxOrder.id
           }).then(res => {
             if (res === '成功') {
-              this.msgSuccess('开票成功，我们将邮寄的方式发送给您，请注意查收！')
+              this.msgSuccess('开票成功，我们将邮寄的方式发送给您，请注意查收！', 4)
+              this.taxOrder.status = '1'
               this.cancel()
             }
           })

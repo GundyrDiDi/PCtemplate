@@ -15,9 +15,10 @@ Vue.prototype.msgLoading = function (msg, duration = 0) {
     duration
   })
 }
-Vue.prototype.msgSuccess = function (msg) {
+Vue.prototype.msgSuccess = function (msg, duration = 2) {
   this.$Message.success({
-    content: msg || '操作成功 ！'
+    content: msg || '操作成功 ！',
+    duration
   })
 }
 Vue.prototype.msgFail = function (msg) {
