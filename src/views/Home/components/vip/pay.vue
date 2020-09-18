@@ -23,12 +23,10 @@
     </div>
     <div class="title flex-ter">
       <div>有效期至</div>
-      <!-- <div>微信支付</div> -->
       <div>{{calcdate(time)}}</div>
     </div>
     <div class="title flex-ter">
       <div>支付方式</div>
-      <!-- <div>微信支付</div> -->
       <img :src="imgs.weixin" alt />
     </div>
     <div class="title flex-ter">
@@ -102,7 +100,7 @@ export default {
         vipLevel: this.version.level
       }).then(res => {
         console.log(res)
-        this.cost = res.money
+        this.cost = res ? res.money : 0
       })
     },
     calcdate (month) {
@@ -113,7 +111,7 @@ export default {
     paymoney () {
       console.log(this.version)
       Axios.post('user/createCost', {
-        goodsName: '鲸宸数据限时优惠',
+        goodsName: '鲸宸数据会员套餐',
         timeLength: this.time,
         vipLevel: this.version.level
       }).then(res => {

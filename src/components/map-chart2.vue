@@ -1,9 +1,6 @@
 <template>
-<div class="flex-col">
-    <div class="p-title flex-ter">
-        {{chartdata.title}}
-    </div>
-  <div class="chart animated" ref="c" v-loading="l" :class="l?'':'fadeIn'">
+<div class="flex-center">
+  <div class="chart animated" ref="c" v-loading="l" :class="l?'':'fadeIn'" style="height:380px">
   </div>
 </div>
 </template>
@@ -81,7 +78,7 @@ export default {
           type: 'continuous',
           min,
           max,
-          left: 0,
+          left: -200,
           itemWidth: 12,
           itemHeight: 60,
           //   seriesIndex: [0, 2],

@@ -67,7 +67,7 @@ export default {
   },
   watch: {
     directives (v) {
-      if (v.join() === '101,103,105,97,99,101') {
+      if (v.join() === '101') {
         this.qrcode = ''
         this.$store.commit('user/User', {
           id: 9999,
@@ -78,7 +78,8 @@ export default {
           openid: 'okzki1rh27xhasmly8Xn8hnlEP0I',
           level: 3,
           auth: '白嫖版',
-          club: '白嫖会员'
+          club: '白嫖会员',
+          userToken: 'svvcnfokzki1rh27xhasmly8Xn8hnlEP0I'
         })
         this.$store.commit('user/openid', 'okzki1rh27xhasmly8Xn8hnlEP0I')
         this.$router.replace({ name: 'overview' })
@@ -171,9 +172,12 @@ export default {
         openid: this.tempuser.openid,
         cellPhone: this.cellPhone
       }).then(res => {
+        console.log(res)
         this.msgDestroy()
         if (typeof res === 'string') {
           this.login()
+        } else {
+          this.msgFail('该手机号已绑定帐户！')
         }
       })
     }

@@ -15,9 +15,10 @@ export default {
     }
   },
   props: ['chartData'],
-  mounted () {
+  async mounted () {
     this.echart = echarts.init(this.$refs.chart)
-    this.echart.setOption(this[this.chartData])
+    const ff = this[this.chartData]
+    this.echart.setOption(ff)
     requestAnimationFrame(() => {
       this.scale = 0.5
     })

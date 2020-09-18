@@ -108,6 +108,18 @@ const map = () => ({
           areaColor: '#E5F39B'
         }
       },
+      // data: function (Axios) {
+      //   return Axios.get('user/newdate').then(date => {
+      //     return Axios.get('charts/map/district', {
+      //       startTime: date.replace(/-/g, ''),
+      //       endTime: date.replace(/-/g, ''),
+      //       num: 40
+      //     }).then(res => {
+      //       console.log(res)
+      //       return 1
+      //     })
+      //   })
+      // }
       data: [
         { name: '广东', value: 2747 },
         { name: '浙江', value: 978 },

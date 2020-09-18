@@ -1371,10 +1371,23 @@ export default {
         props: {
           inset: [
             {
-              component: 'main-chart',
-              link: '',
-              chartData: 'map-liver-area',
-              title: '直播间地区分布'
+              component: 'map-chart2',
+              // link: '',
+              // chartData: 'map-liver-area'
+              title: '直播间地区分布',
+              chartdata: {
+                title: '直播间地区分布',
+                name: 'district',
+                api: 'charts/map/district',
+                props: {
+                  name: {
+                    label: 'liveRoomArea'
+                  },
+                  value: {
+                    label: 'liveCnt'
+                  }
+                }
+              }
             },
             {
               component: 'main-chart',

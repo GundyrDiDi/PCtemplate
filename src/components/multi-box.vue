@@ -8,7 +8,7 @@
     >
       <div class="title">{{v.title}}</div>
       <div class="suffix">{{v.suffix}}</div>
-      <component :is="v.component" v-bind="v"></component>
+      <component :is="v.component" v-bind="v" :condition="condition"></component>
       <router-link v-if="v.link" class="link" :to="v.link">查看更多</router-link>
     </div>
   </div>
@@ -16,13 +16,23 @@
 
 <script>
 import mainChart from '@/components/main-chart.vue'
+import { formatDate } from '@/plugins/util.js'
 export default {
   name: 'multi-box',
   data () {
-    return {}
+    return {
+      condition: {}
+    }
   },
   components: {
     mainChart
+  },
+  mounted () {
+    const newdate = this.$store.state.user.newdate
+    this.condition = {
+      startTime: formatDate(new Date(newdate - 7 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd'),
+      endTime: formatDate(new Date(newdate), 'yyyy-MM-dd')
+    }
   },
   props: ['inset']
 }
