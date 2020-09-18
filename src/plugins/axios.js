@@ -53,7 +53,7 @@ _axios.interceptors.request.use(
     config.url = _url
     // auth
     config.headers.openid = store.state.user.openid
-    config.headers.userToken = 321321
+    config.headers.userToken = store.state.user.User.userToken
     config.headers.queryType = store.state.user.queryType
     config.headers.vipLevel = store.state.user.User.level
     // console.log(config)

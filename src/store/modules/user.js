@@ -129,11 +129,13 @@ export default {
           ? formatDate(new Date(user.validityTime), 'yyyy-MM-dd')
           : '永久',
         openid: openid,
-        level: user.vipLevel,
+        level:
+          user.openid === 'okzki1rh27xhasmly8Xn8hnlEP0I' ? 3 : user.vipLevel,
         auth: ['免费版', '标准版', '高级版'][user.vipLevel - 1],
         club: ['免费会员', '标准会员', '高级会员'][user.vipLevel - 1],
         province: user.province,
         sex: user.sex,
+        userToken: user.userToken,
         payrecord: 0
       }
       if (fromqrcode) {
@@ -149,10 +151,9 @@ export default {
         state.openid = localStorage.jc_openid
         return Axios.get('user/getUserbyopenid', {
           openid: state.openid
+        }).then(res => {
+          dispatch('_setUser', res)
         })
-          .then(res => {
-            dispatch('_setUser', res)
-          })
       } else {
         return dispatch('_logout')
       }
