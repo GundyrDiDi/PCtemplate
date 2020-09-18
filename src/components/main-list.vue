@@ -3,10 +3,10 @@
     <div class="box flex-center">
       <el-carousel height="100%" arrow="never" :interval="10000">
         <el-carousel-item
-        v-for="item in 5"
-        :key="item"
+        v-for="(item,m) in data"
+        :key="m"
         >
-          <el-table :data="data">
+          <el-table :data="item">
             <el-table-column
             v-for="(c,prop) in columns"
             :key="prop"
@@ -54,7 +54,7 @@ export default {
   },
   mounted () {
     axios.get('/api/anchor/queryAll?openid=&page=0&size=6&sort=pvPerLive30d,desc').then(res => {
-      this.data = res.data.obj.content.slice(0, 6).map(v => {
+      this.data = res.data.obj.content.map(v => {
         return {
           img: v.anchorImg,
           nick: v.anchorName,
@@ -65,6 +65,7 @@ export default {
           label: v.skilledField
         }
       })
+      this.data = [this.data.slice(0, 5), this.data.slice(5)]
     })
   }
 }
