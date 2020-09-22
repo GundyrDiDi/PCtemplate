@@ -1,7 +1,6 @@
 import store from '@/store'
 export default {
   baseURL: '/api',
-  // baseURL: 'http://10.228.88.9:8000/api',
   get: {
     _params () {
       return {

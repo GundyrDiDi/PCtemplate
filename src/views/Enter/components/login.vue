@@ -67,7 +67,7 @@ export default {
   },
   watch: {
     directives (v) {
-      if (v.join() === '101') {
+      if (v.join() === '101,103,105,97,99,101') {
         this.qrcode = ''
         this.$store.commit('user/User', {
           id: 9999,
@@ -76,12 +76,12 @@ export default {
           headimg: '',
           expire: '永久',
           openid: 'okzki1rh27xhasmly8Xn8hnlEP0I',
-          level: 3,
+          level: 1,
           auth: '白嫖版',
           club: '白嫖会员',
           userToken: 'svvcnfokzki1rh27xhasmly8Xn8hnlEP0I'
         })
-        this.$store.commit('user/openid', 'okzki1rh27xhasmly8Xn8hnlEP0I')
+        this.$store.dispatch('user/saveLocal', 'okzki1rh27xhasmly8Xn8hnlEP0I')
         this.$router.replace({ name: 'overview' })
       }
     }

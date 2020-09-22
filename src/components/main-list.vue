@@ -19,7 +19,7 @@
               <template slot-scope="scope">
                 <img class="head" v-if="c.img" :src="scope.row.img" alt="">
                 <img class="crown" v-if="c.img&&scope.$index<2" :src="imgs.crown" alt="">
-                <el-tag v-if="c.slot" effect="dark" type="primary">{{scope.row[prop]}}</el-tag>
+                <el-tag v-if="c.slot&&scope.row[prop]" effect="dark" type="primary">{{scope.row[prop]}}</el-tag>
                 <div v-else>{{scope.row[prop]}}</div>
               </template>
             </el-table-column>
@@ -32,6 +32,7 @@
 
 <script>
 import axios from 'axios'
+import { formatNumber, addNumberUnit } from '@/plugins/util.js'
 export default {
   name: 'main-list',
   data () {
@@ -58,9 +59,9 @@ export default {
         return {
           img: v.anchorImg,
           nick: v.anchorName,
-          fansnum: v.fansNum,
-          lovest: v.fansNum,
-          zan: v.totalPraiseNum,
+          fansnum: formatNumber(addNumberUnit(v.fansNum)),
+          lovest: formatNumber(addNumberUnit(v.fansNum)),
+          zan: formatNumber(addNumberUnit(v.totalPraiseNum)),
           dist: v.anchorArea,
           label: v.skilledField
         }
@@ -121,6 +122,7 @@ export default {
   }
   .com-column {
     color: #000;
+    white-space: nowrap;
   }
   .com-column>div{
     display: flex;
