@@ -49,14 +49,22 @@ const pipe = [
   }
 ]
 const valid = [
-  function (fn) {
+  function (fn, ...nones) {
     return function (...rest) {
       if (fn(...rest)) {
-        return this.$block()
+        let i
+        nones.some((fn, j) => {
+          if (!fn || !fn(...rest)) {
+            i = j + 1
+            return true
+          }
+        })
+        console.log(i)
+        return this.$block(i)
       }
     }
   },
-  function (fn) {
+  function (fn, ...nones) {
     return function (newval, oldval, prop) {
       if (fn(newval)) {
         this[prop] = oldval
@@ -66,18 +74,26 @@ const valid = [
       }
     }
   },
-  function (fn) {
+  function (fn, ...nones) {
     return function (newval, oldval, prop) {
       if (fn(newval)) {
         requestAnimationFrame(() => {
           this[prop] = oldval
         })
-        return this.$block()
+        let i
+        nones.some((fn, j) => {
+          if (!fn || !fn(newval)) {
+            i = j + 1
+            return true
+          }
+        })
+        console.log(i)
+        return this.$block(i)
       }
     }
   }
 ]
-function validmap (acc, { test, text }) {
+function validmap (acc, { test, text, textArr }, level) {
   const reg = [
     {
       type: 'filter',
@@ -181,9 +197,13 @@ function validmap (acc, { test, text }) {
   ]
   reg.some(v => {
     if (v.reg.test(test)) {
-      const fn = v.pipe(text, test.match(v.reg))
-      if (fn) {
-        acc[v.type] = v.valid(fn)
+      const pipes = textArr.map(text => {
+        if (text) {
+          return v.pipe(text, test.match(v.reg))
+        }
+      })
+      if (pipes[level - 1]) {
+        acc[v.type] = v.valid(...pipes.slice(level - 1))
       }
       return true
     }
@@ -195,14 +215,17 @@ export default function myauth () {
     auths,
     User: { level }
   } = store.state.user
-  console.log(level)
-  console.log(auths)
   const myauth = auths.reduce((acc, view) => {
     acc[viewmap[view.label]] = view.children.reduce((acc, v) => {
-      return validmap(acc, {
-        test: v.label,
-        text: v.level[level].text
-      })
+      return validmap(
+        acc,
+        {
+          test: v.label,
+          text: v.level[level].text,
+          textArr: v.level.slice(1).map(v => v.text)
+        },
+        level
+      )
     }, {})
     return acc
   }, {})
@@ -212,7 +235,7 @@ export default function myauth () {
 
 //
 Vue.component('my-lock', () => import('./auth-lock.vue'))
-Vue.prototype.$block = function (msg) {
+Vue.prototype.$block = function (authI) {
   // return this.$confirm('该功能为标准版以上会员使用，点击了解套餐详情', '提示', {
   //   confirmButtonText: '升级会员',
   //   confirmButtonClass: 'block-btn',
@@ -228,9 +251,11 @@ Vue.prototype.$block = function (msg) {
     const {
       User: { level }
     } = store.state.user
-    const rank = (this.User.auth = ['', '免费版', '标准版', '高级版'][
-      level + 1
-    ])
+    let msg
+    if (typeof authI === 'string') {
+      msg = authI
+    }
+    const rank = ['', '免费版', '标准版', '高级版'][level + authI]
     this.$Message.warning({
       render: h => {
         return h(
@@ -239,7 +264,9 @@ Vue.prototype.$block = function (msg) {
             class: 'auth-msg'
           },
           [
-            ...(msg ? [msg] : ['该功能为 ', h('a', rank), ' 以上会员使用，']),
+            ...(msg
+              ? [msg]
+              : ['该功能为 ', h('a', rank || '高级版'), ' 以上会员使用，']),
             h(
               'a',
               {

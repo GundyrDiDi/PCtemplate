@@ -104,7 +104,8 @@ export default {
   },
   methods: {
     valid () {
-      this.auth && this.block()
+      // auth
+      this.auth && this.block(111)
     },
     quickset (v) {
       const end = this.originDate

@@ -41,6 +41,7 @@ router.beforeEach(async (to, from, next) => {
   store.commit('myroute/push', to)
   NProgress.start()
   // 验证openid
+  // store.dispatch('user/_logout')
   if (!store.state.user.openid) {
     await store.dispatch('user/getLocal')
   }

@@ -120,7 +120,6 @@ export default {
       })
     },
     _setUser ({ state, dispatch }, { openid, fromqrcode, ...user }) {
-      console.log(user)
       state.User = {
         id: user.id,
         cellPhone: user.cellPhone,
