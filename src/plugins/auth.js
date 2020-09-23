@@ -255,7 +255,8 @@ Vue.prototype.$block = function (authI) {
     if (typeof authI === 'string') {
       msg = authI
     }
-    const rank = ['', '免费版', '标准版', '高级版'][level + authI]
+    let rank = ['', '免费版', '标准版', '高级版'][level + authI]
+    rank = rank || '高级版'
     this.$Message.warning({
       render: h => {
         return h(
@@ -266,7 +267,12 @@ Vue.prototype.$block = function (authI) {
           [
             ...(msg
               ? [msg]
-              : ['该功能为 ', h('a', rank || '高级版'), ' 以上会员使用，']),
+              : [
+                '该功能为 ',
+                h('a', rank),
+                ' ' + rank === '高级版' ? '' : '以上',
+                '会员使用，'
+              ]),
             h(
               'a',
               {
