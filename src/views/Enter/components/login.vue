@@ -76,7 +76,7 @@ export default {
           headimg: '',
           expire: '永久',
           openid: 'on1aixB0HG-N-3faek_fBs_fsfrg',
-          level: 1,
+          level: 3,
           auth: '白嫖版',
           club: '白嫖会员',
           userToken: '8jdvwion1aixB0HG-N-svvcnfokzki1rh27xhasmly8Xn8hnlEP0I'

@@ -50,7 +50,7 @@ export default {
   height: 100%;
   padding: 2.5rem 1rem 2rem 1rem;
   &:last-child {
-    text-align: left;
+    // text-align: left;
     .title,.suffix{
       padding-left:1rem
     }

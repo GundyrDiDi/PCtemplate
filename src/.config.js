@@ -1375,6 +1375,7 @@ export default {
               // link: '',
               // chartData: 'map-liver-area'
               title: '直播间地区分布',
+              suffix: '直播一网打尽',
               chartdata: {
                 title: '直播间地区分布',
                 name: 'district',
@@ -1390,18 +1391,39 @@ export default {
               }
             },
             {
-              component: 'main-chart',
-              link: '',
-              chartData: 'lineBar-people-total',
+              component: 'watch-charts2',
+              // link: '',
+              // chartData: 'lineBar-people-total',
               title: '淘宝直播大盘分析',
-              suffix: '一对一专业数据分析'
+              suffix: '专业数据分析',
+              chartdata: {
+                title: '观看次数(PV)',
+                name: 'uvpv',
+                api: 'charts/watch',
+                props: ['pv']
+              }
             },
             {
-              component: 'main-chart',
-              link: '',
-              chartData: 'rose-liver-level',
+              component: 'ring-chart2',
+              // link: '',
+              // chartData: 'rose-liver-level',
               title: '主播等级分布',
-              suffix: '快速了解全网主播概况'
+              suffix: '快速了解全网主播概况',
+              chartdata: {
+                title: '主播等级分布',
+                name: 'levelofhost',
+                api: 'charts/ring/levelofhost',
+                props: {
+                  name: {
+                    label: 'anchorRank',
+                    map: ['', 'Lv1', 'Lv2', 'Lv3', 'Lv4', 'Lv5']
+                  },
+                  value: {
+                    label: 'anchorRankNum'
+                  },
+                  unit: '位'
+                }
+              }
             }
           ]
         }
