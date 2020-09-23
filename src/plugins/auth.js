@@ -270,7 +270,7 @@ Vue.prototype.$block = function (authI) {
               : [
                 '该功能为 ',
                 h('a', rank),
-                ' ' + rank === '高级版' ? '' : '以上',
+                ' ' + (rank === '高级版' ? '' : '以上'),
                 '会员使用，'
               ]),
             h(

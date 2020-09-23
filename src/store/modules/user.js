@@ -130,7 +130,7 @@ export default {
           : '永久',
         openid: openid,
         // level: 1,
-        level: user.openid === 'on1aixB0HG-N-3faek_fBs_fsfrg' ? 3 : user.vipLevel,
+        level: state.openid === 'on1aixB0HG-N-3faek_fBs_fsfrg' ? 3 : user.vipLevel,
         auth: ['免费版', '标准版', '高级版'][user.vipLevel - 1],
         club: ['免费会员', '标准会员', '高级会员'][user.vipLevel - 1],
         province: user.province,
