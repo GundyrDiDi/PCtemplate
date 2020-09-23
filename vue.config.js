@@ -19,8 +19,8 @@ module.exports = {
   // webpack-dev-server 相关配置
   devServer: {
     disableHostCheck: true, // 代理时跳过检查
-    // host: '0.0.0.0',
-    host: '10.228.90.104', // 如果是真机测试，就使用这个IP
+    host: '0.0.0.0',
+    // host: '10.228.90.104', // 如果是真机测试，就使用这个IP
     port: 8081,
     https: false,
     compress: true, // 配置是否启用 gzip 压缩。boolean 为类型，默认为 false。
