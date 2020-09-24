@@ -1,15 +1,12 @@
 <template>
-  <div class="card">
-    <!-- <div
-      class="item"
-      v-for="(item,i) in 3"
-      :key="item"
-      :class="classlist[i]"
-      :style="{background:colors[i]}"
-    ></div>-->
-    <div class="item" v-for="(item,i) in 3" :key="item" :class="classlist[i]">
-      <div class="box2 flex-center">
-          <el-table :data="data">
+  <div class="main-list">
+    <div class="box flex-center">
+      <el-carousel height="100%" arrow="never" :interval="10000">
+        <el-carousel-item
+        v-for="(item,m) in data"
+        :key="m"
+        >
+          <el-table :data="item">
             <el-table-column
             v-for="(c,prop) in columns"
             :key="prop"
@@ -23,14 +20,13 @@
                 <img class="head" v-if="c.img" :src="scope.row.img" alt="">
                 <img class="crown" v-if="c.img&&scope.$index<2" :src="imgs.crown" alt="">
                 <el-tag v-if="c.slot&&scope.row[prop]" effect="dark" type="primary">{{scope.row[prop]}}</el-tag>
-                <div v-else>{{scope.row[prop]}}</div>
+                <div v-else class="pri-text">{{scope.row[prop]}}</div>
               </template>
             </el-table-column>
           </el-table>
-      </div>
+        </el-carousel-item>
+      </el-carousel>
     </div>
-    <i class="gogo el-icon-arrow-left" @click="roll(1)"></i>
-    <i class="gogo el-icon-arrow-right" @click="roll(-1)"></i>
   </div>
 </template>
 
@@ -38,25 +34,22 @@
 import axios from 'axios'
 import { formatNumber, addNumberUnit } from '@/plugins/util.js'
 export default {
-  name: 'carousel-cards',
+  name: 'main-list',
   data () {
     return {
-      classlist: ['prev', 'center', 'next'],
       columns: {
-        nick: { label: '直播信息', img: 'head', width: '200px' },
+        nick: { label: '直播信息', img: 'head', width: '240px' },
         fansnum: { label: '主播' },
         lovest: { label: '观看次数' },
+        addFansNum: { label: '直播涨粉数' },
         zan: { label: '商品数' }
       },
       data: []
     }
   },
-  methods: {
-    roll (val) {
-      const len = this.classlist.length
-      this.classlist = this.classlist
-        .slice(val)
-        .concat(this.classlist.slice(0, (len + val) % len))
+  computed: {
+    _liverlist () {
+      return new Array(3).fill(this.liverlist).flat()
     }
   },
   mounted () {
@@ -67,76 +60,27 @@ export default {
           nick: v.liveTitle,
           fansnum: v.anchorName,
           lovest: formatNumber(addNumberUnit(v.pv)),
+          addFansNum: formatNumber(addNumberUnit(v.addFansNum)),
           zan: formatNumber(addNumberUnit(v.goodsCnt))
         }
       })
+      this.data = [this.data.slice(0, 5), this.data.slice(5)]
     })
   }
 }
 </script>
-<style lang="less" scoped>
-.box2 {
-  height: 100%;
-  background: #fff;
-  border-radius: 1.2rem;
-  padding: 0rem;
-  // img {
-    //   height: 100%;
-  //   width: 100%;
-  // }
-  >div{
-    box-shadow: var(--boxshadow);
-    padding:2rem;
-    border-radius: 1.2rem;
-  }
-}
-.card .gogo {
-  color: rgba(0, 153, 255, 0.4);
-  font-size: var(--xxxlfont);
-  font-weight: bold;
-  &:hover {
-    color: rgb(0, 153, 255);
-  }
-}
-</style>
-<style lang="less" scoped>
-.card {
-  height: 34rem;
-  width: 60%;
-  left: -5%;
-  position: relative;
-  margin: auto;
-}
-.item {
-  transition: all ease-in-out 0.3s;
+
+<style scoped lang="less">
+.box {
+  height: 24rem;
   width: 100%;
+  border-radius: 1.2rem;
+  padding: 2rem 1rem;
+}
+.el-carousel,
+.el-carousel-item {
   height: 100%;
-  position: absolute;
-  text-align: center;
-  // overflow:hidden;
-}
-.center {
-  z-index: 2;
-}
-.prev {
-  transform: translateX(-40%) scale(0.8);
-  z-index: 0;
-}
-.next {
-  transform: translateX(40%) scale(0.8);
-  z-index: 1;
-}
-i {
-  position: absolute;
-  top: 40%;
-  z-index: 4;
-  cursor: pointer;
-  &:first-of-type {
-    left: -44%;
-  }
-  &:last-of-type {
-    right: -44%;
-  }
+  width: 100%;
 }
 .el-tag{
   padding:0 1rem;
@@ -158,9 +102,12 @@ i {
   width:1rem;
   transform: rotate(-45deg);
 }
+.pri-text{
+  white-space: nowrap;
+}
 </style>
 <style lang="less">
-.card{
+.main-list{
   background:#fff;
   .el-carousel__indicator {
     padding: 12px 10px;
@@ -183,5 +130,10 @@ i {
     align-items: center;
     white-space: nowrap;
   }
+  thead th:nth-child(6)>div{
+    transform: translateX(1rem);
+  }
+}
+.boldest{
 }
 </style>

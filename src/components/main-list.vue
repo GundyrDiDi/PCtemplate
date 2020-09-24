@@ -20,7 +20,7 @@
                 <img class="head" v-if="c.img" :src="scope.row.img" alt="">
                 <img class="crown" v-if="c.img&&scope.$index<2" :src="imgs.crown" alt="">
                 <el-tag v-if="c.slot&&scope.row[prop]" effect="dark" type="primary">{{scope.row[prop]}}</el-tag>
-                <div v-else>{{scope.row[prop]}}</div>
+                <div v-else class="pri-text">{{scope.row[prop]}}</div>
               </template>
             </el-table-column>
           </el-table>
@@ -63,7 +63,7 @@ export default {
           lovest: formatNumber(addNumberUnit(v.fansNum)),
           zan: formatNumber(addNumberUnit(v.totalPraiseNum)),
           dist: v.anchorArea,
-          label: v.skilledField
+          label: v.skilledField ? v.skilledField.split(',')[0] : ''
         }
       })
       this.data = [this.data.slice(0, 5), this.data.slice(5)]
@@ -74,10 +74,10 @@ export default {
 
 <style scoped lang="less">
 .box {
-  height: 26rem;
+  height: 24rem;
   width: 100%;
   border-radius: 1.2rem;
-  padding: 2rem;
+  padding: 2rem 1rem;
 }
 .el-carousel,
 .el-carousel-item {
@@ -104,6 +104,9 @@ export default {
   width:1rem;
   transform: rotate(-45deg);
 }
+.pri-text{
+  white-space: nowrap;
+}
 </style>
 <style lang="less">
 .main-list{
@@ -127,6 +130,7 @@ export default {
   .com-column>div{
     display: flex;
     align-items: center;
+    white-space: nowrap;
   }
   thead th:nth-child(6)>div{
     transform: translateX(1rem);

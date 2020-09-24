@@ -1442,7 +1442,7 @@ export default {
       msg:
         '每日罗列带货优秀的直播间及相关数据，帮助商家感知主播的实力，探寻与主播的合作机会',
       tab: {
-        component: 'carousel-card'
+        component: 'main-list2'
       },
       button: { name: '查看更多', link: '' }
     }
