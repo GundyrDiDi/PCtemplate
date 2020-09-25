@@ -214,7 +214,7 @@ export default {
       height: 100%;
     }
     height: 100%;
-    width: 40%;
+    width: calc(30vw * .56);
     box-shadow: 1px 0 3px rgba(0, 0, 0, 0.1);
   }
   .form {
