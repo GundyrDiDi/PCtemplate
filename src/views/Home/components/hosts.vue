@@ -107,6 +107,7 @@ export default {
     filterLabel (v) {
       this.condition = {
         anchorName: this.trustWord,
+        anchorType: '1,2,3',
         ...this.filterLabel.reduce((acc, v) => {
           acc[v.name] = {
             type: v.component,
@@ -121,6 +122,7 @@ export default {
     trustWord (v) {
       this.condition = {
         anchorName: v,
+        anchorType: '1,2,3',
         ...this.filterLabel.reduce((acc, v) => {
           acc[v.name] = {
             type: v.component,
