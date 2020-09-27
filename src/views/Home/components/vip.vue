@@ -97,6 +97,9 @@ export default {
   },
   methods: {
     buy (v) {
+      if (this.User.isWhite) {
+        return this.msgFail('您当前属于白名单用户，无需购买会员！')
+      }
       if (v.level < this.User.level) {
         return this.msgFail('您当前的会员等级高于购买版本！')
       }

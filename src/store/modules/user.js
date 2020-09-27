@@ -24,7 +24,8 @@ export default {
   actions: {
     _search (store, param) {
       return Axios.get('user/search', {
-        anchorName: param
+        anchorName: param,
+        sort: 'fansNum,desc'
       }).then(res => {
         return res
       })
@@ -136,8 +137,10 @@ export default {
         province: user.province,
         sex: user.sex,
         userToken: user.userToken,
-        payrecord: 0
+        payrecord: 0,
+        isWhite: !!user.isWhite
       }
+      console.log(state.User)
       if (fromqrcode) {
         dispatch('saveLocal', openid)
       }
