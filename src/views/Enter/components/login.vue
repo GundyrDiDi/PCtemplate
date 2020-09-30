@@ -75,13 +75,13 @@ export default {
           name: '管理员',
           headimg: '',
           expire: '永久',
-          openid: 'on1aixB0HG-N-3faek_fBs_fsfrg',
+          openid: 'on1aixCP-oM5psops4ELsfeHCkyw',
           level: 3,
           auth: '白嫖版',
           club: '白嫖会员',
-          userToken: '8jdvwion1aixB0HG-N-svvcnfokzki1rh27xhasmly8Xn8hnlEP0I'
+          userToken: 'ca5l3qon1aixCP-oM5psops4ELsfeHCkyw'
         })
-        this.$store.dispatch('user/saveLocal', 'on1aixB0HG-N-3faek_fBs_fsfrg')
+        this.$store.dispatch('user/saveLocal', 'on1aixCP-oM5psops4ELsfeHCkyw')
         this.$router.replace({ name: 'overview' })
       }
     }

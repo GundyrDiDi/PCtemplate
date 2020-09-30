@@ -29,8 +29,8 @@ module.exports = {
       '/api': {
         target:
           process.env.NODE_ENV === 'production'
-            ? 'http://10.228.88.220:17782/api'
-            : 'http://10.228.88.46:8000/api',
+            ? 'http://10.228.88.220:17782/api/api'
+            : 'http://10.228.88.46:8000/api/api',
         // secure: false,
         // ws: false,
         changeOrigin: true,

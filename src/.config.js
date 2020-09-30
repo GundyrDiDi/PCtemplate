@@ -392,13 +392,13 @@ export default {
         { key: 'anchorType', title: '主播类型', minWidth: 120 },
         { key: 'skilledField', title: '擅长领域', minWidth: 120 },
         {
-          key: 'saleAmtPerLive30d',
+          key: 'saleAmt30d',
           title: '近30天销售额(估)',
           sortable: 'custom',
           width: 170
         },
         {
-          key: 'saleQtyPerLive30d',
+          key: 'saleQty30d',
           title: '近30天销量(估)',
           sortable: 'custom',
           width: 160
@@ -840,7 +840,7 @@ export default {
         pipe: calcRange
       },
       {
-        name: 'saleAmtPerLive30d',
+        name: 'saleAmt30d',
         label: '近30天销售额(估)',
         rule: [],
         component: 'range',
@@ -853,7 +853,7 @@ export default {
         pipe: calcRange
       },
       {
-        name: 'saleQtyPerLive30d',
+        name: 'saleQty30d',
         label: '近30天销量(估)',
         rule: [],
         component: 'range',

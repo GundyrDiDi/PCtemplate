@@ -38,6 +38,7 @@ const router = new VueRouter({
 })
 // 路由守卫
 router.beforeEach(async (to, from, next) => {
+  // store.dispatch('user/_logout')
   store.commit('myroute/push', to)
   NProgress.start()
   // 验证openid
