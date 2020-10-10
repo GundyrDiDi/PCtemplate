@@ -37,6 +37,13 @@ module.exports = {
         pathRewrite: {
           '^/api': '/'
         }
+      },
+      '/oauth': {
+        target: 'http://10.228.88.61:10010/oauth',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/oauth': '/'
+        }
       }
     }
   },

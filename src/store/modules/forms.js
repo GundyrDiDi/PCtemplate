@@ -70,7 +70,6 @@ export default {
         return {
           data: res
             .filter(v => !/other/.test(v))
-            // .map(v => ({ name: v }))
             .map(v => ({
               brandName: v
             }))

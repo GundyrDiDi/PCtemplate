@@ -18,7 +18,7 @@
         </el-menu>
       </el-col>
       <el-col :span="3" class="flex-ter">
-        <el-button type="primary" size="small" @click="$router.push({name:'Login'})">登录/注册</el-button>
+        <el-button type="primary" size="small" @click="login">登录/注册</el-button>
       </el-col>
     </el-row>
     <!-- content -->
@@ -29,6 +29,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 import carouselCard from '@/components/carousel-card.vue'
 export default {
   name: 'Enter',
@@ -50,9 +51,17 @@ export default {
         this.un = false
       }, 800)
       this.$refs.main.scrollTo(0, this.$refs.menu[i].$el.offsetTop + 20)
+    },
+    login () {
+      this.user_logout()
+      this.$router.push({ name: 'Login' })
     }
   },
   async mounted () {
+    console.log(this.$route.query)
+    axios.get('/oauth/access_token?code=' + this.$route.query.code).then(res => {
+      console.log(res)
+    })
     await Promise.all(this.enternavs.map(v => v.component()))
     this.$refs.menu.sort((a, b) =>
       a.$el.offsetTop - b.$el.offsetTop
