@@ -59,9 +59,11 @@ export default {
   },
   async mounted () {
     console.log(this.$route.query)
-    axios.get('/oauth/access_token?code=' + this.$route.query.code).then(res => {
-      console.log(res)
-    })
+    if (this.$route.query.code) {
+      axios.get('/oauth/access_token?code=' + this.$route.query.code).then(res => {
+        console.log(res)
+      })
+    }
     await Promise.all(this.enternavs.map(v => v.component()))
     this.$refs.menu.sort((a, b) =>
       a.$el.offsetTop - b.$el.offsetTop
