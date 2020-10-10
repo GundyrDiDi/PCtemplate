@@ -58,10 +58,12 @@ export default {
     }
   },
   async mounted () {
-    console.log(this.$route.query)
-    if (this.$route.query.code) {
-      axios.get('/oauth/access_token?code=' + this.$route.query.code).then(res => {
+    const code = location.href.match(/code=(.*)#\//)[1]
+    if (code) {
+      axios.get('/oauth/access_token?code=' + code).then(res => {
         console.log(res)
+      }, err => {
+        console.log(err)
       })
     }
     await Promise.all(this.enternavs.map(v => v.component()))
