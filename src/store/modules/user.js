@@ -141,6 +141,7 @@ export default {
         isWhite: !!user.isWhite
       }
       console.log(state.User)
+      state.openid = openid
       if (fromqrcode) {
         dispatch('saveLocal', openid)
       }

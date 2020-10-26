@@ -64,7 +64,7 @@ export default {
         const [num, unit] = addNumberUnit(res[0][v], [
           { value: '万', wei: 4 }
         ], 3).split(/\b(?=\D$)/)
-        this.livedata[i].name = this.livedata[i].name.replace(/.{1}/, days[prev] ? days[prev] : date)
+        this.livedata[i].name = this.livedata[i].name.replace(/([\d-]+)|(.{1})/, days[prev] ? days[prev] : date)
         this.livedata[i].value = isNaN(Number(num)) ? 0 : Number(num)
         this.livedata[i].unit = unit
       })
