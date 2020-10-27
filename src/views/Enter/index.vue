@@ -58,7 +58,7 @@ export default {
     }
   },
   async mounted () {
-    const code = location.href.match(/code=(.*)#\//)[1]
+    const code = (location.href.match(/code=(.*)#\//) || [])[1]
     if (code) {
       axios.get('/oauth/access_token?code=' + code).then(res => {
         console.log(res)

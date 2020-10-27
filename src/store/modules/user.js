@@ -85,7 +85,7 @@ export default {
     },
     // 进入路由前获取权限保存，最新数据日期
     getnewdate ({ state }) {
-      Axios.get('user/newdate').then(res => {
+      return Axios.get('user/newdate').then(res => {
         state.newdate = Date.parse(res)
       })
     },

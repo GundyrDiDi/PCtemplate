@@ -54,6 +54,7 @@ export default {
   async mounted () {
     const keys = ['pv', 'liveCnt', 'goodsCnt', 'saleQty']
     const days = ['今', '昨', '前']
+    await this.$store.dispatch('user/getnewdate')
     const date = await Axios.get('user/newdate')
     const prev = Math.floor((Date.now() - Date.parse(date)) / (1000 * 3600 * 24))
     Axios.get('charts/watch', {
