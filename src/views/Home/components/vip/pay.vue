@@ -130,7 +130,9 @@ export default {
               console.log(res)
               if (res) {
                 this.$myalert('支付成功，刷新页面后即可体验！')
-                // location.reload()
+                setTimeout(e => {
+                  location.reload()
+                }, 2000)
               } else {
                 st()
               }
