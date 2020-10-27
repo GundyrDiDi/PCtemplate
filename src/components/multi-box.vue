@@ -28,11 +28,14 @@ export default {
     mainChart
   },
   mounted () {
-    const newdate = this.$store.state.user.newdate
-    this.condition = {
-      startTime: formatDate(new Date(newdate - 7 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd'),
-      endTime: formatDate(new Date(newdate), 'yyyy-MM-dd')
-    }
+    setTimeout(e => {
+      const newdate = this.$store.state.user.newdate
+      console.log(newdate)
+      this.condition = {
+        startTime: formatDate(new Date(newdate - 7 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd'),
+        endTime: formatDate(new Date(newdate), 'yyyy-MM-dd')
+      }
+    }, 1000)
   },
   props: ['inset']
 }
