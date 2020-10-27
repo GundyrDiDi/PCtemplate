@@ -116,6 +116,11 @@ export default {
             ticket: this.ticket
           }).then((res) => {
             console.log('polling=>', res)
+            if (res[500]) {
+              this.msgFail(res[500])
+              this.qrcode = ''
+              return false
+            }
             if (!res[200] && this.qrcode !== '') {
               setTimeout(st, 1000)
             } else if (res[200]) {
