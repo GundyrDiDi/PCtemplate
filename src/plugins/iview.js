@@ -21,9 +21,10 @@ Vue.prototype.msgSuccess = function (msg, duration = 2) {
     duration
   })
 }
-Vue.prototype.msgFail = function (msg) {
+Vue.prototype.msgFail = function (msg, duration = 2) {
   this.$Message.warning({
-    content: msg || '操作失败 ！'
+    content: msg || '操作失败 ！',
+    duration
   })
 }
 Vue.prototype.msgDestroy = function () {

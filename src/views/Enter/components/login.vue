@@ -117,7 +117,7 @@ export default {
           }).then((res) => {
             console.log('polling=>', res)
             if (res[500]) {
-              this.msgFail(res[500])
+              this.msgFail(res[500], 10)
               this.qrcode = ''
               return false
             }
