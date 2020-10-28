@@ -40,6 +40,7 @@ export default {
   notify: {},
   imgs: {
     logo: require('@/assets/img/logo2.png'),
+    loading: require('@/assets/img/loading.gif'),
     jingchen: require('@/assets/img/jingchen.png'),
     email: require('@/assets/img/email.png'),
     tel: require('@/assets/img/tel.png'),

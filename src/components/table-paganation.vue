@@ -144,7 +144,22 @@ export default {
       this.sortKey = key
       this.request()
     },
+    // 更新表格数据后，由于图片加载慢，显示的还是上一页数据的图片
+    // 解决方案：更新前把图片显示改成load状态
+    // 递归表格数据，找到png，jpg，jpeg后缀替换为loading图片
+    loadingImg (data) {
+      Object.entries(data).forEach(([k, v]) => {
+        if (typeof v === 'object') {
+          this.loadingImg(v)
+        } else if (typeof v === 'string') {
+          if (/.(png|jpg|jpeg)$/.test(v) || /img$/i.test(k)) {
+            this.$set(data, k, this.imgs.loading)
+          }
+        }
+      })
+    },
     async request () {
+      this.loadingImg(this.data)
       this.loading = true
       const { api, param, condition } = this
       const { data, total, code } = await this.tables_getdata({
