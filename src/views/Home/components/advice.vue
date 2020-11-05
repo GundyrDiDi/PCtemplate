@@ -66,7 +66,7 @@ export default {
           content,
           // ...this.User
           name: this.User.name,
-          cellphone: this.User.cellPhone
+          cellPhone: this.User.cellPhone
         }).then(res => {
           this.editor.txt.html('')
           this.msgSuccess('提交成功 ！')
