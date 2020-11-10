@@ -479,6 +479,12 @@ export default {
           window.open(
             'https://taobaolive.taobao.com/room/index.htm?feedId=' + row.topic
           )
+        },
+        modal (param) {
+          console.log(param)
+          const fn = this.myauth.inst.columnEvent2
+          if (fn && fn.call(this)) return
+          this.tables_setcelldata({ ...param, name: 'saleData' })
         }
       },
       scroll: true,
@@ -511,20 +517,22 @@ export default {
         {
           key: 'action',
           title: '操作',
-          // action: [
-          //   {
-          //     event: 'playlive',
-          //     class: 'fa fa-play',
-          //     on: 'click',
-          //     tooltip: '观看直播'
-          //   }
-          // ],
           custom: [
             {
               tag: 'a',
               raw: '观看直播',
               events: {
                 click: 'playlive'
+              }
+            },
+            {
+              tag: 'a',
+              style: {
+                display: 'block'
+              },
+              raw: '销量估算明细',
+              events: {
+                click: 'modal'
               }
             }
           ]
@@ -809,6 +817,75 @@ export default {
         { key: 'salesAmt', title: '销售额(估)', sortable: 'custom' },
         { key: 'saleQty', title: '销量(估)', sortable: 'custom' },
         { key: 'perSalePrice', title: '客单价(估)', sortable: 'custom' }
+      ]
+    },
+    liveprice: {
+      defaultSort: 'startTime,desc',
+      api: 'host/record/rltgoods',
+      events: {
+        link ({ row }) {
+          window.open(
+            'https://item.taobao.com/item.htm?ft=t&id=' + row.taobaoGoodsId
+          )
+        }
+      },
+      column: [
+        {
+          key: 'startTime',
+          title: '直播日期',
+          width: 160,
+          sortable: 'custom'
+        },
+        {
+          key: 'anchorName',
+          title: '直播标题',
+          width: 200
+        },
+        {
+          key: 'anchorName',
+          title: '主播名称'
+        },
+        {
+          key: 'taobaoGoodsName',
+          title: '商品',
+          custom: [
+            {
+              tag: 'a',
+              text: 'taobaoGoodsName',
+              events: {
+                click: 'link'
+              }
+            }
+          ],
+          width: 300
+        },
+        {
+          key: 'taobaoGoodsId',
+          title: '商品ID'
+        },
+        {
+          key: 'goodsImg',
+          title: '商品图片',
+          custom: [
+            {
+              tag: 'img',
+              src: 'goodsImg',
+              class: 'diff-img',
+              props: {
+                size: 'large'
+              }
+            }
+          ]
+        },
+        {
+          key: 'originalPrice',
+          title: '商品原价',
+          sortable: 'custom'
+        },
+        {
+          key: 'discountDetail',
+          title: '商品直播利益点'
+        }
       ]
     }
   },
@@ -1317,12 +1394,12 @@ export default {
       component: () => import('@/views/Home/components/hotlive.vue'),
       meta: { title: '人气直播', icon: 'icon-remen' }
     },
-    // {
-    //   path: '/home/report',
-    //   name: 'report',
-    //   component: () => import('@/views/Home/components/hotlive.vue'),
-    //   meta: { title: '行业专题报告' ,icon:'fenxi'}
-    // },
+    {
+      path: '/home/report',
+      name: 'report',
+      component: () => import('@/views/Home/components/pricequery.vue'),
+      meta: { title: '直播价格查询', icon: 'icon-fenxi' }
+    },
     {
       path: '/home/follow',
       name: 'follow',

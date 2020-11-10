@@ -10,6 +10,7 @@
     v-bind="hostrecord"
     :lockvalid="myauth.hostDetail.lock"
     ></table-paganation>
+    <modal-table></modal-table>
   </div>
 </template>
 

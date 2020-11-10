@@ -144,7 +144,7 @@ export function numberRange (val, min, max) {
 }
 
 /* 搬运 */
-export function formatDate (date, fmt) {
+export function formatDate (date, fmt = 'yyyy-MM-dd') {
   if (/(y+)/.test(fmt)) {
     fmt = fmt.replace(
       RegExp.$1,

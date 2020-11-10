@@ -1,10 +1,23 @@
 <template>
-  <Modal v-model="_show" width="70vw" style="text-align:center">
+  <Modal v-model="_show" width="70vw" style="text-align: center">
     <header slot="header" class="p-title">
-      {{celldata&&celldata.name}}
+      {{ celldata && celldata.name }}
     </header>
-    <section style="max-height:60vh;overflow:auto">
-        <table-paganation v-if="celldata" v-bind="celldata" ref="table"></table-paganation>
+    <section style="max-height: 60vh; overflow: auto">
+      <div class="flex-bwn header" v-if="celldata && celldata.header">
+        <div v-for="v in celldata.header" :key="v.name">
+          <template v-if="v.name">
+            <div>{{ v.name }}</div>
+            <div>{{ v.value }}</div>
+          </template>
+          <img style="height: 4rem" v-else :src="v.value" alt="" />
+        </div>
+      </div>
+      <table-paganation
+        v-if="celldata"
+        v-bind="celldata"
+        ref="table"
+      ></table-paganation>
     </section>
     <footer slot="footer"></footer>
   </Modal>
@@ -37,7 +50,17 @@ export default {
   }
 }
 </script>
-
-<style>
-
+<style lang="less" scoped>
+.header {
+  margin-bottom: 1rem;
+  width:99%;
+  padding: 0.3rem 1% 0.2rem 1%;
+  border-bottom: 1px solid #ddd;
+  border-top: 1px solid #ddd;
+  div>div:first-child{
+    font-weight: 600;
+    line-height:2.5rem;
+  }
+  font-size:var(--xs2font)
+}
 </style>

@@ -117,6 +117,11 @@ export default {
         }
       }
     },
+    liveprice: {
+      brief: {
+        url: 'goods/getHistoryPriceSimple'
+      }
+    },
     host: {
       _params () {
         return {
@@ -133,7 +138,10 @@ export default {
         url: 'anchor/findFansPortrait'
       },
       record: {
-        url: 'anchor/findLiveInfoByPage'
+        url: 'anchor/findLiveInfoByPage',
+        rltgoods: {
+          url: 'goods/getHistoryPrice'
+        }
       },
       good: {
         url: 'goods/queryAnalysis'

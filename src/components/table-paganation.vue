@@ -7,6 +7,7 @@
       :columns="column"
       :data="data"
       @on-sort-change="sortchange"
+      :class="sortclick?'':'custom-sort'"
     ></Table>
     <!-- <Page
       v-show="data.length<=total"
@@ -48,7 +49,8 @@ export default {
     'sortvalid',
     'listvalid',
     'lockvalid',
-    'defaultSort'
+    'defaultSort',
+    'sortclick'
   ],
   data () {
     return {
@@ -126,23 +128,27 @@ export default {
         this.sortvalid()
         return
       }
-      // 有默认排序
-      // const issame = this.sortKey === key
-      // this.$set(this.column.find(v => v.key === key), 'className', issame ? '' : 'sort-active')
-      // if (!issame && this.sortKey) {
-      //   this.$set(this.column.find(v => v.key === this.sortKey), 'className', '')
-      // }
-      // this.param.sort = issame ? this.defaultSort : key + ',desc'
-      // this.sortKey = issame ? '' : key
-
-      // 必须选一个降序
-      if (this.sortKey === key) return
-      this.column.forEach(v => {
-        this.$set(v, 'className', v.key === key ? 'sort-active' : '')
-      })
-      this.param.sort = key + ',desc'
-      this.sortKey = key
-      this.request()
+      if (this.sortclick === 'default') {
+        this.param.sort = order === 'normal' ? this.defaultSort : key + ',' + order
+        this.request()
+        // 有默认排序
+        // const issame = this.sortKey === key
+        // this.$set(this.column.find(v => v.key === key), 'className', issame ? '' : 'sort-active')
+        // if (!issame && this.sortKey) {
+        //   this.$set(this.column.find(v => v.key === this.sortKey), 'className', '')
+        // }
+        // this.param.sort = issame ? this.defaultSort : key + ',desc'
+        // this.sortKey = issame ? '' : key
+      } else {
+        // 必须选一个降序
+        if (this.sortKey === key) return
+        this.column.forEach(v => {
+          this.$set(v, 'className', v.key === key ? 'sort-active' : '')
+        })
+        this.param.sort = key + ',desc'
+        this.sortKey = key
+        this.request()
+      }
     },
     // 更新表格数据后，由于图片加载慢，显示的还是上一页数据的图片
     // 解决方案：更新前把图片显示改成load状态
@@ -443,7 +449,7 @@ thead .margin-left div{
   margin-left:40px;
 }
 // 自定义排序样式
-.ivu-table-sort{
+.custom-sort .ivu-table-sort{
   i.ivu-icon{
     pointer-events: none;
     color:transparent;
@@ -454,9 +460,13 @@ thead .margin-left div{
     top:3px;
   }
 }
-.sort-active{
+.custom-sort .sort-active{
   i.ivu-icon:last-of-type{
     color:#2d8cf0
   }
+}
+.diff-img{
+  float:none;
+  border-radius:.1rem;
 }
 </style>

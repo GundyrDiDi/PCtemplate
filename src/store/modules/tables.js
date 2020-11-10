@@ -270,6 +270,96 @@ const Map = {
       ],
       api: 'user/payrecord'
     }
+  },
+  saleData: {
+    events: {
+      link
+    },
+    defaultSort: 'startTime,desc',
+    condition: ['liveId'],
+    column: [
+      {
+        key: 'taobaoGoodsName',
+        title: '商品信息',
+        custom: [
+          {
+            tag: 'img',
+            src: 'goodsImg',
+            events: {
+              click: 'link'
+            }
+          },
+          {
+            tag: 'a',
+            class: 'lines',
+            text: 'taobaoGoodsName',
+            events: {
+              click: 'link'
+            }
+          }
+        ],
+        width: 300
+      },
+      {
+        key: 'brandName',
+        title: '品牌'
+      },
+      {
+        key: 'originalPrice',
+        title: '商品原价',
+        sortable: 'custom'
+      },
+      {
+        key: 'discountDetail',
+        title: '商品利益点',
+        width: 150
+      },
+      {
+        key: 'saleQty',
+        title: '直播销量(估)',
+        sortable: 'custom',
+        width: 150
+      },
+      {
+        key: 'saleAmt',
+        title: '直播销售额(估)',
+        sortable: 'custom',
+        width: 150
+      },
+      {
+        key: 'anchorCnt',
+        title: '关联主播数',
+        sortable: 'custom'
+      }
+    ],
+    action: {
+      name: '直播销售明细',
+      column: [],
+      api: 'host/record/rltgoods'
+    },
+    // 附加信息
+    header ({ row, column }) {
+      console.log(row)
+      console.log(column)
+      // return '324'
+      const keys = {
+        img: '',
+        liveinfo: '直播信息',
+        livetime: '直播时间',
+        pv: 'PV',
+        fansofraise: '直播涨粉',
+        goodsCnt: '商品数',
+        salesAmt: '销售额(估)',
+        saleQty: '销量(估)',
+        perSalePrice: '客单价(估)'
+      }
+      return Object.entries(keys).map(([k, v]) => {
+        return {
+          name: v,
+          value: row[k]
+        }
+      })
+    }
   }
 }
 export default {
@@ -286,6 +376,7 @@ export default {
     _setcelldata (store, { row, column, name }) {
       const key = column.key
       const data = Map[name]
+      const header = data.header({ row, column })
       const events = data.events || {}
       const defaultSort = data.defaultSort || ''
       const cellcolumn = [...data.column]
@@ -299,6 +390,7 @@ export default {
         ...data[key],
         defaultSort,
         events,
+        header,
         column: cellcolumn.filter(v => !!v),
         condition: condition.reduce((acc, v) => {
           acc[v] = row[v]
